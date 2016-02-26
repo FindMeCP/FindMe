@@ -3,18 +3,23 @@ Group Project for CodePath
 
 ## User Stories
 
-The following **required** functionality is complete:
+**Required** functionality: User can
 
-- [] User can track friend with FindMe app.
-- [] User can be tracked by friend with FindMe app.
-- [] User can turn tracking on and off.
+- [] Find friend's location, and friend can Find user's location.
+- [] Stop seeing friend's location
+- [] Turn off tracking.
+- [] Select three map modes: split screen, shared screen, solor screen.
+- [] Find friends with app installed, invite friends without the app.
+- [] Reset the map to the user's pin.
 
-The following **optional** features are implemented:
 
-- [] User can track multiple friends at a time.
-- [] User can leave geonotes.
-- [] User can login with Facebook account.
+**Optional** features: User can
+
+- [] Track multiple friends at a time.
+- [] Leave geonotes.
+- [] Login with Facebook account.
 - [] Ping other users.
+- [] Set timer until unFinds friend.
 
 
 

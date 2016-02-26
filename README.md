@@ -5,16 +5,16 @@ Group Project for CodePath
 
 The following **required** functionality is complete:
 
-- [] 
-- []
-- []
-- []
-- 
+- [] User can track friend with FindMe app.
+- [] User can be tracked by friend with FindMe app.
+- [] User can turn tracking on and off.
+
 The following **optional** features are implemented:
 
-- [] 
-- [] 
-- 
+- [] User can track multiple friends at a time.
+- [] User can leave geonotes.
+
+
 ## Notes
 
 

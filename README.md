@@ -13,6 +13,9 @@ The following **optional** features are implemented:
 
 - [] User can track multiple friends at a time.
 - [] User can leave geonotes.
+- [] User can login with Facebook account.
+- [] Ping other users.
+
 
 
 ## Notes

@@ -1,6 +1,11 @@
 # FindMe
 Group Project for CodePath
 
+## Description
+Tired of trying to find your friends while they dont text you back? FindMe
+helps you find your friends without any effort. The FindMe app is useful
+for all ages, but we are specifically targetting collegiates. 
+
 ## User Stories
 
 **Required** functionality: User can
@@ -21,9 +26,12 @@ Group Project for CodePath
 - [] Ping other users.
 - [] Set timer until unFinds friend.
 
+**APIs**
+- Google Maps API (link to endpoint)
 
+**Model Classes**
+- Users: username, password, phone number, location, email, tracking
 
-## Notes
 
 
 ## Video Walkthrough 

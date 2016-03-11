@@ -15,6 +15,10 @@
 		0021E5B91C8FB4E600B88D0B /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0021E5B81C8FB4E600B88D0B /* MainViewController.swift */; };
 		0021E5BB1C8FB5E600B88D0B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0021E5BA1C8FB5E600B88D0B /* User.swift */; };
 		5C38DDF98CD2B282434DA202 /* Pods_FindMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B040466A5D1C7485E2B268 /* Pods_FindMe.framework */; };
+		9CD700EF1C90E483006389CC /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD700EE1C90E483006389CC /* SWRevealViewController.m */; };
+		9CD700F11C923E88006389CC /* AccountTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD700F01C923E87006389CC /* AccountTableViewController.swift */; };
+		9CD700F31C923EE5006389CC /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD700F21C923EE5006389CC /* SettingsTableViewController.swift */; };
+		9CD700F51C923F0B006389CC /* LogoutTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD700F41C923F0B006389CC /* LogoutTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +33,12 @@
 		0021E5BA1C8FB5E600B88D0B /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		10B040466A5D1C7485E2B268 /* Pods_FindMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FindMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84545270CAA77090DD16047E /* Pods-FindMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindMe.release.xcconfig"; path = "Pods/Target Support Files/Pods-FindMe/Pods-FindMe.release.xcconfig"; sourceTree = "<group>"; };
+		9CD700EC1C90E43F006389CC /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		9CD700ED1C90E483006389CC /* FindMe-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FindMe-Bridging-Header.h"; sourceTree = "<group>"; };
+		9CD700EE1C90E483006389CC /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		9CD700F01C923E87006389CC /* AccountTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountTableViewController.swift; sourceTree = "<group>"; };
+		9CD700F21C923EE5006389CC /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		9CD700F41C923F0B006389CC /* LogoutTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutTableViewController.swift; sourceTree = "<group>"; };
 		DAD50516224F5EA7B48C8514 /* Pods-FindMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FindMe/Pods-FindMe.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -65,6 +75,7 @@
 		0021E5A11C8FAFAC00B88D0B /* FindMe */ = {
 			isa = PBXGroup;
 			children = (
+				9CD700EB1C90E2CC006389CC /* SideBar */,
 				0021E5A21C8FAFAC00B88D0B /* AppDelegate.swift */,
 				0021E5A61C8FAFAC00B88D0B /* Main.storyboard */,
 				0021E5A91C8FAFAC00B88D0B /* Assets.xcassets */,
@@ -72,6 +83,9 @@
 				0021E5AE1C8FAFAC00B88D0B /* Info.plist */,
 				0021E5B41C8FB25400B88D0B /* LoginViewController.swift */,
 				0021E5B81C8FB4E600B88D0B /* MainViewController.swift */,
+				9CD700F01C923E87006389CC /* AccountTableViewController.swift */,
+				9CD700F21C923EE5006389CC /* SettingsTableViewController.swift */,
+				9CD700F41C923F0B006389CC /* LogoutTableViewController.swift */,
 				0021E5BA1C8FB5E600B88D0B /* User.swift */,
 			);
 			path = FindMe;
@@ -92,6 +106,16 @@
 				84545270CAA77090DD16047E /* Pods-FindMe.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		9CD700EB1C90E2CC006389CC /* SideBar */ = {
+			isa = PBXGroup;
+			children = (
+				9CD700EC1C90E43F006389CC /* SWRevealViewController.h */,
+				9CD700EE1C90E483006389CC /* SWRevealViewController.m */,
+				9CD700ED1C90E483006389CC /* FindMe-Bridging-Header.h */,
+			);
+			name = SideBar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -123,7 +147,7 @@
 		0021E5971C8FAFAC00B88D0B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0710;
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "William Tong";
 				TargetAttributes = {
@@ -218,8 +242,12 @@
 			files = (
 				0021E5BB1C8FB5E600B88D0B /* User.swift in Sources */,
 				0021E5B91C8FB4E600B88D0B /* MainViewController.swift in Sources */,
+				9CD700F11C923E88006389CC /* AccountTableViewController.swift in Sources */,
+				9CD700F51C923F0B006389CC /* LogoutTableViewController.swift in Sources */,
+				9CD700EF1C90E483006389CC /* SWRevealViewController.m in Sources */,
 				0021E5B51C8FB25400B88D0B /* LoginViewController.swift in Sources */,
 				0021E5A31C8FAFAC00B88D0B /* AppDelegate.swift in Sources */,
+				9CD700F31C923EE5006389CC /* SettingsTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,10 +359,13 @@
 			baseConfigurationReference = DAD50516224F5EA7B48C8514 /* Pods-FindMe.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = FindMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.WillTong.FindMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "FindMe/FindMe-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -343,10 +374,12 @@
 			baseConfigurationReference = 84545270CAA77090DD16047E /* Pods-FindMe.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = FindMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.WillTong.FindMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "FindMe/FindMe-Bridging-Header.h";
 			};
 			name = Release;
 		};

@@ -10,14 +10,21 @@ import UIKit
 import Parse
 
 class MainViewController: UIViewController {
+    
+    
+    @IBOutlet weak var settingsButton: UIBarButtonItem!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        if self.revealViewController() != nil {
+            settingsButton.target = self.revealViewController()
+            settingsButton.action = "revealToggle:"
+            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
+   
     
 }

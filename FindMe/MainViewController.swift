@@ -25,6 +25,12 @@ class MainViewController: UIViewController {
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
     }
     }
+    
+    @IBAction func logout(sender: AnyObject) {
+        PFUser.logOut()
+
+    }
+    
    
     
 }

@@ -7,15 +7,42 @@
 //
 
 import UIKit
+import AddressBook
 
 class ContactsCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var contactSwitch: UISwitch!
+    @IBOutlet weak var addButton: UIButton!
     
     var name: String?
+    var contact:ABRecordRef?
+    var friend: Bool?
+    var user: User?
     
     override func layoutSubviews() {
         super.layoutSubviews()
-     nameLabel.text = name
+        friend = false
+        let contactPerson: ABRecordRef = contact!
+        if(friend==true){
+            addButton.setImage(UIImage(named: "Checked"), forState: .Normal)
+        }else{
+            addButton.setImage(UIImage(named: "Unchecked"), forState: .Normal)
+        }
+        name = ABRecordCopyCompositeName(contactPerson).takeRetainedValue() as String
+        nameLabel.text = name
+    }
+    
+    @IBAction func addPerson(sender: AnyObject) {
+        add()
+        if(friend==true){
+            friend=false
+            addButton.setImage(UIImage(named: "Unchecked"), forState: .Normal)
+        }else{
+            friend=true
+            addButton.setImage(UIImage(named: "Checked"), forState: .Normal)
+        }
+    }
+    
+    func add() {
+        user?.addContact(contact!)
     }
 }

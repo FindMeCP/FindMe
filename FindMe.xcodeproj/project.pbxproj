@@ -80,6 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				9CD700EB1C90E2CC006389CC /* SideBar */,
+				0021E5C41C924FAE00B88D0B /* Contacts */,
 				0021E5A21C8FAFAC00B88D0B /* AppDelegate.swift */,
 				0021E5A61C8FAFAC00B88D0B /* Main.storyboard */,
 				0021E5A91C8FAFAC00B88D0B /* Assets.xcassets */,
@@ -91,7 +92,6 @@
 				9CD700F21C923EE5006389CC /* SettingsTableViewController.swift */,
 				9CD700F41C923F0B006389CC /* LogoutTableViewController.swift */,
 				0021E5BA1C8FB5E600B88D0B /* User.swift */,
-				0021E5C41C924FAE00B88D0B /* Contacts */,
 			);
 			path = FindMe;
 			sourceTree = "<group>";

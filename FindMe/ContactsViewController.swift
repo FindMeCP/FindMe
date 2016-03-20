@@ -75,7 +75,6 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         } else {
             return 0
         }
-        return 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
@@ -86,7 +85,9 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         let contactName: String = ABRecordCopyCompositeName(contactPerson).takeRetainedValue() as String
         //print ("contactName \(contactName)")
         //print(cell.name)
-        cell.name = contactName
+        cell.contact = record
         return cell
     }
+    
+    
 }

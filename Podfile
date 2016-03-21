@@ -5,6 +5,8 @@ use_frameworks!
 
 target 'FindMe' do
 	pod ‘Parse’
+    pod 'AFNetworking'
+
 
 end
 

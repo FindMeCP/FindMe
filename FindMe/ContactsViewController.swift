@@ -61,9 +61,10 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
             
         case .Restricted:
             print("Access restricted")
-            
-        default:
-            print("Other Problem")
+        
+            //not needed??? gives error
+        //default:
+        //    print("Other Problem")
         }
         //print(addressBook)
         
@@ -81,8 +82,8 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     {
        let cell = tableView.dequeueReusableCellWithIdentifier("ContactsIdentifier", forIndexPath: indexPath) as! ContactsCell
         let record:ABRecordRef = contactList![indexPath.row]
-        let contactPerson: ABRecordRef = record
-        let contactName: String = ABRecordCopyCompositeName(contactPerson).takeRetainedValue() as String
+        //let contactPerson: ABRecordRef = record
+        //let contactName: String = ABRecordCopyCompositeName(contactPerson).takeRetainedValue() as String
         //print ("contactName \(contactName)")
         //print(cell.name)
         cell.contact = record

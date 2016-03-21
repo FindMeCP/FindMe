@@ -20,7 +20,6 @@
 		9CD700EF1C90E483006389CC /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD700EE1C90E483006389CC /* SWRevealViewController.m */; };
 		9CD700F11C923E88006389CC /* AccountTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD700F01C923E87006389CC /* AccountTableViewController.swift */; };
 		9CD700F31C923EE5006389CC /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD700F21C923EE5006389CC /* SettingsTableViewController.swift */; };
-		9CD700F51C923F0B006389CC /* LogoutTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD700F41C923F0B006389CC /* LogoutTableViewController.swift */; };
 		EF4328CC1CA087F8006B9328 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF4328CB1CA087F8006B9328 /* MapKit.framework */; };
 		EF4328CE1CA08CD9006B9328 /* LogoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4328CD1CA08CD9006B9328 /* LogoutViewController.swift */; };
 /* End PBXBuildFile section */
@@ -44,7 +43,6 @@
 		9CD700EE1C90E483006389CC /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		9CD700F01C923E87006389CC /* AccountTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountTableViewController.swift; sourceTree = "<group>"; };
 		9CD700F21C923EE5006389CC /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
-		9CD700F41C923F0B006389CC /* LogoutTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutTableViewController.swift; sourceTree = "<group>"; };
 		DAD50516224F5EA7B48C8514 /* Pods-FindMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FindMe/Pods-FindMe.debug.xcconfig"; sourceTree = "<group>"; };
 		EF4328CB1CA087F8006B9328 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		EF4328CD1CA08CD9006B9328 /* LogoutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutViewController.swift; sourceTree = "<group>"; };
@@ -95,7 +93,6 @@
 				0021E5B81C8FB4E600B88D0B /* MainViewController.swift */,
 				9CD700F01C923E87006389CC /* AccountTableViewController.swift */,
 				9CD700F21C923EE5006389CC /* SettingsTableViewController.swift */,
-				9CD700F41C923F0B006389CC /* LogoutTableViewController.swift */,
 				0021E5BA1C8FB5E600B88D0B /* User.swift */,
 				EF4328CD1CA08CD9006B9328 /* LogoutViewController.swift */,
 			);
@@ -264,7 +261,6 @@
 				0021E5BB1C8FB5E600B88D0B /* User.swift in Sources */,
 				0021E5B91C8FB4E600B88D0B /* MainViewController.swift in Sources */,
 				9CD700F11C923E88006389CC /* AccountTableViewController.swift in Sources */,
-				9CD700F51C923F0B006389CC /* LogoutTableViewController.swift in Sources */,
 				EF4328CE1CA08CD9006B9328 /* LogoutViewController.swift in Sources */,
 				9CD700EF1C90E483006389CC /* SWRevealViewController.m in Sources */,
 				0021E5BF1C92480300B88D0B /* ContactsViewController.swift in Sources */,

@@ -507,6 +507,13 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VnO-KC-PEQ">
+                                <rect key="frame" x="131" y="269" width="59" height="30"/>
+                                <state key="normal" title="Log Out!"/>
+                                <connections>
+                                    <action selector="onLogOut:" destination="SvF-SQ-bkr" eventType="touchUpInside" id="dFa-VF-Edi"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>

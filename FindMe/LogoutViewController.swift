@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class LogoutViewController: UIViewController {
 
@@ -28,6 +29,14 @@ class LogoutViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func onLogOut(sender: AnyObject) {
+        PFUser.logOut()
+        
+        // Doesnt seem to work
+        
+        
+        
+    }
 
     /*
     // MARK: - Navigation

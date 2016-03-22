@@ -40,9 +40,9 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
             }
         
         }
-        var source: ABRecord = ABAddressBookCopyDefaultSource(contactList).takeRetainedValue()
-        allPeople = ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(addressBook,
-            source, ABPersonSortOrdering(kABPersonSortByFirstName))
+//        var source: ABRecord = ABAddressBookCopyDefaultSource(contactList).takeRetainedValue()
+//        allPeople = ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(addressBook,
+//            source, ABPersonSortOrdering(kABPersonSortByFirstName))
     }
     
     

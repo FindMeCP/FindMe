@@ -14,17 +14,41 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var tableView: UITableView!
     var addressBook = ABAddressBookRef?()
     var contactList: NSArray!
+    var allPeople: NSArray!
+
+    var phonesArray  = Array<Dictionary<String,String>>()
     
     func createAddressBook(){
         var error: Unmanaged<CFError>?
         addressBook = ABAddressBookCreateWithOptions(nil, &error).takeRetainedValue()
+        
         contactList = ABAddressBookCopyArrayOfAllPeople(addressBook).takeRetainedValue()
         print(contactList)
         for record:ABRecordRef in contactList {
             let contactPerson: ABRecordRef = record
             let contactName: String = ABRecordCopyCompositeName(contactPerson).takeRetainedValue() as String
             print ("contactName \(contactName)")
+        let phonesRef: ABMultiValueRef = ABRecordCopyValue(contactPerson, kABPersonPhoneProperty).takeRetainedValue() as ABMultiValueRef
+        for var i:Int = 0; i < ABMultiValueGetCount(phonesRef); i++ {
+            let label: String = ABMultiValueCopyLabelAtIndex(phonesRef, i).takeRetainedValue() as NSString as String
+            let value: String = ABMultiValueCopyValueAtIndex(phonesRef, i).takeRetainedValue() as! NSString as String
+            
+            print("Phone: \(label) = \(value)")
+            
+            let phone = [label: value]
+            phonesArray.append(phone)
+            }
+        
         }
+        var source: ABRecord = ABAddressBookCopyDefaultSource(contactList).takeRetainedValue()
+        allPeople = ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(addressBook,
+            source, ABPersonSortOrdering(kABPersonSortByFirstName))
+    }
+    
+    
+    
+    func compareWithDatabase(){
+        
     }
     
     
@@ -81,7 +105,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
        let cell = tableView.dequeueReusableCellWithIdentifier("ContactsIdentifier", forIndexPath: indexPath) as! ContactsCell
-        let record:ABRecordRef = contactList![indexPath.row]
+        let record:ABRecordRef = allPeople![indexPath.row]
         //let contactPerson: ABRecordRef = record
         //let contactName: String = ABRecordCopyCompositeName(contactPerson).takeRetainedValue() as String
         //print ("contactName \(contactName)")

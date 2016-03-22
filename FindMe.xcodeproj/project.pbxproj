@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		00071EA91CA205810063C9FD /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00071EA81CA205810063C9FD /* SignUpViewController.swift */; };
+		00071EAB1CA20A680063C9FD /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00071EAA1CA20A680063C9FD /* Contact.swift */; };
 		0021E5A31C8FAFAC00B88D0B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0021E5A21C8FAFAC00B88D0B /* AppDelegate.swift */; };
 		0021E5A81C8FAFAC00B88D0B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0021E5A61C8FAFAC00B88D0B /* Main.storyboard */; };
 		0021E5AA1C8FAFAC00B88D0B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0021E5A91C8FAFAC00B88D0B /* Assets.xcassets */; };
@@ -27,6 +28,7 @@
 
 /* Begin PBXFileReference section */
 		00071EA81CA205810063C9FD /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignUpViewController.swift; path = ../SignUpViewController.swift; sourceTree = "<group>"; };
+		00071EAA1CA20A680063C9FD /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		0021E59F1C8FAFAC00B88D0B /* FindMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FindMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0021E5A21C8FAFAC00B88D0B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0021E5A71C8FAFAC00B88D0B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 			children = (
 				0021E5BE1C92480300B88D0B /* ContactsViewController.swift */,
 				0021E5C21C924DFB00B88D0B /* ContactsCell.swift */,
+				00071EAA1CA20A680063C9FD /* Contact.swift */,
 			);
 			name = Contacts;
 			sourceTree = "<group>";
@@ -262,6 +265,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00071EAB1CA20A680063C9FD /* Contact.swift in Sources */,
 				0021E5BB1C8FB5E600B88D0B /* User.swift in Sources */,
 				0021E5B91C8FB4E600B88D0B /* MainViewController.swift in Sources */,
 				9CD700F11C923E88006389CC /* AccountTableViewController.swift in Sources */,

@@ -44,13 +44,13 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
         firstMapTitle.text = "New York"
         let NYCoordinates = CLLocationCoordinate2DMake(40.72, -74)
         secondMapTitle.text = "User (SF)"
-        let userCoordinates = locationManager.location!.coordinate
+        //let userCoordinates = locationManager.location!.coordinate
         let firstRegion = MKCoordinateRegionMakeWithDistance(NYCoordinates, 4000, 4000)
-        let secondRegion = MKCoordinateRegionMakeWithDistance(userCoordinates, 4000, 4000)
+        //let secondRegion = MKCoordinateRegionMakeWithDistance(userCoordinates, 4000, 4000)
         
         
         firstMapView.setRegion(firstRegion, animated: true)
-        secondMapView.setRegion(secondRegion, animated: true)
+        //secondMapView.setRegion(secondRegion, animated: true)
         
         
 //        For two pins in one?

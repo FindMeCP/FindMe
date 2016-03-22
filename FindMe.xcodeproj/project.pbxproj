@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00071EA51CA1BD100063C9FD /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00071EA41CA1BD100063C9FD /* Contact.swift */; };
 		0021E5A31C8FAFAC00B88D0B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0021E5A21C8FAFAC00B88D0B /* AppDelegate.swift */; };
 		0021E5A81C8FAFAC00B88D0B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0021E5A61C8FAFAC00B88D0B /* Main.storyboard */; };
 		0021E5AA1C8FAFAC00B88D0B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0021E5A91C8FAFAC00B88D0B /* Assets.xcassets */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		00071EA41CA1BD100063C9FD /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Contact.swift; path = ../Contact.swift; sourceTree = "<group>"; };
 		0021E59F1C8FAFAC00B88D0B /* FindMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FindMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0021E5A21C8FAFAC00B88D0B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0021E5A71C8FAFAC00B88D0B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -93,8 +95,8 @@
 				0021E5B81C8FB4E600B88D0B /* MainViewController.swift */,
 				9CD700F01C923E87006389CC /* AccountTableViewController.swift */,
 				9CD700F21C923EE5006389CC /* SettingsTableViewController.swift */,
-				0021E5BA1C8FB5E600B88D0B /* User.swift */,
 				EF4328CD1CA08CD9006B9328 /* LogoutViewController.swift */,
+				0021E5BA1C8FB5E600B88D0B /* User.swift */,
 			);
 			path = FindMe;
 			sourceTree = "<group>";
@@ -104,6 +106,7 @@
 			children = (
 				0021E5BE1C92480300B88D0B /* ContactsViewController.swift */,
 				0021E5C21C924DFB00B88D0B /* ContactsCell.swift */,
+				00071EA41CA1BD100063C9FD /* Contact.swift */,
 			);
 			name = Contacts;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				EF4328CE1CA08CD9006B9328 /* LogoutViewController.swift in Sources */,
 				9CD700EF1C90E483006389CC /* SWRevealViewController.m in Sources */,
 				0021E5BF1C92480300B88D0B /* ContactsViewController.swift in Sources */,
+				00071EA51CA1BD100063C9FD /* Contact.swift in Sources */,
 				0021E5B51C8FB25400B88D0B /* LoginViewController.swift in Sources */,
 				0021E5A31C8FAFAC00B88D0B /* AppDelegate.swift in Sources */,
 				0021E5C31C924DFB00B88D0B /* ContactsCell.swift in Sources */,

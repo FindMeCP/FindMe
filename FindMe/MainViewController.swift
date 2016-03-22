@@ -11,6 +11,9 @@ import Parse
 import MapKit
 
 class MainViewController: UIViewController, CLLocationManagerDelegate{
+    @IBOutlet weak var firstMapTitle: UILabel!
+    @IBOutlet weak var secondMapTitle: UILabel!
+    @IBOutlet weak var mapViewArea: UIView!
     @IBOutlet weak var firstMapView: MKMapView!
     @IBOutlet weak var secondMapView: MKMapView!
     @IBOutlet weak var settingsButton: UIBarButtonItem!
@@ -19,6 +22,10 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        firstMapView.frame = CGRectMake(0 , 0, mapViewArea.frame.width, mapViewArea.frame.height/2)
+        print(mapViewArea.frame.height/2)
+        
+        
         // Do any additional setup after loading the view, typically from a nib.
         
         // Ask for Authorisation from the User.
@@ -31,23 +38,28 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             
-            //WILL UPDATE LOCATION
-            //locationManager.startUpdatingLocation()
+            //WILL UPDATE LOCATION ?
+            locationManager.startUpdatingLocation()
         }
-        let userLatitude = locationManager.location!.coordinate.latitude
-        let userLongitude = locationManager.location!.coordinate.longitude
+        firstMapTitle.text = "New York"
+        let NYCoordinates = CLLocationCoordinate2DMake(40.72, -74)
+        secondMapTitle.text = "User (SF)"
+        let userCoordinates = locationManager.location!.coordinate
+        let firstRegion = MKCoordinateRegionMakeWithDistance(NYCoordinates, 4000, 4000)
+        let secondRegion = MKCoordinateRegionMakeWithDistance(userCoordinates, 4000, 4000)
         
-        print("location = \(userLatitude) \(userLongitude) ")
         
-        //one degree of latitude is approximately 111 kilometers (69 miles) at all times.
-        let firstRegion = MKCoordinateRegionMake(CLLocationCoordinate2DMake(40.7, -74),
-            MKCoordinateSpanMake(0.1, 0.1))
-        print(firstRegion)
+        firstMapView.setRegion(firstRegion, animated: true)
+        secondMapView.setRegion(secondRegion, animated: true)
         
-        let secondRegion = MKCoordinateRegionMake(CLLocationCoordinate2DMake(userLatitude, userLongitude),MKCoordinateSpanMake(0.01, 0.1))
         
-        firstMapView.setRegion(firstRegion, animated: false)
-        secondMapView.setRegion(secondRegion, animated: false)
+//        For two pins in one?
+        
+//        CLLocation *pointALocation = [[CLLocation alloc] initWithLatitude:middlePoint.latitude longitude:middlePoint.longitude];
+//        CLLocation *pointBLocation = [[CLLocation alloc] initWithLatitude:pointB.latitude longitude:pointB.longitude];
+//        CLLocationDistance d = [pointALocation distanceFromLocation:pointBLocation];
+//        MKCoordinateRegion r = MKCoordinateRegionMakeWithDistance(middlePoint, 2*d, 2*d);
+//        [mapView setRegion:r animated:YES];
         
         if self.revealViewController() != nil {
             settingsButton.target = self.revealViewController()
@@ -56,18 +68,23 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
         }
     }
     
-//    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
-//        //userLongitude = locValue.longitude
-//        //userLatitude = locValue.latitude
-//        //print("locations = \(locValue.latitude) \(locValue.longitude)")
-//    }
-    
-    @IBAction func logout(sender: AnyObject) {
-        PFUser.logOut()
-
+    @IBAction func onSlider(sender: UISlider) {
+        sender.setValue(Float(roundf(sender.value)), animated: false)
     }
     
+    
+    @IBAction func onFirstMapReturn(sender: AnyObject) {
+        let NYCoordinates = CLLocationCoordinate2DMake(40.72, -74)
+        let firstRegion = MKCoordinateRegionMakeWithDistance(NYCoordinates, 4000, 4000)
+        firstMapView.setRegion(firstRegion, animated: true)
+    }
+    
+    
+    @IBAction func onSecondMapReturn(sender: AnyObject) {
+        let userCoordinates = locationManager.location!.coordinate
+        let secondRegion = MKCoordinateRegionMakeWithDistance(userCoordinates, 4000, 4000)
+        secondMapView.setRegion(secondRegion, animated: true)
+    }
    
     
 }

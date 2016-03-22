@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00071EA51CA1BD100063C9FD /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00071EA41CA1BD100063C9FD /* Contact.swift */; };
 		00071EA91CA205810063C9FD /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00071EA81CA205810063C9FD /* SignUpViewController.swift */; };
 		0021E5A31C8FAFAC00B88D0B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0021E5A21C8FAFAC00B88D0B /* AppDelegate.swift */; };
 		0021E5A81C8FAFAC00B88D0B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0021E5A61C8FAFAC00B88D0B /* Main.storyboard */; };
@@ -27,7 +26,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		00071EA41CA1BD100063C9FD /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Contact.swift; path = ../Contact.swift; sourceTree = "<group>"; };
 		00071EA81CA205810063C9FD /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignUpViewController.swift; path = ../SignUpViewController.swift; sourceTree = "<group>"; };
 		0021E59F1C8FAFAC00B88D0B /* FindMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FindMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0021E5A21C8FAFAC00B88D0B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -109,7 +107,6 @@
 			children = (
 				0021E5BE1C92480300B88D0B /* ContactsViewController.swift */,
 				0021E5C21C924DFB00B88D0B /* ContactsCell.swift */,
-				00071EA41CA1BD100063C9FD /* Contact.swift */,
 			);
 			name = Contacts;
 			sourceTree = "<group>";
@@ -272,7 +269,6 @@
 				9CD700EF1C90E483006389CC /* SWRevealViewController.m in Sources */,
 				0021E5BF1C92480300B88D0B /* ContactsViewController.swift in Sources */,
 				00071EA91CA205810063C9FD /* SignUpViewController.swift in Sources */,
-				00071EA51CA1BD100063C9FD /* Contact.swift in Sources */,
 				0021E5B51C8FB25400B88D0B /* LoginViewController.swift in Sources */,
 				0021E5A31C8FAFAC00B88D0B /* AppDelegate.swift in Sources */,
 				0021E5C31C924DFB00B88D0B /* ContactsCell.swift in Sources */,

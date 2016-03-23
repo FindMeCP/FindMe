@@ -43,6 +43,6 @@ class ContactsCell: UITableViewCell {
     }
     
     func add() {
-        user?.addContact(contact!)
+        //user?.addContact(contact!)
     }
 }

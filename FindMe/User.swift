@@ -20,23 +20,28 @@ class User: NSObject {
     var mediaFile: PFFile?
     var id: Int?
     var username: String?
-    var contacts: [ABRecordRef]?
-    var friends: [ABRecordRef]?
-    var location: Int?
+    var contacts: [Contact]?
+    var friends: [Contact]?
+    var location: CLLocationCoordinate2D?
     
     init(object: PFObject) {
         mediaFile = object["media"] as? PFFile
         username = object["username"] as? String
-        contacts = object["contacts"] as? [ABRecordRef]
-        friends = object["friends"] as? [ABRecordRef]
+        contacts = object["contacts"] as? [Contact]
+        friends = object["friends"] as? [Contact]
+        location = object["location"] as? CLLocationCoordinate2D
     }
 
-    func addContact(contact: ABRecordRef){
+    func addContact(contact: Contact){
         contacts?.append(contact)
     }
     
-    func getPhoneNumber(contact: ABRecordRef){
+    func getPhoneNumber(){
         
+    }
+    
+    func getLocation()->CLLocationCoordinate2D{
+        return location!
     }
 
 }

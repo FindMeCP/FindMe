@@ -14,6 +14,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var tableView: UITableView!
     var addressBook = ABAddressBookRef?()
     var contactList: NSArray!
+    var contactArray: ABRecordRef?
     var allPeople: NSArray!
 
     var phonesArray  = Array<Dictionary<String,String>>()
@@ -41,7 +42,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         
         }
 //        var source: ABRecord = ABAddressBookCopyDefaultSource(contactList).takeRetainedValue()
-//        allPeople = ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(addressBook,
+        //allPeople = ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(addressBook,
 //            source, ABPersonSortOrdering(kABPersonSortByFirstName))
     }
     
@@ -105,7 +106,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
        let cell = tableView.dequeueReusableCellWithIdentifier("ContactsIdentifier", forIndexPath: indexPath) as! ContactsCell
-        let record:ABRecordRef = allPeople![indexPath.row]
+        let record:ABRecordRef = contactList![indexPath.row]
         //let contactPerson: ABRecordRef = record
         //let contactName: String = ABRecordCopyCompositeName(contactPerson).takeRetainedValue() as String
         //print ("contactName \(contactName)")

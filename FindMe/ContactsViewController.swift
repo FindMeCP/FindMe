@@ -8,6 +8,7 @@
 
 import UIKit
 import AddressBook
+import Parse
 
 class ContactsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -41,15 +42,18 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
             }
         
         }
-//        var source: ABRecord = ABAddressBookCopyDefaultSource(contactList).takeRetainedValue()
+        //var source: ABRecord = ABAddressBookCopyDefaultSource(contactList).takeRetainedValue()
         //allPeople = ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(addressBook,
-//            source, ABPersonSortOrdering(kABPersonSortByFirstName))
+           // source, ABPersonSortOrdering(kABPersonSortByFirstName))
     }
     
     
     
     func compareWithDatabase(){
         
+        var query = PFUser.query()
+        query!.whereKey("contacts", equalTo:"female")
+        //var girls = query!.findObjects()
     }
     
     

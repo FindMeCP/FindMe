@@ -16,8 +16,6 @@ class Contact: NSObject {
     var friend: Bool?
     var onSite: Bool?
     
-    
-    
     init(contact: ABRecordRef, phone: Dictionary<String,String>){
         contactPerson = contact
         phonesArray = phone

@@ -8,12 +8,14 @@
 
 import UIKit
 import AddressBook
+import Parse
 
 class ContactsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
     var addressBook = ABAddressBookRef?()
     var contactList: NSArray!
+    var contactArray: ABRecordRef?
     var allPeople: NSArray!
 
     var phonesArray  = Array<Dictionary<String,String>>()
@@ -40,15 +42,18 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
             }
         
         }
-//        var source: ABRecord = ABAddressBookCopyDefaultSource(contactList).takeRetainedValue()
-//        allPeople = ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(addressBook,
-//            source, ABPersonSortOrdering(kABPersonSortByFirstName))
+        //var source: ABRecord = ABAddressBookCopyDefaultSource(contactList).takeRetainedValue()
+        //allPeople = ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(addressBook,
+           // source, ABPersonSortOrdering(kABPersonSortByFirstName))
     }
     
     
     
     func compareWithDatabase(){
         
+        var query = PFUser.query()
+        query!.whereKey("contacts", equalTo:"female")
+        //var girls = query!.findObjects()
     }
     
     
@@ -105,7 +110,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
        let cell = tableView.dequeueReusableCellWithIdentifier("ContactsIdentifier", forIndexPath: indexPath) as! ContactsCell
-        let record:ABRecordRef = allPeople![indexPath.row]
+        let record:ABRecordRef = contactList![indexPath.row]
         //let contactPerson: ABRecordRef = record
         //let contactName: String = ABRecordCopyCompositeName(contactPerson).takeRetainedValue() as String
         //print ("contactName \(contactName)")

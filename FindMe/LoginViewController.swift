@@ -32,28 +32,10 @@ class LoginViewController: UIViewController {
                 print("you're logged in!")
                 self.performSegueWithIdentifier("loginSegue", sender: nil)
             }
-            
         }
-        
     }
     
     @IBAction func signUp(sender: AnyObject) {
-        let newUser = PFUser()
-        
-        newUser.username = usernameText.text
-        newUser.password = passwordText.text
-        
-        // call sign up function on the object
-        newUser.signUpInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-            if let error = error {
-                print(error.localizedDescription)
-            } else {
-                print("User Registered successfully")
-                self.performSegueWithIdentifier("loginSegue", sender: nil)
-                // manually segue to logged in view
-            }
-        }
-        
         
     }
     

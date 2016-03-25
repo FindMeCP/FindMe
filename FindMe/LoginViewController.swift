@@ -9,16 +9,18 @@
 import UIKit
 import Parse
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var usernameText: UITextField!
     
     @IBOutlet weak var passwordText: UITextField!
+    let locationManager = CLLocationManager()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
     }
     
     override func didReceiveMemoryWarning() {

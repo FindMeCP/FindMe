@@ -13,9 +13,9 @@ import MapKit
 class MainViewController: UIViewController, CLLocationManagerDelegate{
     @IBOutlet weak var firstMapTitle: UILabel!
     @IBOutlet weak var secondMapTitle: UILabel!
+    @IBOutlet weak var mapView1: GMSMapView!
+    @IBOutlet weak var mapView2: GMSMapView!
     @IBOutlet weak var mapViewArea: UIView!
-    @IBOutlet weak var firstMapView: MKMapView!
-    @IBOutlet weak var secondMapView: MKMapView!
     @IBOutlet weak var settingsButton: UIBarButtonItem!
     let locationManager = CLLocationManager()
     
@@ -28,52 +28,40 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
         let logo = UIImage(named: "FindMeLogoSmallPurple")
         let imageView = UIImageView(image:logo)
         imageView.contentMode = .ScaleAspectFit
-        
         self.navigationItem.titleView = imageView
         
+        locationManager.delegate = self
+        locationManager.startUpdatingLocation()
         
-        
-        
-        
-        firstMapView.frame = CGRectMake(0 , 0, mapViewArea.frame.width, mapViewArea.frame.height/2)
-        print(mapViewArea.frame.height/2)
-        
-        
-        // Do any additional setup after loading the view, typically from a nib.
-        
-        // Ask for Authorisation from the User.
-        self.locationManager.requestAlwaysAuthorization()
-        
-        // For use in foreground
-        self.locationManager.requestWhenInUseAuthorization()
-        
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            
-            //WILL UPDATE LOCATION ?
-            locationManager.startUpdatingLocation()
-        }
         firstMapTitle.text = "New York"
-        let NYCoordinates = CLLocationCoordinate2DMake(40.72, -74)
         secondMapTitle.text = "User"
-        let userCoordinates = locationManager.location!.coordinate
-        let firstRegion = MKCoordinateRegionMakeWithDistance(NYCoordinates, 4000, 4000)
-        let secondRegion = MKCoordinateRegionMakeWithDistance(userCoordinates, 4000, 4000)
-        
-        
-        firstMapView.setRegion(firstRegion, animated: true)
-        secondMapView.setRegion(secondRegion, animated: true)
-        
-        
-//        For two pins in one?
-        
-//        CLLocation *pointALocation = [[CLLocation alloc] initWithLatitude:middlePoint.latitude longitude:middlePoint.longitude];
-//        CLLocation *pointBLocation = [[CLLocation alloc] initWithLatitude:pointB.latitude longitude:pointB.longitude];
-//        CLLocationDistance d = [pointALocation distanceFromLocation:pointBLocation];
-//        MKCoordinateRegion r = MKCoordinateRegionMakeWithDistance(middlePoint, 2*d, 2*d);
-//        [mapView setRegion:r animated:YES];
-        
+        let status = CLLocationManager.authorizationStatus()
+        switch status {
+        case .NotDetermined:
+            print("not determined")
+        case .AuthorizedWhenInUse:
+            print("authorized when in use")
+        case .AuthorizedAlways:
+            print("authorized always")
+            locationManager.startUpdatingLocation()
+            mapView1.myLocationEnabled = true
+            mapView1.settings.myLocationButton = true
+            mapView2.myLocationEnabled = true
+            mapView2.settings.myLocationButton = true
+            let NYCoordinates = CLLocationCoordinate2DMake(40.72, -74)
+            mapView1.camera = GMSCameraPosition(target: NYCoordinates, zoom: 12, bearing: 0, viewingAngle: 0)
+            mapView2.camera = GMSCameraPosition(target: NYCoordinates, zoom: 12, bearing: 0, viewingAngle: 0)
+            if let UserCoordinates = locationManager.location?.coordinate {
+                mapView2.camera = GMSCameraPosition(target: UserCoordinates, zoom: 15, bearing: 0, viewingAngle: 0)
+            }
+        case .Restricted:
+            print("restricted")
+            // restricted by e.g. parental controls. User can't enable Location Services
+        case .Denied:
+            print("not authorized")
+            // user denied your app access to Location Services, but can grant access from Settings.app
+        }
+
         if self.revealViewController() != nil {
             settingsButton.target = self.revealViewController()
             settingsButton.action = "revealToggle:"
@@ -86,18 +74,13 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
     }
     
     
-    @IBAction func onFirstMapReturn(sender: AnyObject) {
-        let NYCoordinates = CLLocationCoordinate2DMake(40.72, -74)
-        let firstRegion = MKCoordinateRegionMakeWithDistance(NYCoordinates, 4000, 4000)
-        firstMapView.setRegion(firstRegion, animated: true)
-    }
     
-    
-    @IBAction func onSecondMapReturn(sender: AnyObject) {
-        let userCoordinates = locationManager.location!.coordinate
-        let secondRegion = MKCoordinateRegionMakeWithDistance(userCoordinates, 4000, 4000)
-        secondMapView.setRegion(secondRegion, animated: true)
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            mapView2.camera = GMSCameraPosition(target: location.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
+            //locationManager.stopUpdatingLocation()
+        }
+        
     }
-   
     
 }

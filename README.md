@@ -6,33 +6,40 @@ Tired of trying to find your friends while they dont text you back? FindMe
 helps you find your friends without any effort. The FindMe app is useful
 for all ages, but we are specifically targetting collegiates. 
 
+## Member Work Distribution
+- Jordi: Map modes, turn off location sharing, showing shared user's location
+- Shirley: Fix side navigation bar, user interface
+- Will: Phone authentication registration/log in, syncing contacts, making requests to share location.
+
 ## User Stories
 
 **Required** functionality: User can
 
-- [] Find friend's location, and friend can Find user's location.
-- [] Stop seeing friend's location
-- [] Turn off tracking.
-- [] Select three map modes: split screen, shared screen, solor screen.
-- [] Find friends with app installed, invite friends without the app.
-- [] Reset the map to the user's pin.
-
+- [] Sign up, log in, and log out of the FindMe app. 
+- [] Remained signed in across app restarts.
+- [X] See the user's location on a Google Maps SDK map.
+- [] Make or receive requests to share user locations with a friend.
+- [X] Reset the map to user locations.
+- [] Turn off all location sharing.
+- [] Select three map modes: split screen, shared screen, solo screen.
+- [] Find friends with app installed.
 
 **Optional** features: User can
 
 - [] Track multiple friends at a time.
+- [] Enable maps to fix to users' locations. 
 - [] Leave geonotes.
 - [] Login with Facebook account.
 - [] Ping other users.
-- [] Set timer until unFinds friend.
+- [] Set timer for user location sharing to end.
+- [] Invite friends without the app.
 
 **APIs**
-- Google Maps API (link to endpoint)
+- Google Maps SDK API (link to endpoint)
 
 **Model Classes**
-- Users: username, password, phone number, location, email, tracking
-
-
+- Users: username, password, phone number, latitute, longitude, email, locationSharingEnabled
+- Contacts: name, phone number, appUser, locationSharing
 
 ## Video Walkthrough 
 

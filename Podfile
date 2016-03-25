@@ -4,8 +4,9 @@ platform :ios, '8.0'
 use_frameworks!
 
 target 'FindMe' do
-pod ‘Parse’
-pod 'GoogleMaps'
+    pod ‘Parse’
+    pod 'ParseUI'
+    pod 'GoogleMaps'
     pod 'AFNetworking'
 
 

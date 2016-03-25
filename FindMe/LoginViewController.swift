@@ -37,10 +37,6 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
-    @IBAction func signUp(sender: AnyObject) {
-        
-    }
-    
     
 
 }

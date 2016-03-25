@@ -32,7 +32,7 @@ class SignUpViewController: UIViewController {
         newUser.username = usernameText.text
         newUser.password = passwordText.text
         let phonenumber: String = phoneText.text!
-        newUser["phone"] = phonenumber
+        newUser["phone"] = storeAsPhone(phonenumber)
         if(phonenumber.characters.count==7){
             // call sign up function on the object
             newUser.signUpInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
@@ -47,6 +47,13 @@ class SignUpViewController: UIViewController {
         }else{
             print("invalid phone number")
         }
+    }
+    
+    func storeAsPhone(phone: String)->String{
+        let stringArray = phone.componentsSeparatedByCharactersInSet(
+            NSCharacterSet.decimalDigitCharacterSet().invertedSet)
+        let newString = stringArray.joinWithSeparator("")
+        return newString
     }
     
 }

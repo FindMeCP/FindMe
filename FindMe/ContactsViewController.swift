@@ -12,43 +12,45 @@ import Parse
 
 class ContactsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    @IBOutlet weak var friendsTableView: UITableView!
     @IBOutlet weak var tableView: UITableView!
     var addressBook = ABAddressBookRef?()
-    var contactList: NSArray!
-    var contactArray: ABRecordRef?
-    var allPeople: NSArray!
-    //var phonesArray: [String]?
-    var phonesList: [[String]]?
-    var userBook: [Contact]?
-    var contactBook: [Contact]?
+    var contactList: [ABRecordRef]!
+    var friendsList: [ABRecordRef]!
+    var contactListCopy: [ABRecordRef]!
+    var phonesList =  Array<Array<String>>()
+    var phonesListCopy =  Array<Array<String>>()
+    var phonesArray: [String]!
+    var friendBook: [PFObject]! = []
+    var contactBook: [Contact]!
     
     func createAddressBook(){
         let user = PFUser.currentUser()
         var error: Unmanaged<CFError>?
         addressBook = ABAddressBookCreateWithOptions(nil, &error).takeRetainedValue()
-        
-        //contactList = ABAddressBookCopyArrayOfAllPeople(addressBook).takeRetainedValue()
         contactList = ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(addressBook, nil, ABPersonSortOrdering(kABPersonSortByFirstName)).takeRetainedValue() as [ABRecordRef]
-
-        print(contactList)
+        //print(contactList)
         for record:ABRecordRef in contactList {
             let contactPerson: ABRecordRef = record
             let contactName: String = ABRecordCopyCompositeName(contactPerson).takeRetainedValue() as String
-            print ("contactName \(contactName)")
+            //print ("contactName \(contactName)")
         let phonesRef: ABMultiValueRef = ABRecordCopyValue(contactPerson, kABPersonPhoneProperty).takeRetainedValue() as ABMultiValueRef
             var phonesArray: [String] = []
         for var i:Int = 0; i < ABMultiValueGetCount(phonesRef); i++ {
             let value: String = ABMultiValueCopyValueAtIndex(phonesRef, i).takeRetainedValue() as! NSString as String
             let number = storeAsPhone(value)
-            //print("Phone: \(label) = \(value)")
-            print(number)
+           // print("Phone: \(label) = \(value)")
+            //print(number)
             phonesArray.append(number)
             }
-            phonesList?.append(phonesArray)
-            contactBook?.append(Contact(contact: record, phone: phonesArray))
+            //print(phonesArray)
+            phonesList.append(phonesArray)
         }
-        user?.addObject([contactList, phonesList], forKey: "contacts")
-        //user!.saveInBackgroundWithBlock({ (success, error) -> Void in })
+        contactListCopy = contactList
+        phonesListCopy = phonesList
+        for object in phonesList{
+            //print(object)
+        }
     }
     
     func storeAsPhone(phone: String)->String{
@@ -65,7 +67,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         var error: Unmanaged<CFError>?
         let aBook: ABAddressBook? = ABAddressBookCreateWithOptions(nil, &error)?.takeRetainedValue()
         if aBook == nil {
-            print(error?.takeRetainedValue())
+            //print(error?.takeRetainedValue())
             return
         }
         
@@ -92,19 +94,56 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     func compareWithDatabase(){
-        
-        var query = PFUser.query()
-        query!.whereKey("contacts", equalTo:"phone")
+        var inList = false
+        for(var x=0; x < phonesList.count; x++){
+            for(var y=0; y<phonesList[x].count; y++){
+                //print(contactList[x])
+                //print(phonesList[x][y])
+                let innerQuery = PFUser.query()
+                innerQuery!.whereKey("phone", equalTo: phonesList[x][y])
+                innerQuery!.findObjectsInBackgroundWithBlock {
+                    (objects: [PFObject]?, error: NSError?) -> Void in
+                    
+                    if error == nil {
+                        // The find succeeded.
+                        // Do something with the found objects
+                        if let objects = objects {
+                            for object in objects {
+                                print(object)
+                                self.friendBook.append(object)
+                                print(self.friendBook[0])
+                                self.friendsTableView.reloadData()
+                            }
+                        }
+                    } else {
+                        // Log details of the failure
+                        print("Error: \(error!) \(error!.userInfo)")
+                    }
+                }
+/*
+                innerQuery!.getFirstObjectInBackgroundWithBlock() {
+                    (object: PFObject?, error: NSError?) -> Void in
+                    if error == nil {
+                        inList = true
+                        print("hi")
+                        print(object)
+                    }
+                }*/
+                if(inList){
+                    print("hello")
+                    friendsList.append(self.contactList[x])
+                    contactListCopy.removeAtIndex(x)
+                    phonesList.removeAtIndex(x)
+                }
+                //inList = false
+            }
+        }
+        print("yo")
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 150
     
         let status = ABAddressBookGetAuthorizationStatus()
         if status == .Denied || status == .Restricted {
@@ -121,26 +160,80 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
             
                 self.createAddressBook()
             }
-        }else{
-            refreshContacts()
+        //}else{
+        //    refreshContacts()
         }
+        refreshContacts()
+        
+        compareWithDatabase()
+        
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 150
+        
+        friendsTableView.dataSource = self
+        friendsTableView.delegate = self
+        friendsTableView.rowHeight = UITableViewAutomaticDimension
+        friendsTableView.estimatedRowHeight = 150
+        
+        friendsTableView.hidden = true
+        tableView.hidden = true
+        
+
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if contactList != nil {
-            return contactList!.count
-        } else {
-            return 0
+        if tableView == self.tableView {
+            if contactListCopy != nil {
+                print("contact")
+                return contactListCopy!.count
+            } else {
+                return 0
+            }
         }
+        if tableView == self.friendsTableView {
+            if friendBook != nil {
+                //print("friends")
+                print(friendBook!.count)
+                return friendBook!.count
+            } else {
+                return 0
+            }
+        }
+        return 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-       let cell = tableView.dequeueReusableCellWithIdentifier("ContactsIdentifier", forIndexPath: indexPath) as! ContactsCell
-        let record:ABRecordRef = contactList![indexPath.row]
-        cell.contact = record
-        return cell
+        let blank = UITableViewCell()
+        if tableView == self.tableView {
+            print("contacts")
+            let cell = tableView.dequeueReusableCellWithIdentifier("ContactsIdentifier", forIndexPath: indexPath) as! ContactsCell
+            let record:ABRecordRef = contactListCopy![indexPath.row]
+            cell.contact = record
+            return cell
+        }
+        if tableView == self.friendsTableView{
+            print("friends")
+            let cell = tableView.dequeueReusableCellWithIdentifier("FriendsIdentifier", forIndexPath: indexPath) as! FriendsCell
+            let record:PFObject = friendBook![indexPath.row]
+            cell.contact = record
+            return cell
+        }
+        return blank
     }
+    
+    @IBAction func friendsTable(sender: AnyObject) {
+        friendsTableView.hidden = false
+        tableView.hidden = true
+    }
+    
+    @IBAction func contactsTable(sender: AnyObject) {
+        friendsTableView.hidden = true
+        tableView.hidden = false
+    }
+    
     
     
 }

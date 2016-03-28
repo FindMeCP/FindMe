@@ -18,6 +18,7 @@
 		0021E5BB1C8FB5E600B88D0B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0021E5BA1C8FB5E600B88D0B /* User.swift */; };
 		0021E5BF1C92480300B88D0B /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0021E5BE1C92480300B88D0B /* ContactsViewController.swift */; };
 		0021E5C31C924DFB00B88D0B /* ContactsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0021E5C21C924DFB00B88D0B /* ContactsCell.swift */; };
+		003C5C481CA8A5E40075105A /* FriendsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003C5C471CA8A5E40075105A /* FriendsCell.swift */; };
 		5C38DDF98CD2B282434DA202 /* Pods_FindMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B040466A5D1C7485E2B268 /* Pods_FindMe.framework */; };
 		9CD700EF1C90E483006389CC /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD700EE1C90E483006389CC /* SWRevealViewController.m */; };
 		9CD700F11C923E88006389CC /* AccountTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD700F01C923E87006389CC /* AccountTableViewController.swift */; };
@@ -40,6 +41,7 @@
 		0021E5BA1C8FB5E600B88D0B /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		0021E5BE1C92480300B88D0B /* ContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		0021E5C21C924DFB00B88D0B /* ContactsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsCell.swift; sourceTree = "<group>"; };
+		003C5C471CA8A5E40075105A /* FriendsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsCell.swift; sourceTree = "<group>"; };
 		10B040466A5D1C7485E2B268 /* Pods_FindMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FindMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84545270CAA77090DD16047E /* Pods-FindMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindMe.release.xcconfig"; path = "Pods/Target Support Files/Pods-FindMe/Pods-FindMe.release.xcconfig"; sourceTree = "<group>"; };
 		9CD700EC1C90E43F006389CC /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 			children = (
 				0021E5BE1C92480300B88D0B /* ContactsViewController.swift */,
 				0021E5C21C924DFB00B88D0B /* ContactsCell.swift */,
+				003C5C471CA8A5E40075105A /* FriendsCell.swift */,
 				00071EAA1CA20A680063C9FD /* Contact.swift */,
 			);
 			name = Contacts;
@@ -273,6 +276,7 @@
 				9CD700EF1C90E483006389CC /* SWRevealViewController.m in Sources */,
 				0021E5BF1C92480300B88D0B /* ContactsViewController.swift in Sources */,
 				00071EA91CA205810063C9FD /* SignUpViewController.swift in Sources */,
+				003C5C481CA8A5E40075105A /* FriendsCell.swift in Sources */,
 				0021E5B51C8FB25400B88D0B /* LoginViewController.swift in Sources */,
 				0021E5A31C8FAFAC00B88D0B /* AppDelegate.swift in Sources */,
 				0021E5C31C924DFB00B88D0B /* ContactsCell.swift in Sources */,

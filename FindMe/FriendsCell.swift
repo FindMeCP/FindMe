@@ -1,5 +1,5 @@
 //
-//  ContactsCell.swift
+//  FriendsCell.swift
 //  FindMe
 //
 //  Created by William Tong on 3/10/16.
@@ -8,27 +8,28 @@
 
 import UIKit
 import AddressBook
+import Parse
 
-class ContactsCell: UITableViewCell {
+class FriendsCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var addButton: UIButton!
     
     var name: String?
-    var contact:ABRecordRef?
+    var contact:PFObject?
     var friend: Bool?
     var user: User?
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        print("yoyo")
         friend = false
-        let contactPerson: ABRecordRef = contact!
+        //let contactPerson: PFObject = contact!
+        print("hello")
         if(friend==true){
             addButton.setImage(UIImage(named: "Checked"), forState: .Normal)
         }else{
             addButton.setImage(UIImage(named: "Unchecked"), forState: .Normal)
         }
-        name = ABRecordCopyCompositeName(contactPerson).takeRetainedValue() as String
+        name = contact!["username"] as? String
         nameLabel.text = name
     }
     

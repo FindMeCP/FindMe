@@ -18,6 +18,7 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
     @IBOutlet weak var mapViewArea: UIView!
     @IBOutlet weak var settingsButton: UIBarButtonItem!
     let locationManager = CLLocationManager()
+    let user = PFUser.currentUser()
     
     
     override func viewDidLoad() {
@@ -79,6 +80,9 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
         if let location = locations.first {
             mapView2.camera = GMSCameraPosition(target: location.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
             //locationManager.stopUpdatingLocation()
+            user!["latitude"] = locationManager.location?.coordinate.latitude
+            user!["longitude"] = locationManager.location?.coordinate.latitude
+            user!.saveInBackground()
         }
         
     }

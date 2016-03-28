@@ -12,11 +12,11 @@ import Parse
 
 class Contact: NSObject {
     var contactPerson: ABRecordRef?
-    var phonesArray: [String]?
+    var phonesArray: String?
     var friend: Bool?
     var onSite: Bool?
     
-    init(contact: ABRecordRef, phone: [String]){
+    init(contact: ABRecordRef, phone: String){
         contactPerson = contact
         phonesArray = phone
         friend = false
@@ -27,7 +27,7 @@ class Contact: NSObject {
         return contactPerson!
     }
     
-    func getPhone()->[String]{
+    func getPhone()->String{
         return phonesArray!
     }
     
@@ -83,7 +83,7 @@ class Contact: NSObject {
         var media = [Contact]()
         
         for object in array {
-            media.append(Contact(contact: object["contact"] as ABRecordRef, phone: object["phone"] as! [String])  )
+            media.append(Contact(contact: object["contact"] as ABRecordRef, phone: object["phone"] as! String)  )
         }
         
         return media

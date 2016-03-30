@@ -23,8 +23,7 @@ class AccountTableViewController: UITableViewController {
         
         if self.revealViewController() != nil {
             settingsButton.target = self.revealViewController()
-            settingsButton.action = "revealToggle:"
-            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+            settingsButton.action = #selector(SWRevealViewController.revealToggle(_:))
         }
 
     }

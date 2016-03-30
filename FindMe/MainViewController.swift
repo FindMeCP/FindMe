@@ -10,6 +10,9 @@ import UIKit
 import Parse
 import MapKit
 
+//more google help http://www.appcoda.com/google-maps-api-tutorial/
+
+
 class MainViewController: UIViewController, CLLocationManagerDelegate{
     @IBOutlet weak var firstMapTitle: UILabel!
     @IBOutlet weak var secondMapTitle: UILabel!
@@ -58,6 +61,49 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
                 if let UserCoordinates = locationManager.location?.coordinate {
                     mapViewFull.camera = GMSCameraPosition(target: UserCoordinates, zoom: 12, bearing: 0, viewingAngle: 0)
                 }
+                //let STLCoordinates = CLLocationCoordinate2DMake(26.63, -90.20)
+//                var markers = //some array;
+//                var bounds = new go
+                //var bounds = new google.maps.LatLngBounds();
+//                
+//                for i in 0 ... markers.length {
+//                    bounds.extend(markers[i].getPosition());
+//                }
+                
+//                //center the map to a specific spot (city)
+//                map.setCenter(center);
+//                
+//                //center the map to the geometric center of all markers
+//                map.setCenter(bounds.getCenter());
+//                
+//                map.fitBounds(bounds);
+//                
+//                //remove one zoom level to ensure no marker is on the edge.
+//                map.setZoom(map.getZoom()-1);
+//                
+//                // set a minimum zoom
+//                // if you got only 1 marker or all markers are on the same address map will be zoomed too much.
+//                if(map.getZoom()> 15){
+//                    map.setZoom(15);
+//                }
+//                
+//                //Alternatively this code can be used to set the zoom for just 1 marker and to skip redrawing.
+//                //Note that this will not cover the case if you have 2 markers on the same address.
+//                if(count(markers) == 1){
+//                    map.setMaxZoom(15);
+//                    map.fitBounds(bounds);
+//                    map.setMaxZoom(Null)
+//                }
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
             }
             //            else if (mapModeSlider.value == 0){
             //                mapView1.myLocationEnabled = true
@@ -152,15 +198,36 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
         }
     }
     
+//    
+//    func sharedZoom(){
+//        var latlngList = [];
+//        latlngList.push(new google.maps.LatLng (lat,lng));
+//        
+//        var bounds = new google.maps.LatLngBounds();
+//        latlngList.each(function(n){
+//            bounds.extend(n);
+//            });
+//        
+//        map.setCenter(bounds.getCenter()); //or use custom center
+//        map.fitBounds(bounds);
+//        //remove one zoom level to ensure no marker is on the edge.
+//        map.setZoom(map.getZoom()-1);
+//        
+//        // set a minimum zoom
+//        // if you got only 1 marker or all markers are on the same address map will be zoomed too much.
+//        if(map.getZoom()> 15){
+//            map.setZoom(15);
+//        }
+//    }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.first {
+        //if let location = locations.first {
             //mapView2.camera = GMSCameraPosition(target: location.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
             //locationManager.stopUpdatingLocation()
             user!["latitude"] = locationManager.location?.coordinate.latitude
             user!["longitude"] = locationManager.location?.coordinate.latitude
             user!.saveInBackground()
-        }
+        //}
         
     }
     

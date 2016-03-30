@@ -11,6 +11,7 @@ import Parse
 import MapKit
 
 //more google help http://www.appcoda.com/google-maps-api-tutorial/
+//contacts helps http://appcoda.com/ios-contacts-framework/
 
 
 class MainViewController: UIViewController, CLLocationManagerDelegate{
@@ -229,6 +230,19 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
             user!.saveInBackground()
         //}
         
+    }
+    func showMessage(message: String) {
+        let alertController = UIAlertController(title: "Birthdays", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let dismissAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (action) -> Void in
+        }
+        
+        alertController.addAction(dismissAction)
+        
+        let pushedViewControllers = (self.window?.rootViewController as! UINavigationController).viewControllers
+        let presentedViewController = pushedViewControllers[pushedViewControllers.count - 1]
+        
+        presentedViewController.presentViewController(alertController, animated: true, completion: nil)
     }
     
 }

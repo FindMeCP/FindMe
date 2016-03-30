@@ -9,6 +9,7 @@
 import UIKit
 import AddressBook
 import Parse
+import Contacts
 
 class ContactsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -25,14 +26,14 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     var contactBook: [Contact]!
     
     func createAddressBook(){
-        let user = PFUser.currentUser()
+        //let user = PFUser.currentUser()
         var error: Unmanaged<CFError>?
         addressBook = ABAddressBookCreateWithOptions(nil, &error).takeRetainedValue()
         contactList = ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(addressBook, nil, ABPersonSortOrdering(kABPersonSortByFirstName)).takeRetainedValue() as [ABRecordRef]
         //print(contactList)
         for record:ABRecordRef in contactList {
             let contactPerson: ABRecordRef = record
-            let contactName: String = ABRecordCopyCompositeName(contactPerson).takeRetainedValue() as String
+            //let contactName: String = ABRecordCopyCompositeName(contactPerson).takeRetainedValue() as String
             //print ("contactName \(contactName)")
         let phonesRef: ABMultiValueRef = ABRecordCopyValue(contactPerson, kABPersonPhoneProperty).takeRetainedValue() as ABMultiValueRef
             var phonesArray: [String] = []
@@ -48,9 +49,9 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         }
         contactListCopy = contactList
         phonesListCopy = phonesList
-        for object in phonesList{
+        //for object in phonesList{
             //print(object)
-        }
+        //}
     }
     
     func storeAsPhone(phone: String)->String{
@@ -88,6 +89,43 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         }else{
             createAddressBook()
         }
+    }
+    
+    func requestForAccess(completionHandler: (accessGranted: Bool) -> Void) {
+        if #available(iOS 9.0, *) {
+            let authorizationStatus = CNContactStore.authorizationStatusForEntityType(CNEntityType.Contacts)
+            AppDelegate.getAppDelegate().contactStore
+            switch authorizationStatus {
+            case .Authorized:
+                completionHandler(accessGranted: true)
+                
+            case .Denied, .NotDetermined:
+                if #available(iOS 9.0, *) {
+                    self.contactStore.requestAccessForEntityType(CNEntityType.Contacts, completionHandler: { (access, accessError) -> Void in
+                        if access {
+                            completionHandler(accessGranted: access)
+                        }
+                        else {
+                            if authorizationStatus == CNAuthorizationStatus.Denied {
+                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                    let message = "\(accessError!.localizedDescription)\n\nPlease allow the app to access your contacts through the Settings."
+                                    self.showMessage(message)
+                                })
+                            }
+                        }
+                    })
+                } else {
+                    // Fallback on earlier versions
+                }
+                
+            default:
+                completionHandler(accessGranted: false)
+            }
+        } else {
+            print("this function requires iOS 9+")
+        }
+        
+        
     }
 
     

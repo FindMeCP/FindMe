@@ -15,14 +15,14 @@ for all ages, but we are specifically targetting collegiates.
 
 **Required** functionality: User can
 
-- [] Sign up, log in, and log out of the FindMe app. 
-- [] Remained signed in across app restarts.
+- [X] Sign up, log in, and log out of the FindMe app. 
+- [X] Remained signed in across app restarts.
 - [X] See the user's location on a Google Maps SDK map.
 - [] Make or receive requests to share user locations with a friend.
 - [X] Reset the map to user locations.
 - [] Turn off all location sharing.
-- [] Select three map modes: split screen, shared screen, solo screen.
-- [] Find friends with app installed.
+- [X] Select three map modes: split screen, shared screen, solo screen.
+- [X] Find friends with app installed.
 
 **Optional** features: User can
 
@@ -45,7 +45,7 @@ for all ages, but we are specifically targetting collegiates.
 
 Here's a walkthrough of implemented user stories:
 
-<img src='' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/De6snsa.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 

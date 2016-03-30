@@ -36,7 +36,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
             //print ("contactName \(contactName)")
         let phonesRef: ABMultiValueRef = ABRecordCopyValue(contactPerson, kABPersonPhoneProperty).takeRetainedValue() as ABMultiValueRef
             var phonesArray: [String] = []
-        for var i:Int = 0; i < ABMultiValueGetCount(phonesRef); i++ {
+        for i in 0...ABMultiValueGetCount(phonesRef){
             let value: String = ABMultiValueCopyValueAtIndex(phonesRef, i).takeRetainedValue() as! NSString as String
             let number = storeAsPhone(value)
            // print("Phone: \(label) = \(value)")
@@ -95,8 +95,8 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     
     func compareWithDatabase(){
         var inList = false
-        for(var x=0; x < phonesList.count; x++){
-            for(var y=0; y<phonesList[x].count; y++){
+        for x in 0 ... phonesList.count {
+            for y in 0 ... phonesList[x].count{
                 //print(contactList[x])
                 //print(phonesList[x][y])
                 let innerQuery = PFUser.query()

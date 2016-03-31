@@ -227,22 +227,12 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
             //locationManager.stopUpdatingLocation()
             user!["latitude"] = locationManager.location?.coordinate.latitude
             user!["longitude"] = locationManager.location?.coordinate.latitude
+            //let dictionary: NSDictionary = ["phone": "3146022911","friend":false,"tracking":false]
+            //user!["contacts"]=[dictionary, dictionary]
             user!.saveInBackground()
         //}
         
     }
-    func showMessage(message: String) {
-        let alertController = UIAlertController(title: "Birthdays", message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        
-        let dismissAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (action) -> Void in
-        }
-        
-        alertController.addAction(dismissAction)
-        
-        let pushedViewControllers = (self.window?.rootViewController as! UINavigationController).viewControllers
-        let presentedViewController = pushedViewControllers[pushedViewControllers.count - 1]
-        
-        presentedViewController.presentViewController(alertController, animated: true, completion: nil)
-    }
+
     
 }

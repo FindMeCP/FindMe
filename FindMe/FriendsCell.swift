@@ -23,7 +23,6 @@ class FriendsCell: UITableViewCell {
         super.layoutSubviews()
         friend = false
         //let contactPerson: PFObject = contact!
-        print("hello")
         if(friend==true){
             addButton.setImage(UIImage(named: "Checked"), forState: .Normal)
         }else{

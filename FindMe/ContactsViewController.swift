@@ -10,11 +10,14 @@ import UIKit
 import AddressBook
 import Parse
 import Contacts
+import ContactsUI
 
-class ContactsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+@available(iOS 9.0, *)
+class ContactsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIPickerViewDelegate, CNContactPickerDelegate {
     
     @IBOutlet weak var friendsTableView: UITableView!
     @IBOutlet weak var tableView: UITableView!
+    var user = PFUser.currentUser()
     var addressBook = ABAddressBookRef?()
     var contactList: [ABRecordRef]!
     var friendsList: [ABRecordRef]!
@@ -25,121 +28,63 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     var friendBook: [PFObject]! = []
     var contactBook: [Contact]!
     
-    func createAddressBook(){
-        //let user = PFUser.currentUser()
-        var error: Unmanaged<CFError>?
-        addressBook = ABAddressBookCreateWithOptions(nil, &error).takeRetainedValue()
-        contactList = ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(addressBook, nil, ABPersonSortOrdering(kABPersonSortByFirstName)).takeRetainedValue() as [ABRecordRef]
-        //print(contactList)
-        for record:ABRecordRef in contactList {
-            let contactPerson: ABRecordRef = record
-            //let contactName: String = ABRecordCopyCompositeName(contactPerson).takeRetainedValue() as String
-            //print ("contactName \(contactName)")
-        let phonesRef: ABMultiValueRef = ABRecordCopyValue(contactPerson, kABPersonPhoneProperty).takeRetainedValue() as ABMultiValueRef
-            var phonesArray: [String] = []
-        for i in 0...ABMultiValueGetCount(phonesRef){
-            let value: String = ABMultiValueCopyValueAtIndex(phonesRef, i).takeRetainedValue() as! NSString as String
-            let number = storeAsPhone(value)
-           // print("Phone: \(label) = \(value)")
-            //print(number)
-            phonesArray.append(number)
+    var contactsBook: [CNContact]!
+    var contactDict: [NSDictionary] = []
+    var arrayOfDict: [NSDictionary] = []
+    var dictionary: NSDictionary = ["phone": "3146022911", "friend": true, "tracking": true]
+    
+    
+    
+    func getContacts() {
+        AppDelegate.getAppDelegate().requestForAccess { (accessGranted) -> Void in
+            if accessGranted {
+                self.findContacts()
             }
-            //print(phonesArray)
-            phonesList.append(phonesArray)
         }
-        contactListCopy = contactList
-        phonesListCopy = phonesList
-        //for object in phonesList{
-            //print(object)
-        //}
     }
     
-    func storeAsPhone(phone: String)->String{
-        let stringArray = phone.componentsSeparatedByCharactersInSet(
-            NSCharacterSet.decimalDigitCharacterSet().invertedSet)
-        let newString = stringArray.joinWithSeparator("")
-        return newString
-    }
-    
-    func refreshContacts(){
-        let status = ABAddressBookGetAuthorizationStatus()
-        // open it
+    func findContacts () -> [CNContact]{
         
-        var error: Unmanaged<CFError>?
-        let aBook: ABAddressBook? = ABAddressBookCreateWithOptions(nil, &error)?.takeRetainedValue()
-        if aBook == nil {
-            //print(error?.takeRetainedValue())
-            return
-        }
+        let keys = [CNContactFormatter.descriptorForRequiredKeysForStyle(.FullName),CNContactPhoneNumbersKey]
+        let fetchRequest = CNContactFetchRequest(keysToFetch: keys)
+        var contacts = [CNContact]()
+        CNContact.localizedStringForKey(CNLabelPhoneNumberiPhone)
+        fetchRequest.mutableObjects = false
+        fetchRequest.unifyResults = true
+        fetchRequest.sortOrder = .GivenName
         
-        if status == .Denied || status == .Restricted {
-            // user previously denied, to tell them to fix that in settings
+        let contactStoreID = CNContactStore().defaultContainerIdentifier()
+        //print("\(contactStoreID)")
+        
+        
+        do {
             
-            ABAddressBookRequestAccessWithCompletion(addressBook) {
-                granted, error in
-                
-                if !granted {
-                    // warn the user that because they just denied permission, this functionality won't work
-                    // also let them know that they have to fix this in settings
-                    return
+            try CNContactStore().enumerateContactsWithFetchRequest(fetchRequest) { (let contact, let stop) -> Void in
+                if contact.phoneNumbers.count > 0 {
+                    contacts.append(contact)
                 }
                 
-                self.createAddressBook()
             }
-        }else{
-            createAddressBook()
+        } catch let e as NSError {
+            //print(e.localizedDescription)
         }
-    }
-    
-    func requestForAccess(completionHandler: (accessGranted: Bool) -> Void) {
-        if #available(iOS 9.0, *) {
-            let authorizationStatus = CNContactStore.authorizationStatusForEntityType(CNEntityType.Contacts)
-            AppDelegate.getAppDelegate().contactStore
-            switch authorizationStatus {
-            case .Authorized:
-                completionHandler(accessGranted: true)
-                
-            case .Denied, .NotDetermined:
-                if #available(iOS 9.0, *) {
-                    self.contactStore.requestAccessForEntityType(CNEntityType.Contacts, completionHandler: { (access, accessError) -> Void in
-                        if access {
-                            completionHandler(accessGranted: access)
-                        }
-                        else {
-                            if authorizationStatus == CNAuthorizationStatus.Denied {
-                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                    let message = "\(accessError!.localizedDescription)\n\nPlease allow the app to access your contacts through the Settings."
-                                    self.showMessage(message)
-                                })
-                            }
-                        }
-                    })
-                } else {
-                    // Fallback on earlier versions
-                }
-                
-            default:
-                completionHandler(accessGranted: false)
-            }
-        } else {
-            print("this function requires iOS 9+")
-        }
-        
+        print(contacts)
+        contactsBook = contacts
+        return contacts
         
     }
-
     
-    
-    
-    func compareWithDatabase(){
-        var inList = false
-        for x in 0 ... phonesList.count {
-            for y in 0 ... phonesList[x].count{
-                //print(contactList[x])
-                //print(phonesList[x][y])
-                let innerQuery = PFUser.query()
-                innerQuery!.whereKey("phone", equalTo: phonesList[x][y])
-                innerQuery!.findObjectsInBackgroundWithBlock {
+    func compareWithDatabase(completionHandler: (success:Bool) -> Void){
+        var flag = false
+        for x in 0...contactsBook.count-1 {
+            for y in 0...contactsBook[x].phoneNumbers.count-1{
+                let query = PFUser.query()
+                let number = contactsBook[x].phoneNumbers[y].value as! CNPhoneNumber
+                let phoneNumber = storeAsPhone(number.stringValue)
+                print("\(phoneNumber)")
+                query!.whereKey("phone", equalTo: phoneNumber)
+                //query!.orderByAscending("username")
+                query!.findObjectsInBackgroundWithBlock {
                     (objects: [PFObject]?, error: NSError?) -> Void in
                     
                     if error == nil {
@@ -152,38 +97,40 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                                 print(self.friendBook[0])
                                 self.friendsTableView.reloadData()
                             }
+                            completionHandler(success: true)
                         }
                     } else {
                         // Log details of the failure
                         print("Error: \(error!) \(error!.userInfo)")
                     }
                 }
-/*
-                innerQuery!.getFirstObjectInBackgroundWithBlock() {
-                    (object: PFObject?, error: NSError?) -> Void in
-                    if error == nil {
-                        inList = true
-                        print("hi")
-                        print(object)
-                    }
-                }*/
-                if(inList){
-                    print("hello")
-                    friendsList.append(self.contactList[x])
-                    contactListCopy.removeAtIndex(x)
-                    phonesList.removeAtIndex(x)
-                }
-                //inList = false
             }
         }
-        print("yo")
+
     }
     
+    func storeAsPhone(phone: String)->String{
+        let stringArray = phone.componentsSeparatedByCharactersInSet(
+            NSCharacterSet.decimalDigitCharacterSet().invertedSet)
+        let newString = stringArray.joinWithSeparator("")
+        return newString
+    }
+    
+    func showContactPickerController() {
+        let contactPickerViewController = CNContactPickerViewController()
+        
+        contactPickerViewController.predicateForEnablingContact = NSPredicate(format: "phoneNumbers.@count > 0 ")
+        
+        contactPickerViewController.delegate = self
+        
+        
+        presentViewController(contactPickerViewController, animated: true, completion: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        let status = ABAddressBookGetAuthorizationStatus()
+        /*let status = ABAddressBookGetAuthorizationStatus()
         if status == .Denied || status == .Restricted {
             // user previously denied, to tell them to fix that in settings
 
@@ -201,9 +148,26 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         //}else{
         //    refreshContacts()
         }
-        refreshContacts()
+        refreshContacts()*/
         
-        compareWithDatabase()
+        
+        getContacts()
+        //showContactPickerController()
+
+        compareWithDatabase({ (success) -> Void in
+            if success {
+                print("success")
+                for object in self.friendBook{
+                    print(object["username"])
+                    let dictionary = ["phone": object["phone"],"friend":false,"tracking":false]
+                    self.contactDict.append(dictionary)
+                    self.user!["contacts"]=self.contactDict
+                    self.user!.saveInBackground()
+                }
+            } else {
+                print("no contacts")
+            }
+        })
         
         tableView.dataSource = self
         tableView.delegate = self
@@ -223,9 +187,8 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == self.tableView {
-            if contactListCopy != nil {
-                print("contact")
-                return contactListCopy!.count
+            if contactsBook != nil {
+                return contactsBook!.count
             } else {
                 return 0
             }
@@ -246,14 +209,12 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     {
         let blank = UITableViewCell()
         if tableView == self.tableView {
-            print("contacts")
             let cell = tableView.dequeueReusableCellWithIdentifier("ContactsIdentifier", forIndexPath: indexPath) as! ContactsCell
-            let record:ABRecordRef = contactListCopy![indexPath.row]
-            cell.contact = record
+            let currentContact = contactsBook![indexPath.row]
+            cell.contact = currentContact
             return cell
         }
         if tableView == self.friendsTableView{
-            print("friends")
             let cell = tableView.dequeueReusableCellWithIdentifier("FriendsIdentifier", forIndexPath: indexPath) as! FriendsCell
             let record:PFObject = friendBook![indexPath.row]
             cell.contact = record
@@ -272,6 +233,67 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.hidden = false
     }
     
+    /*
+     func createAddressBook(){
+     //let user = PFUser.currentUser()
+     var error: Unmanaged<CFError>?
+     addressBook = ABAddressBookCreateWithOptions(nil, &error).takeRetainedValue()
+     contactList = ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(addressBook, nil, ABPersonSortOrdering(kABPersonSortByFirstName)).takeRetainedValue() as [ABRecordRef]
+     //print(contactList)
+     for record:ABRecordRef in contactList {
+     let contactPerson: ABRecordRef = record
+     //let contactName: String = ABRecordCopyCompositeName(contactPerson).takeRetainedValue() as String
+     //print ("contactName \(contactName)")
+     let phonesRef: ABMultiValueRef = ABRecordCopyValue(contactPerson, kABPersonPhoneProperty).takeRetainedValue() as ABMultiValueRef
+     var phonesArray: [String] = []
+     for i in 0...ABMultiValueGetCount(phonesRef){
+     let value: String = ABMultiValueCopyValueAtIndex(phonesRef, i).takeRetainedValue() as! NSString as String
+     let number = storeAsPhone(value)
+     // print("Phone: \(label) = \(value)")
+     //print(number)
+     phonesArray.append(number)
+     }
+     //print(phonesArray)
+     phonesList.append(phonesArray)
+     }
+     contactListCopy = contactList
+     phonesListCopy = phonesList
+     //for object in phonesList{
+     //print(object)
+     //}
+     }
+     
+     
+     
+     func refreshContacts(){
+     let status = ABAddressBookGetAuthorizationStatus()
+     // open it
+     
+     var error: Unmanaged<CFError>?
+     let aBook: ABAddressBook? = ABAddressBookCreateWithOptions(nil, &error)?.takeRetainedValue()
+     if aBook == nil {
+     //print(error?.takeRetainedValue())
+     return
+     }
+     
+     if status == .Denied || status == .Restricted {
+     // user previously denied, to tell them to fix that in settings
+     
+     ABAddressBookRequestAccessWithCompletion(addressBook) {
+     granted, error in
+     
+     if !granted {
+     // warn the user that because they just denied permission, this functionality won't work
+     // also let them know that they have to fix this in settings
+     return
+     }
+     
+     self.createAddressBook()
+     }
+     }else{
+     createAddressBook()
+     }
+     }*/
     
     
 }

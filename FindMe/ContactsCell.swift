@@ -8,28 +8,29 @@
 
 import UIKit
 import AddressBook
+import Contacts
 
+@available(iOS 9.0, *)
 class ContactsCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var addButton: UIButton!
     
     var name: String?
-    var contact:ABRecordRef?
+    var contact:CNContact?
     var friend: Bool?
     var user: User?
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        print("yoyo")
+        let contactPerson = contact!
+        name = "\(contactPerson.givenName) \(contactPerson.familyName)"
+        nameLabel.text = name
         friend = false
-        let contactPerson: ABRecordRef = contact!
         if(friend==true){
             addButton.setImage(UIImage(named: "Checked"), forState: .Normal)
         }else{
             addButton.setImage(UIImage(named: "Unchecked"), forState: .Normal)
         }
-        name = ABRecordCopyCompositeName(contactPerson).takeRetainedValue() as String
-        nameLabel.text = name
     }
     
     @IBAction func addPerson(sender: AnyObject) {

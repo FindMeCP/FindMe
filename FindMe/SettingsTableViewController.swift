@@ -17,7 +17,7 @@ class SettingsTableViewController: UITableViewController {
         
         if self.revealViewController() != nil {
             settingsButton.target = self.revealViewController()
-            settingsButton.action = "revealToggle:"
+            settingsButton.action = #selector(SWRevealViewController.revealToggle(_:))
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
 

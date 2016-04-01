@@ -29,28 +29,38 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
     let user = PFUser.currentUser()
     var locationMarker: GMSMarker!
     var otherUser: PFObject!
+    var otherUserPhone: String!
+    let otherUserData = NSUserDefaults.standardUserDefaults().objectForKey("otherUserKey") as? NSData
     
     override func viewDidLoad() {
         super.viewDidLoad()
         loadingView.hidden = false
-        let query = PFUser.query()
-        query!.whereKey("phone", equalTo: "3146022911")
-        query!.findObjectsInBackgroundWithBlock {
-            (objects: [PFObject]?, error: NSError?) -> Void in
-            
-            if error == nil {
-                if let objects = objects {
-                    for object in objects {
-                        self.otherUser = object
+        if user!["follow"] != nil {
+            if user!["follow"] as! String != ""{
+                otherUserPhone = user!["follow"] as! String
+                print(user)
+                print("other user")
+                //print(otherUser)
+                let query = PFUser.query()
+                query!.whereKey("phone", equalTo: otherUserPhone)
+                query!.findObjectsInBackgroundWithBlock {
+                    (objects: [PFObject]?, error: NSError?) -> Void in
+                    
+                    if error == nil {
+                        if let objects = objects {
+                            for object in objects {
+                                self.otherUser = object
+                            }
+                        }
+                        let otherUserCoordinates = self.loadOtherUserData() as CLLocationCoordinate2D!
+                        self.setuplocationMarker(otherUserCoordinates)
+                        self.mapMode()
+                        self.loadingView.hidden = true
+                        print("map fully loaded")
+                    } else {
+                        print("Error: \(error!) \(error!.userInfo)")
                     }
                 }
-                let otherUserCoordinates = self.loadOtherUserData() as CLLocationCoordinate2D!
-                self.setuplocationMarker(otherUserCoordinates)
-                self.mapMode()
-                self.loadingView.hidden = true
-                print("map fully loaded")
-            } else {
-                print("Error: \(error!) \(error!.userInfo)")
             }
         }
         let logo = UIImage(named: "FindMeLogoSmallPurple")
@@ -199,24 +209,29 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
     
     func timedPinUpdate()
     {
-        let query = PFUser.query()
-        query!.whereKey("phone", equalTo: "1234567")  //3146022911
-        query!.findObjectsInBackgroundWithBlock {
-            (objects: [PFObject]?, error: NSError?) -> Void in
+        if user!["follow"] != nil{
+            if user!["follow"] as! String != ""{
+
+                otherUserPhone = user!["follow"] as! String
+                let query = PFUser.query()
+                query!.whereKey("phone", equalTo: otherUserPhone)  //3146022911
+                query!.findObjectsInBackgroundWithBlock {
+                    (objects: [PFObject]?, error: NSError?) -> Void in
             
-            if error == nil {
-                if let objects = objects {
-                    for object in objects {
-                        self.otherUser = object
+                    if error == nil {
+                        if let objects = objects {
+                            for object in objects {
+                                self.otherUser = object
+                            }
+                        }
+                        let otherUserCoordinates = self.loadOtherUserData() as CLLocationCoordinate2D!
+                        self.setuplocationMarker(otherUserCoordinates)
+                    } else {
+                        print("Error: \(error!) \(error!.userInfo)")
                     }
                 }
-                let otherUserCoordinates = self.loadOtherUserData() as CLLocationCoordinate2D!
-                self.setuplocationMarker(otherUserCoordinates)
-            } else {
-                print("Error: \(error!) \(error!.userInfo)")
             }
         }
-
     }
     
 }

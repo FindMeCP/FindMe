@@ -21,10 +21,10 @@
 		003C5C481CA8A5E40075105A /* FriendsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003C5C471CA8A5E40075105A /* FriendsCell.swift */; };
 		5C38DDF98CD2B282434DA202 /* Pods_FindMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B040466A5D1C7485E2B268 /* Pods_FindMe.framework */; };
 		9CD700EF1C90E483006389CC /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD700EE1C90E483006389CC /* SWRevealViewController.m */; };
-		9CD700F11C923E88006389CC /* AccountTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD700F01C923E87006389CC /* AccountTableViewController.swift */; };
-		9CD700F31C923EE5006389CC /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD700F21C923EE5006389CC /* SettingsTableViewController.swift */; };
 		EF4328CC1CA087F8006B9328 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF4328CB1CA087F8006B9328 /* MapKit.framework */; };
 		EF4328CE1CA08CD9006B9328 /* LogoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4328CD1CA08CD9006B9328 /* LogoutViewController.swift */; };
+		EF49C5A51CAEEEE000EC2FB3 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF49C5A41CAEEEE000EC2FB3 /* AccountViewController.swift */; };
+		EF49C5A71CAEEEEC00EC2FB3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF49C5A61CAEEEEC00EC2FB3 /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,11 +47,11 @@
 		9CD700EC1C90E43F006389CC /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		9CD700ED1C90E483006389CC /* FindMe-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FindMe-Bridging-Header.h"; sourceTree = "<group>"; };
 		9CD700EE1C90E483006389CC /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
-		9CD700F01C923E87006389CC /* AccountTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountTableViewController.swift; sourceTree = "<group>"; };
-		9CD700F21C923EE5006389CC /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		DAD50516224F5EA7B48C8514 /* Pods-FindMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FindMe/Pods-FindMe.debug.xcconfig"; sourceTree = "<group>"; };
 		EF4328CB1CA087F8006B9328 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		EF4328CD1CA08CD9006B9328 /* LogoutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutViewController.swift; sourceTree = "<group>"; };
+		EF49C5A41CAEEEE000EC2FB3 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
+		EF49C5A61CAEEEEC00EC2FB3 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,10 +98,10 @@
 				0021E5B41C8FB25400B88D0B /* LoginViewController.swift */,
 				00071EA81CA205810063C9FD /* SignUpViewController.swift */,
 				0021E5B81C8FB4E600B88D0B /* MainViewController.swift */,
-				9CD700F01C923E87006389CC /* AccountTableViewController.swift */,
-				9CD700F21C923EE5006389CC /* SettingsTableViewController.swift */,
 				EF4328CD1CA08CD9006B9328 /* LogoutViewController.swift */,
 				0021E5BA1C8FB5E600B88D0B /* User.swift */,
+				EF49C5A41CAEEEE000EC2FB3 /* AccountViewController.swift */,
+				EF49C5A61CAEEEEC00EC2FB3 /* SettingsViewController.swift */,
 			);
 			path = FindMe;
 			sourceTree = "<group>";
@@ -270,17 +270,17 @@
 			files = (
 				00071EAB1CA20A680063C9FD /* Contact.swift in Sources */,
 				0021E5BB1C8FB5E600B88D0B /* User.swift in Sources */,
+				EF49C5A51CAEEEE000EC2FB3 /* AccountViewController.swift in Sources */,
 				0021E5B91C8FB4E600B88D0B /* MainViewController.swift in Sources */,
-				9CD700F11C923E88006389CC /* AccountTableViewController.swift in Sources */,
 				EF4328CE1CA08CD9006B9328 /* LogoutViewController.swift in Sources */,
 				9CD700EF1C90E483006389CC /* SWRevealViewController.m in Sources */,
 				0021E5BF1C92480300B88D0B /* ContactsViewController.swift in Sources */,
 				00071EA91CA205810063C9FD /* SignUpViewController.swift in Sources */,
+				EF49C5A71CAEEEEC00EC2FB3 /* SettingsViewController.swift in Sources */,
 				003C5C481CA8A5E40075105A /* FriendsCell.swift in Sources */,
 				0021E5B51C8FB25400B88D0B /* LoginViewController.swift in Sources */,
 				0021E5A31C8FAFAC00B88D0B /* AppDelegate.swift in Sources */,
 				0021E5C31C924DFB00B88D0B /* ContactsCell.swift in Sources */,
-				9CD700F31C923EE5006389CC /* SettingsTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

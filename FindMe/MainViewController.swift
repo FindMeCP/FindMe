@@ -59,9 +59,8 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
         imageView.contentMode = .ScaleAspectFit
         self.navigationItem.titleView = imageView
         locationManager.delegate = self
-        locationManager.startUpdatingLocation()
-        firstMapTitle.text = "New York"
-        secondMapTitle.text = "User"
+        firstMapTitle.text = "Friend name"
+        secondMapTitle.text = "User name"
         let status = CLLocationManager.authorizationStatus()
         switch status {
         case .NotDetermined:
@@ -71,6 +70,7 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
         case .AuthorizedAlways:
             print("authorized always")
             locationManager.startUpdatingLocation()
+            NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: #selector(MainViewController.timedPinUpdate), userInfo: nil, repeats: true)
         case .Restricted:
             print("restricted")
         // restricted by e.g. parental controls. User can't enable Location Services
@@ -102,17 +102,14 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
         }
     }
     
-    
-    
-    
-    
     @IBAction func sliderLetGo(sender: UISlider) {
         sender.setValue(Float(roundf(sender.value)), animated: false)
         mapMode()
         
     }
+    
     func mapMode () {
-        let NYCoordinates = CLLocationCoordinate2DMake(40.72, -74)
+        //let NYCoordinates = CLLocationCoordinate2DMake(40.72, -74)
         if (mapModeSlider.value == 0){
             print("split mode")
             mapViewArea2.hidden = true;
@@ -123,7 +120,7 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
             let otherUserCoordinates = loadOtherUserData()
             mapView1.animateToZoom(13)
             mapView1.animateToLocation(otherUserCoordinates)
-            mapView2.animateToLocation(NYCoordinates)
+            //mapView2.animateToLocation(NYCoordinates)
             setuplocationMarker(otherUserCoordinates)
             if let UserCoordinates = locationManager.location?.coordinate {
                 mapView2.animateToZoom(13)
@@ -135,8 +132,8 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
             mapViewArea2.hidden = false;
             mapViewFull.myLocationEnabled = true
             mapViewFull.settings.myLocationButton = true
-            mapViewFull.camera = GMSCameraPosition(target: NYCoordinates, zoom: 13, bearing: 0, viewingAngle: 0)
-            setuplocationMarker(NYCoordinates)
+//            mapViewFull.camera = GMSCameraPosition(target: NYCoordinates, zoom: 13, bearing: 0, viewingAngle: 0)
+//            setuplocationMarker(NYCoordinates)
             if let UserCoordinates = locationManager.location?.coordinate {
                 let otherUserCoordinates = loadOtherUserData()
                 let path = GMSMutablePath()
@@ -155,7 +152,6 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
             mapViewFull.settings.myLocationButton = true
             mapViewFull.animateToZoom(13)
             mapViewFull.animateToLocation(otherUserCoordinates)
-            
             setuplocationMarker(otherUserCoordinates)
         }
     }
@@ -166,7 +162,7 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
         }
         locationMarker = GMSMarker(position: coordinate)
         locationMarker.title = "Username"
-        locationMarker.appearAnimation = kGMSMarkerAnimationNone
+        locationMarker.appearAnimation = kGMSMarkerAnimationPop
         locationMarker.flat = false
         locationMarker.snippet = "Time posted"
         if (mapModeSlider.value == 0){
@@ -192,8 +188,19 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
     
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        user!["latitude"] = locationManager.location?.coordinate.latitude
+        user!["longitude"] = locationManager.location?.coordinate.longitude
+        ///ADD USER TIME
+        user!.saveInBackground()
+    }
+
+    
+    
+    
+    func timedPinUpdate()
+    {
         let query = PFUser.query()
-        query!.whereKey("phone", equalTo: "3146022911")
+        query!.whereKey("phone", equalTo: "1234567")  //3146022911
         query!.findObjectsInBackgroundWithBlock {
             (objects: [PFObject]?, error: NSError?) -> Void in
             
@@ -209,11 +216,7 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
                 print("Error: \(error!) \(error!.userInfo)")
             }
         }
-        user!["latitude"] = locationManager.location?.coordinate.latitude
-        user!["longitude"] = locationManager.location?.coordinate.longitude
-        ///ADD USER TIME
-        user!.saveInBackground()
-    }
 
+    }
     
 }

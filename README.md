@@ -45,6 +45,10 @@ for all ages, but we are specifically targetting collegiates.
 
 Here's a walkthrough of implemented user stories:
 
+Sprint 2
+<img src='http://i.imgur.com/AaWo5w2.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+Sprint 1
 <img src='http://i.imgur.com/De6snsa.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).

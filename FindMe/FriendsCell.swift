@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import AddressBook
+import Contacts
 import Parse
 
 class FriendsCell: UITableViewCell {
@@ -15,13 +15,17 @@ class FriendsCell: UITableViewCell {
     @IBOutlet weak var addButton: UIButton!
     
     var name: String?
+    var user = PFUser.currentUser()
     var contact:PFObject?
     var friend: Bool?
-    var user: User?
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        friend = false
+        if(contact!["phone"] as? String == user!["follow"] as? String){
+            friend = true
+        }else{
+            friend = false
+        }
         //let contactPerson: PFObject = contact!
         if(friend==true){
             addButton.setImage(UIImage(named: "Checked"), forState: .Normal)
@@ -33,11 +37,12 @@ class FriendsCell: UITableViewCell {
     }
     
     @IBAction func addPerson(sender: AnyObject) {
-        add()
         if(friend==true){
+            unadd()
             friend=false
             addButton.setImage(UIImage(named: "Unchecked"), forState: .Normal)
         }else{
+            add()
             friend=true
             addButton.setImage(UIImage(named: "Checked"), forState: .Normal)
         }
@@ -45,5 +50,13 @@ class FriendsCell: UITableViewCell {
     
     func add() {
         //user?.addContact(contact!)
+        user!["follow"] = contact!["phone"]
+        user!.saveInBackground()
+    }
+    
+    func unadd() {
+        //user?.addContact(contact!)
+        user!["follow"] = ""
+        user!.saveInBackground()
     }
 }

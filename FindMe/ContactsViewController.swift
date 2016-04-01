@@ -17,23 +17,16 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBOutlet weak var friendsTableView: UITableView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var friendsButton: UIButton!
+    @IBOutlet weak var contactsButton: UIButton!
     var user = PFUser.currentUser()
-    var addressBook = ABAddressBookRef?()
-    var contactList: [ABRecordRef]!
-    var friendsList: [ABRecordRef]!
-    var contactListCopy: [ABRecordRef]!
-    var phonesList =  Array<Array<String>>()
-    var phonesListCopy =  Array<Array<String>>()
     var phonesArray: [String]!
     var friendBook: [PFObject]! = []
     var contactBook: [Contact]!
     
     var contactsBook: [CNContact]!
     var contactDict: [NSDictionary] = []
-    var arrayOfDict: [NSDictionary] = []
     var dictionary: NSDictionary = ["phone": "3146022911", "friend": true, "tracking": true]
-    
-    
     
     func getContacts() {
         AppDelegate.getAppDelegate().requestForAccess { (accessGranted) -> Void in
@@ -116,17 +109,6 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         return newString
     }
     
-    func showContactPickerController() {
-        let contactPickerViewController = CNContactPickerViewController()
-        
-        contactPickerViewController.predicateForEnablingContact = NSPredicate(format: "phoneNumbers.@count > 0 ")
-        
-        contactPickerViewController.delegate = self
-        
-        
-        presentViewController(contactPickerViewController, animated: true, completion: nil)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -179,9 +161,15 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         friendsTableView.rowHeight = UITableViewAutomaticDimension
         friendsTableView.estimatedRowHeight = 150
         
-        friendsTableView.hidden = true
+        friendsTableView.hidden = false
         tableView.hidden = true
         
+        friendsButton.backgroundColor = UIColor.lightGrayColor()
+        contactsButton.backgroundColor = UIColor.whiteColor()
+        friendsButton.layer.cornerRadius = 10.0
+        friendsButton.clipsToBounds = true
+        contactsButton.layer.cornerRadius = 10.0
+        contactsButton.clipsToBounds = true
 
     }
     
@@ -226,74 +214,15 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     @IBAction func friendsTable(sender: AnyObject) {
         friendsTableView.hidden = false
         tableView.hidden = true
+        friendsButton.backgroundColor = UIColor.lightGrayColor()
+        contactsButton.backgroundColor = UIColor.whiteColor()
     }
     
     @IBAction func contactsTable(sender: AnyObject) {
         friendsTableView.hidden = true
         tableView.hidden = false
-    }
-    
-    /*
-     func createAddressBook(){
-     //let user = PFUser.currentUser()
-     var error: Unmanaged<CFError>?
-     addressBook = ABAddressBookCreateWithOptions(nil, &error).takeRetainedValue()
-     contactList = ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(addressBook, nil, ABPersonSortOrdering(kABPersonSortByFirstName)).takeRetainedValue() as [ABRecordRef]
-     //print(contactList)
-     for record:ABRecordRef in contactList {
-     let contactPerson: ABRecordRef = record
-     //let contactName: String = ABRecordCopyCompositeName(contactPerson).takeRetainedValue() as String
-     //print ("contactName \(contactName)")
-     let phonesRef: ABMultiValueRef = ABRecordCopyValue(contactPerson, kABPersonPhoneProperty).takeRetainedValue() as ABMultiValueRef
-     var phonesArray: [String] = []
-     for i in 0...ABMultiValueGetCount(phonesRef){
-     let value: String = ABMultiValueCopyValueAtIndex(phonesRef, i).takeRetainedValue() as! NSString as String
-     let number = storeAsPhone(value)
-     // print("Phone: \(label) = \(value)")
-     //print(number)
-     phonesArray.append(number)
-     }
-     //print(phonesArray)
-     phonesList.append(phonesArray)
-     }
-     contactListCopy = contactList
-     phonesListCopy = phonesList
-     //for object in phonesList{
-     //print(object)
-     //}
-     }
-     
-     
-     
-     func refreshContacts(){
-     let status = ABAddressBookGetAuthorizationStatus()
-     // open it
-     
-     var error: Unmanaged<CFError>?
-     let aBook: ABAddressBook? = ABAddressBookCreateWithOptions(nil, &error)?.takeRetainedValue()
-     if aBook == nil {
-     //print(error?.takeRetainedValue())
-     return
-     }
-     
-     if status == .Denied || status == .Restricted {
-     // user previously denied, to tell them to fix that in settings
-     
-     ABAddressBookRequestAccessWithCompletion(addressBook) {
-     granted, error in
-     
-     if !granted {
-     // warn the user that because they just denied permission, this functionality won't work
-     // also let them know that they have to fix this in settings
-     return
-     }
-     
-     self.createAddressBook()
-     }
-     }else{
-     createAddressBook()
-     }
-     }*/
-    
+        friendsButton.backgroundColor = UIColor.whiteColor()
+        contactsButton.backgroundColor = UIColor.lightGrayColor()
+    }    
     
 }

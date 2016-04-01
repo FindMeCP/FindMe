@@ -6,11 +6,6 @@ Tired of trying to find your friends while they dont text you back? FindMe
 helps you find your friends without any effort. The FindMe app is useful
 for all ages, but we are specifically targetting collegiates. 
 
-## Member Work Distribution
-- Jordi: Map modes, turn off location sharing, showing shared user's location
-- Shirley: Fix side navigation bar, user interface
-- Will: Phone authentication registration/log in, syncing contacts, making requests to share location.
-
 ## User Stories
 
 **Required** functionality: User can
@@ -19,10 +14,11 @@ for all ages, but we are specifically targetting collegiates.
 - [X] Remained signed in across app restarts.
 - [X] See the user's location on a Google Maps SDK map.
 - [] Make or receive requests to share user locations with a friend.
-- [X] Reset the map to user locations.
+- [X] Reset the map to user/friend locations.
 - [] Turn off all location sharing.
 - [X] Select three map modes: split screen, shared screen, solo screen.
 - [X] Find friends with app installed.
+- [X] Friend's location pin updates every 5 seconds.
 
 **Optional** features: User can
 
@@ -45,7 +41,7 @@ for all ages, but we are specifically targetting collegiates.
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/De6snsa.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/x5Nc1RK.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 

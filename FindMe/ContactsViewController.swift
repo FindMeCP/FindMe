@@ -28,10 +28,12 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     var contactDict: [NSDictionary] = []
     var dictionary: NSDictionary = ["phone": "3146022911", "friend": true, "tracking": true]
     
-    func getContacts() {
+    func getContacts(completionHandler: (success:Bool) -> Void) {
         AppDelegate.getAppDelegate().requestForAccess { (accessGranted) -> Void in
             if accessGranted {
                 self.findContacts()
+                self.tableView.reloadData()
+                completionHandler(success: true)
             }
         }
     }
@@ -133,24 +135,26 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         refreshContacts()*/
         
         
-        getContacts()
+        getContacts({(success) -> Void in
         //showContactPickerController()
 
-        compareWithDatabase({ (success) -> Void in
-            if success {
-                print("success")
-                for object in self.friendBook{
-                    print(object["username"])
-                    let dictionary = ["phone": object["phone"],"friend":false,"tracking":false]
-                    self.contactDict.append(dictionary)
-                    self.user!["contacts"]=self.contactDict
-                    self.user!.saveInBackground()
+            self.compareWithDatabase({ (success) -> Void in
+                if success {
+                    print("success")
+                    for object in self.friendBook{
+                        print(object["username"])
+                        let dictionary = ["phone": object["phone"],"friend":false,"tracking":false]
+                        self.contactDict.append(dictionary)
+                        self.user!["contacts"]=self.contactDict
+                        self.user!.saveInBackground()
+                    }
+                } else {
+                    print("no contacts")
                 }
-            } else {
-                print("no contacts")
-            }
+            })
+            
         })
-        
+    
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = UITableViewAutomaticDimension

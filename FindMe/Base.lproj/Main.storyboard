@@ -42,7 +42,7 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5ao-4s-i6Y">
                                 <rect key="frame" x="20" y="180" width="280" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eTV-BN-rTx">
                                 <rect key="frame" x="20" y="276" width="130" height="30"/>
@@ -60,6 +60,11 @@
                                         <integer key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="uZZ-Ow-2G5"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <segue destination="5D0-qh-3Wx" kind="popoverPresentation" popoverAnchorView="eTV-BN-rTx" id="oec-RB-qC9">
                                         <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
@@ -108,6 +113,7 @@
                             <constraint firstItem="Qcd-YH-azS" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="U4C-j5-vlg"/>
                             <constraint firstItem="Qcd-YH-azS" firstAttribute="top" secondItem="5ao-4s-i6Y" secondAttribute="bottom" constant="22" id="VMh-5H-bBM"/>
                             <constraint firstAttribute="trailing" secondItem="5ao-4s-i6Y" secondAttribute="trailing" constant="20" id="Wfl-st-zRy"/>
+                            <constraint firstItem="cyl-wZ-3Ff" firstAttribute="width" secondItem="eTV-BN-rTx" secondAttribute="width" id="jW7-Tk-ZE7"/>
                             <constraint firstItem="cyl-wZ-3Ff" firstAttribute="centerY" secondItem="eTV-BN-rTx" secondAttribute="centerY" id="mbx-Z2-oSJ"/>
                             <constraint firstItem="eTV-BN-rTx" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="pge-nt-7y8"/>
                             <constraint firstAttribute="trailing" secondItem="cyl-wZ-3Ff" secondAttribute="trailing" constant="20" id="rPu-8w-bbP"/>
@@ -1113,7 +1119,7 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qtq-TR-SNh">
                                 <rect key="frame" x="20" y="187" width="280" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" red="0.79215686269999996" green="0.40784313729999999" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -1175,7 +1181,7 @@
         <image name="purplecircle35" width="35" height="35"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="UpO-cb-igj"/>
+        <segue reference="6aK-Ds-hcz"/>
         <segue reference="ZYo-Ts-DDY"/>
     </inferredMetricsTieBreakers>
 </document>

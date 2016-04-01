@@ -53,7 +53,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         fetchRequest.unifyResults = true
         fetchRequest.sortOrder = .GivenName
         
-        let contactStoreID = CNContactStore().defaultContainerIdentifier()
+        //let contactStoreID = CNContactStore().defaultContainerIdentifier()
         //print("\(contactStoreID)")
         
         
@@ -66,7 +66,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                 
             }
         } catch let e as NSError {
-            //print(e.localizedDescription)
+            print(e.localizedDescription)
         }
         print(contacts)
         contactsBook = contacts
@@ -75,7 +75,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func compareWithDatabase(completionHandler: (success:Bool) -> Void){
-        var flag = false
+        //var flag = false
         for x in 0...contactsBook.count-1 {
             for y in 0...contactsBook[x].phoneNumbers.count-1{
                 let query = PFUser.query()

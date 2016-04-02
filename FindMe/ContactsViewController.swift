@@ -21,12 +21,11 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var contactsButton: UIButton!
     var user = PFUser.currentUser()
     var phonesArray: [String]!
+    var queryBook: [PFObject]! = []
     var friendBook: [PFObject]! = []
-    var contactBook: [Contact]!
-    
+    var contactsDelete: [Int]! = []
     var contactsBook: [CNContact]!
     var contactDict: [NSDictionary] = []
-    var dictionary: NSDictionary = ["phone": "3146022911", "friend": true, "tracking": true]
     
     func getContacts(completionHandler: (success:Bool) -> Void) {
         AppDelegate.getAppDelegate().requestForAccess { (accessGranted) -> Void in
@@ -48,12 +47,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         fetchRequest.unifyResults = true
         fetchRequest.sortOrder = .GivenName
         
-        //let contactStoreID = CNContactStore().defaultContainerIdentifier()
-        //print("\(contactStoreID)")
-        
-        
         do {
-            
             try CNContactStore().enumerateContactsWithFetchRequest(fetchRequest) { (let contact, let stop) -> Void in
                 if contact.phoneNumbers.count > 0 {
                     contacts.append(contact)
@@ -69,39 +63,54 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
-    func compareWithDatabase(completionHandler: (success:Bool) -> Void){
+    func getQuery(completionHandler: (success:Bool) -> Void){
         //var flag = false
+        let query = PFUser.query()
+        query!.whereKeyExists("phone")
+        query!.orderByAscending("username")
+        query!.findObjectsInBackgroundWithBlock {
+            (objects: [PFObject]?, error: NSError?) -> Void in
+            if error == nil {
+                // The find succeeded.
+                // Do something with the found objects
+                if let objects = objects {
+                    for object in objects {
+                        print(object)
+                        self.queryBook.append(object)
+                    }
+                    completionHandler(success: true)
+                }
+            } else {
+                // Log details of the failure
+                print("Error: \(error!) \(error!.userInfo)")
+            }
+        }
+    }
+    
+    func createFriends(){
+        print("create friends")
         for x in 0...contactsBook.count-1 {
             for y in 0...contactsBook[x].phoneNumbers.count-1{
-                let query = PFUser.query()
                 let number = contactsBook[x].phoneNumbers[y].value as! CNPhoneNumber
                 let phoneNumber = storeAsPhone(number.stringValue)
-                print("\(phoneNumber)")
-                query!.whereKey("phone", equalTo: phoneNumber)
-                //query!.orderByAscending("username")
-                query!.findObjectsInBackgroundWithBlock {
-                    (objects: [PFObject]?, error: NSError?) -> Void in
-                    
-                    if error == nil {
-                        // The find succeeded.
-                        // Do something with the found objects
-                        if let objects = objects {
-                            for object in objects {
-                                print(object)
-                                self.friendBook.append(object)
-                                print(self.friendBook[0])
-                                self.friendsTableView.reloadData()
-                            }
-                            completionHandler(success: true)
-                        }
-                    } else {
-                        // Log details of the failure
-                        print("Error: \(error!) \(error!.userInfo)")
+                //print("\(phoneNumber)")
+                for object in queryBook{
+                    print(object["phone"] as! String)
+                    if(phoneNumber == (object["phone"] as! String)){
+                        print("appended")
+                        friendBook.append(object)
+                        self.friendsTableView.reloadData()
+                        contactsDelete.append(x)
                     }
                 }
             }
         }
-
+        for x in 0...contactsDelete.count-1{
+            let i = contactsDelete.count-1-x
+            let z = contactsDelete[i]
+            contactsBook.removeAtIndex(z)
+        }
+        tableView.reloadData()
     }
     
     func storeAsPhone(phone: String)->String{
@@ -113,33 +122,13 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
-        /*let status = ABAddressBookGetAuthorizationStatus()
-        if status == .Denied || status == .Restricted {
-            // user previously denied, to tell them to fix that in settings
-
-            ABAddressBookRequestAccessWithCompletion(addressBook) {
-                granted, error in
-                
-                if !granted {
-                    // warn the user that because they just denied permission, this functionality won't work
-                    // also let them know that they have to fix this in settings
-                    return
-                }
-            
-                self.createAddressBook()
-            }
-        //}else{
-        //    refreshContacts()
-        }
-        refreshContacts()*/
         
         
         getContacts({(success) -> Void in
-        //showContactPickerController()
 
-            self.compareWithDatabase({ (success) -> Void in
+            self.getQuery({ (success) -> Void in
                 if success {
+                    self.createFriends()
                     print("success")
                     for object in self.friendBook{
                         print(object["username"])

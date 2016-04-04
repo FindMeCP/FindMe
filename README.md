@@ -6,6 +6,11 @@ Tired of trying to find your friends while they dont text you back? FindMe
 helps you find your friends without any effort. The FindMe app is useful
 for all ages, but we are specifically targetting collegiates. 
 
+#Project Distribution
+Jordi: Google maps functionality, customize screens (split, shared, solo) for viewing maps, manage location services
+William: Create users, access contacts, store and retrieve user data via Parse, allow tracking of other users, handle login and signup
+Shirley: Settings side bar, view controllers that segue from side bar (settings, account logout)
+
 ## User Stories
 
 **Required** functionality: User can

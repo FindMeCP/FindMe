@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -42,7 +42,7 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5ao-4s-i6Y">
                                 <rect key="frame" x="20" y="180" width="280" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eTV-BN-rTx">
                                 <rect key="frame" x="20" y="276" width="130" height="30"/>
@@ -60,6 +60,11 @@
                                         <integer key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="uZZ-Ow-2G5"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <segue destination="5D0-qh-3Wx" kind="popoverPresentation" popoverAnchorView="eTV-BN-rTx" id="oec-RB-qC9">
                                         <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
@@ -108,6 +113,7 @@
                             <constraint firstItem="Qcd-YH-azS" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="U4C-j5-vlg"/>
                             <constraint firstItem="Qcd-YH-azS" firstAttribute="top" secondItem="5ao-4s-i6Y" secondAttribute="bottom" constant="22" id="VMh-5H-bBM"/>
                             <constraint firstAttribute="trailing" secondItem="5ao-4s-i6Y" secondAttribute="trailing" constant="20" id="Wfl-st-zRy"/>
+                            <constraint firstItem="cyl-wZ-3Ff" firstAttribute="width" secondItem="eTV-BN-rTx" secondAttribute="width" id="jW7-Tk-ZE7"/>
                             <constraint firstItem="cyl-wZ-3Ff" firstAttribute="centerY" secondItem="eTV-BN-rTx" secondAttribute="centerY" id="mbx-Z2-oSJ"/>
                             <constraint firstItem="eTV-BN-rTx" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="pge-nt-7y8"/>
                             <constraint firstAttribute="trailing" secondItem="cyl-wZ-3Ff" secondAttribute="trailing" constant="20" id="rPu-8w-bbP"/>
@@ -437,11 +443,11 @@
                                 <rect key="frame" x="0.0" y="104" width="320" height="464"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FriendsIdentifier" rowHeight="48" id="gd1-LN-ICY" customClass="FriendsCell" customModule="FindMe" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FriendsIdentifier" rowHeight="48" id="gd1-LN-ICY" customClass="FriendsCell" customModule="FindMe" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gd1-LN-ICY" id="hgw-N2-JR7">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="47"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="47.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JQ1-2i-jm8">
@@ -486,7 +492,7 @@
                                         <rect key="frame" x="0.0" y="28" width="320" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xuM-pW-vfI" id="4bd-Fc-Nfh">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="47"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="47.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JxL-L6-0YV">
@@ -515,7 +521,7 @@
                                                 <constraint firstItem="JxL-L6-0YV" firstAttribute="leading" secondItem="4bd-Fc-Nfh" secondAttribute="leading" constant="8" id="sdR-pn-64E"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.17045766740000001" green="0.45932679900000001" blue="0.6545116165" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.79215686269999996" green="0.40784313729999999" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <outlet property="addButton" destination="PlA-1W-hvC" id="ica-b3-fAq"/>
                                             <outlet property="nameLabel" destination="JxL-L6-0YV" id="akM-t4-74c"/>
@@ -526,26 +532,52 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lw8-I2-BsP">
                                 <rect key="frame" x="0.0" y="64" width="320" height="40"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TGQ-Dh-Bog">
-                                        <rect key="frame" x="57" y="5" width="51" height="30"/>
-                                        <state key="normal" title="Friends"/>
-                                        <connections>
-                                            <action selector="friendsTable:" destination="zT4-sU-bPa" eventType="touchUpInside" id="hmC-Tt-Bus"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YFE-N1-Abp">
-                                        <rect key="frame" x="209" y="5" width="62" height="30"/>
-                                        <state key="normal" title="Contacts"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YFE-N1-Abp">
+                                        <rect key="frame" x="165" y="5" width="145" height="30"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="120" id="TWi-W6-9YZ"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" title="Contacts">
+                                            <color key="titleColor" red="0.79215686269999996" green="0.40784313729999999" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="TWi-W6-9YZ"/>
+                                            </mask>
+                                        </variation>
                                         <connections>
                                             <action selector="contactsTable:" destination="zT4-sU-bPa" eventType="touchUpInside" id="YVy-Gy-VPW"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TGQ-Dh-Bog">
+                                        <rect key="frame" x="10" y="5" width="145" height="30"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="120" id="Gh3-U4-of4"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" title="Friends">
+                                            <color key="titleColor" red="0.79215686269999996" green="0.40784313729999999" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="Gh3-U4-of4"/>
+                                            </mask>
+                                        </variation>
+                                        <connections>
+                                            <action selector="friendsTable:" destination="zT4-sU-bPa" eventType="touchUpInside" id="hmC-Tt-Bus"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.79215686269999996" green="0.40784313729999999" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="TGQ-Dh-Bog" firstAttribute="leading" secondItem="Lw8-I2-BsP" secondAttribute="leading" constant="50" id="4BB-rN-Lxb"/>
+                                    <constraint firstItem="YFE-N1-Abp" firstAttribute="width" secondItem="TGQ-Dh-Bog" secondAttribute="width" id="0Pj-Py-2vE"/>
+                                    <constraint firstItem="TGQ-Dh-Bog" firstAttribute="leading" secondItem="Lw8-I2-BsP" secondAttribute="leading" constant="10" id="4BB-rN-Lxb"/>
                                     <constraint firstAttribute="height" constant="40" id="E5x-Pz-er5"/>
-                                    <constraint firstAttribute="trailing" secondItem="YFE-N1-Abp" secondAttribute="trailing" constant="50" id="VJY-Ej-E49"/>
+                                    <constraint firstItem="YFE-N1-Abp" firstAttribute="leading" secondItem="TGQ-Dh-Bog" secondAttribute="trailing" constant="10" id="Sna-er-Rkk"/>
+                                    <constraint firstAttribute="trailing" secondItem="YFE-N1-Abp" secondAttribute="trailing" constant="10" id="VJY-Ej-E49"/>
                                     <constraint firstItem="TGQ-Dh-Bog" firstAttribute="centerY" secondItem="Lw8-I2-BsP" secondAttribute="centerY" id="cPf-pB-34B"/>
                                     <constraint firstItem="YFE-N1-Abp" firstAttribute="centerY" secondItem="Lw8-I2-BsP" secondAttribute="centerY" id="dTS-Et-sTV"/>
                                 </constraints>
@@ -568,6 +600,8 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="contactsButton" destination="YFE-N1-Abp" id="R2F-RT-Umw"/>
+                        <outlet property="friendsButton" destination="TGQ-Dh-Bog" id="Jx2-bJ-KAF"/>
                         <outlet property="friendsTableView" destination="kNo-ou-rVG" id="byn-bP-xoi"/>
                         <outlet property="tableView" destination="VHL-gj-dpE" id="E9M-xm-30a"/>
                     </connections>
@@ -1085,7 +1119,7 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qtq-TR-SNh">
                                 <rect key="frame" x="20" y="187" width="280" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" red="0.79215686269999996" green="0.40784313729999999" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -1147,7 +1181,7 @@
         <image name="purplecircle35" width="35" height="35"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="UpO-cb-igj"/>
         <segue reference="ZYo-Ts-DDY"/>
+        <segue reference="UpO-cb-igj"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -29,38 +29,51 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
     let user = PFUser.currentUser()
     var locationMarker: GMSMarker!
     var otherUser: PFObject!
+    var otherUserPhone: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("view did load")
         loadingView.hidden = false
-        let query = PFUser.query()
-        query!.whereKey("phone", equalTo: "3146022911")
-        query!.findObjectsInBackgroundWithBlock {
-            (objects: [PFObject]?, error: NSError?) -> Void in
-            
-            if error == nil {
-                if let objects = objects {
-                    for object in objects {
-                        self.otherUser = object
+            if user!["follow"] as! String != ""{
+                otherUserPhone = user!["follow"] as! String
+                print(user)
+                print("other user")
+                let query = PFUser.query()
+                query!.whereKey("phone", equalTo: otherUserPhone)
+                query!.findObjectsInBackgroundWithBlock {
+                    (objects: [PFObject]?, error: NSError?) -> Void in
+                    
+                    if error == nil {
+                        if let objects = objects {
+                            for object in objects {
+                                self.otherUser = object
+                            }
+                        }
+                        let otherUserCoordinates = self.loadOtherUserData() as CLLocationCoordinate2D!
+                        self.setuplocationMarker(otherUserCoordinates)
+                        self.mapMode()
+                        self.loadingView.hidden = true
+                        print("map fully loaded")
+                    } else {
+                        print("Error: \(error!) \(error!.userInfo)")
                     }
+                    let friendName = self.otherUser["username"]
+                    self.firstMapTitle.text = "\(friendName)"
                 }
-                let otherUserCoordinates = self.loadOtherUserData() as CLLocationCoordinate2D!
-                self.setuplocationMarker(otherUserCoordinates)
-                self.mapMode()
-                self.loadingView.hidden = true
-                print("map fully loaded")
-            } else {
-                print("Error: \(error!) \(error!.userInfo)")
             }
-        }
+            else {
+                firstMapTitle.text = "Friend name"
+                mapMode()
+                loadingView.hidden = true
+                
+            }
         let logo = UIImage(named: "FindMeLogoSmallPurple")
-        
         let imageView = UIImageView(image:logo)
         imageView.contentMode = .ScaleAspectFit
         self.navigationItem.titleView = imageView
         locationManager.delegate = self
-        firstMapTitle.text = "Friend name"
-        secondMapTitle.text = "User name"
+        secondMapTitle.text = "\((user!.username)!)"
         let status = CLLocationManager.authorizationStatus()
         switch status {
         case .NotDetermined:
@@ -70,7 +83,9 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
         case .AuthorizedAlways:
             print("authorized always")
             locationManager.startUpdatingLocation()
-            NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: #selector(MainViewController.timedPinUpdate), userInfo: nil, repeats: true)
+            if user!["follow"] as! String != ""{
+               NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: #selector(MainViewController.timedPinUpdate), userInfo: nil, repeats: true)
+            }
         case .Restricted:
             print("restricted")
         // restricted by e.g. parental controls. User can't enable Location Services
@@ -84,14 +99,63 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
             settingsButton.action = #selector(SWRevealViewController.revealToggle(_:))
         }
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        loadingView.hidden = false
+        if user!["follow"] as! String != ""{
+            otherUserPhone = user!["follow"] as! String
+            print(user)
+            print("other user")
+            let query = PFUser.query()
+            query!.whereKey("phone", equalTo: otherUserPhone)
+            query!.findObjectsInBackgroundWithBlock {
+                (objects: [PFObject]?, error: NSError?) -> Void in
+                
+                if error == nil {
+                    if let objects = objects {
+                        for object in objects {
+                            self.otherUser = object
+                        }
+                    }
+                    let otherUserCoordinates = self.loadOtherUserData() as CLLocationCoordinate2D!
+                    self.setuplocationMarker(otherUserCoordinates)
+                    self.mapMode()
+                    self.loadingView.hidden = true
+                    print("map fully loaded")
+                } else {
+                    print("Error: \(error!) \(error!.userInfo)")
+                }
+                let friendName = self.otherUser["username"]
+                self.firstMapTitle.text = "\(friendName)"
+            }
+        }
+        else {
+            firstMapTitle.text = "Friend name"
+            mapMode()
+            loadingView.hidden = true
+            
+        }
+
+    }
+    
+    
     @IBAction func onMapFullReturn(sender: AnyObject) {
         mapMode()
     }
    
     @IBAction func onMap1Return(sender: AnyObject) {
-        let otherUserCoordinates = loadOtherUserData()
-        mapView1.animateToZoom(13)
-        mapView1.animateToLocation(otherUserCoordinates)
+        if user!["follow"] as! String != ""{
+            let otherUserCoordinates = loadOtherUserData()
+            mapView1.animateToZoom(13)
+            mapView1.animateToLocation(otherUserCoordinates)
+            setuplocationMarker(otherUserCoordinates)
+        }
+        else {
+            if let UserCoordinates = locationManager.location?.coordinate {
+                mapView1.animateToZoom(13)
+                mapView1.animateToLocation(UserCoordinates)
+            }
+        }
         
     }
     
@@ -117,42 +181,68 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
             mapView1.settings.myLocationButton = true
             mapView2.myLocationEnabled = true
             mapView2.settings.myLocationButton = true
-            let otherUserCoordinates = loadOtherUserData()
-            mapView1.animateToZoom(13)
-            mapView1.animateToLocation(otherUserCoordinates)
-            //mapView2.animateToLocation(NYCoordinates)
-            setuplocationMarker(otherUserCoordinates)
-            if let UserCoordinates = locationManager.location?.coordinate {
-                mapView2.animateToZoom(13)
-                mapView2.animateToLocation(UserCoordinates)
+            if user!["follow"] as! String != ""{
+                print("reached this point - following")
+                let otherUserCoordinates = loadOtherUserData()
+                mapView1.animateToZoom(13)
+                mapView1.animateToLocation(otherUserCoordinates)
+                setuplocationMarker(otherUserCoordinates)
+                if let UserCoordinates = locationManager.location?.coordinate {
+                    mapView2.animateToZoom(13)
+                    mapView2.animateToLocation(UserCoordinates)
+                }
             }
+            else {
+                print("reached this point - no following")
+                if let UserCoordinates = locationManager.location?.coordinate {
+                    mapView1.animateToZoom(13)
+                    mapView1.animateToLocation(UserCoordinates)
+                    mapView2.animateToZoom(13)
+                    mapView2.animateToLocation(UserCoordinates)
+                }
+            }
+            
+            
         }
         else if (mapModeSlider.value == 1){
             print("shared mode")
             mapViewArea2.hidden = false;
             mapViewFull.myLocationEnabled = true
             mapViewFull.settings.myLocationButton = true
-//            mapViewFull.camera = GMSCameraPosition(target: NYCoordinates, zoom: 13, bearing: 0, viewingAngle: 0)
-//            setuplocationMarker(NYCoordinates)
             if let UserCoordinates = locationManager.location?.coordinate {
-                let otherUserCoordinates = loadOtherUserData()
-                let path = GMSMutablePath()
-                path.addCoordinate(UserCoordinates)
-                path.addCoordinate(otherUserCoordinates)
-                let bounds = GMSCoordinateBounds(path: path)
-                mapViewFull.animateWithCameraUpdate(GMSCameraUpdate.fitBounds(bounds,withPadding: 50))
-                setuplocationMarker(otherUserCoordinates)
+                if user!["follow"] as! String != ""{
+                    let otherUserCoordinates = loadOtherUserData()
+                    let path = GMSMutablePath()
+                    path.addCoordinate(UserCoordinates)
+                    path.addCoordinate(otherUserCoordinates)
+                    let bounds = GMSCoordinateBounds(path: path)
+                    mapViewFull.animateWithCameraUpdate(GMSCameraUpdate.fitBounds(bounds,withPadding: 50))
+                    setuplocationMarker(otherUserCoordinates)
+                }
+                else {
+                    mapViewFull.animateToZoom(13)
+                    mapViewFull.animateToLocation(UserCoordinates)
+                }
             }
         }
         else if (mapModeSlider.value == 2){
             print("solo mode")
-            let otherUserCoordinates = loadOtherUserData()
+            
             mapViewArea2.hidden = false;
             mapViewFull.myLocationEnabled = true
             mapViewFull.settings.myLocationButton = true
-            mapViewFull.animateToZoom(13)
-            mapViewFull.animateToLocation(otherUserCoordinates)
-            setuplocationMarker(otherUserCoordinates)
+            if user!["follow"] as! String != ""{
+                let otherUserCoordinates = loadOtherUserData()
+                mapViewFull.animateToZoom(13)
+                mapViewFull.animateToLocation(otherUserCoordinates)
+                setuplocationMarker(otherUserCoordinates)
+            }
+            else {
+                if let UserCoordinates = locationManager.location?.coordinate {
+                    mapViewFull.animateToZoom(13)
+                    mapViewFull.animateToLocation(UserCoordinates)
+                }
+            }
         }
     }
     
@@ -199,24 +289,27 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
     
     func timedPinUpdate()
     {
-        let query = PFUser.query()
-        query!.whereKey("phone", equalTo: "1234567")  //3146022911
-        query!.findObjectsInBackgroundWithBlock {
-            (objects: [PFObject]?, error: NSError?) -> Void in
+            if user!["follow"] as! String != ""{
+
+                otherUserPhone = user!["follow"] as! String
+                let query = PFUser.query()
+                query!.whereKey("phone", equalTo: otherUserPhone)
+                query!.findObjectsInBackgroundWithBlock {
+                    (objects: [PFObject]?, error: NSError?) -> Void in
             
-            if error == nil {
-                if let objects = objects {
-                    for object in objects {
-                        self.otherUser = object
+                    if error == nil {
+                        if let objects = objects {
+                            for object in objects {
+                                self.otherUser = object
+                            }
+                        }
+                        let otherUserCoordinates = self.loadOtherUserData() as CLLocationCoordinate2D!
+                        self.setuplocationMarker(otherUserCoordinates)
+                    } else {
+                        print("Error: \(error!) \(error!.userInfo)")
                     }
                 }
-                let otherUserCoordinates = self.loadOtherUserData() as CLLocationCoordinate2D!
-                self.setuplocationMarker(otherUserCoordinates)
-            } else {
-                print("Error: \(error!) \(error!.userInfo)")
             }
-        }
-
     }
     
 }

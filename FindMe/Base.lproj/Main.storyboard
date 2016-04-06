@@ -521,7 +521,7 @@
                                                 <constraint firstItem="JxL-L6-0YV" firstAttribute="leading" secondItem="4bd-Fc-Nfh" secondAttribute="leading" constant="8" id="sdR-pn-64E"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.17045766740000001" green="0.45932679900000001" blue="0.6545116165" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.79215686269999996" green="0.40784313729999999" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <outlet property="addButton" destination="PlA-1W-hvC" id="ica-b3-fAq"/>
                                             <outlet property="nameLabel" destination="JxL-L6-0YV" id="akM-t4-74c"/>
@@ -1181,7 +1181,7 @@
         <image name="purplecircle35" width="35" height="35"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="6aK-Ds-hcz"/>
         <segue reference="ZYo-Ts-DDY"/>
+        <segue reference="UpO-cb-igj"/>
     </inferredMetricsTieBreakers>
 </document>

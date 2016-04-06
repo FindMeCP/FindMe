@@ -105,10 +105,12 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                 }
             }
         }
-        for x in 0...contactsDelete.count-1{
-            let i = contactsDelete.count-1-x
-            let z = contactsDelete[i]
-            contactsBook.removeAtIndex(z)
+        if contactsDelete.count != 0 {
+            for x in 0...contactsDelete.count-1{
+                let i = contactsDelete.count-1-x
+                let z = contactsDelete[i]
+                contactsBook.removeAtIndex(z)
+            }
         }
         tableView.reloadData()
     }

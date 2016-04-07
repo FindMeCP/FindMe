@@ -683,10 +683,10 @@
             </objects>
             <point key="canvasLocation" x="1310" y="2291"/>
         </scene>
-        <!--View Controller-->
+        <!--Side View Controller-->
         <scene sceneID="Ra8-b1-I02">
             <objects>
-                <viewController id="Rgn-uF-zcT" sceneMemberID="viewController">
+                <viewController id="Rgn-uF-zcT" customClass="SideViewController" customModule="FindMe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="qja-d6-pZe"/>
                         <viewControllerLayoutGuide type="bottom" id="U3n-GO-5C5"/>
@@ -918,6 +918,9 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="49" id="3lh-ik-6dr"/>
                                                 </constraints>
+                                                <connections>
+                                                    <action selector="changeTracking:" destination="Rgn-uF-zcT" eventType="valueChanged" id="n8q-Q8-x6h"/>
+                                                </connections>
                                             </switch>
                                         </subviews>
                                         <constraints>
@@ -983,6 +986,9 @@
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="trackingButton" destination="TAN-Cr-kgK" id="FJz-QR-Ekh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7SK-qd-dPU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1181,7 +1187,7 @@
         <image name="purplecircle35" width="35" height="35"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ZYo-Ts-DDY"/>
         <segue reference="UpO-cb-igj"/>
+        <segue reference="ZYo-Ts-DDY"/>
     </inferredMetricsTieBreakers>
 </document>

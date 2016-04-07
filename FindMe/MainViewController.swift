@@ -50,16 +50,23 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
                                 self.otherUser = object
                             }
                         }
+                        
+                    } else {
+                        print("Error: \(error!) \(error!.userInfo)")
+                    }
+                    if(self.otherUser["tracking"] as! Bool == true){
                         let otherUserCoordinates = self.loadOtherUserData() as CLLocationCoordinate2D!
                         self.setuplocationMarker(otherUserCoordinates)
                         self.mapMode()
                         self.loadingView.hidden = true
                         print("map fully loaded")
-                    } else {
-                        print("Error: \(error!) \(error!.userInfo)")
+                        let friendName = self.otherUser["username"]
+                        self.firstMapTitle.text = "\(friendName)"
+                    }else{
+                        self.firstMapTitle.text = "Friend name"
+                        self.mapMode()
+                        self.loadingView.hidden = true
                     }
-                    let friendName = self.otherUser["username"]
-                    self.firstMapTitle.text = "\(friendName)"
                 }
             }
             else {
@@ -117,16 +124,22 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
                             self.otherUser = object
                         }
                     }
+                } else {
+                    print("Error: \(error!) \(error!.userInfo)")
+                }
+                if(self.otherUser["tracking"] as! Bool == true){
                     let otherUserCoordinates = self.loadOtherUserData() as CLLocationCoordinate2D!
                     self.setuplocationMarker(otherUserCoordinates)
                     self.mapMode()
                     self.loadingView.hidden = true
                     print("map fully loaded")
-                } else {
-                    print("Error: \(error!) \(error!.userInfo)")
+                    let friendName = self.otherUser["username"]
+                    self.firstMapTitle.text = "\(friendName)"
+                }else{
+                    self.firstMapTitle.text = "Friend name"
+                    self.mapMode()
+                    self.loadingView.hidden = true
                 }
-                let friendName = self.otherUser["username"]
-                self.firstMapTitle.text = "\(friendName)"
             }
         }
         else {
@@ -278,10 +291,12 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
     
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        user!["latitude"] = locationManager.location?.coordinate.latitude
-        user!["longitude"] = locationManager.location?.coordinate.longitude
-        ///ADD USER TIME
-        user!.saveInBackground()
+        if(user!["tracking"] as! Bool == true){
+            user!["latitude"] = locationManager.location?.coordinate.latitude
+            user!["longitude"] = locationManager.location?.coordinate.longitude
+            ///ADD USER TIME
+            user!.saveInBackground()
+        }
     }
 
     

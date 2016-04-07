@@ -18,7 +18,6 @@ class ContactsCell: UITableViewCell {
     var name: String?
     var contact:CNContact?
     var friend: Bool?
-    var user: User?
     
     override func layoutSubviews() {
         super.layoutSubviews()

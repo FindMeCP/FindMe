@@ -73,7 +73,7 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
                 firstMapTitle.text = "Friend name"
                 mapMode()
                 loadingView.hidden = true
-                
+                locationMarker = nil
             }
         let logo = UIImage(named: "FindMeLogoSmallPurple")
         let imageView = UIImageView(image:logo)
@@ -146,7 +146,7 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
             firstMapTitle.text = "Friend name"
             mapMode()
             loadingView.hidden = true
-            
+            locationMarker = nil
         }
 
     }

@@ -220,4 +220,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         contactsButton.backgroundColor = UIColor.lightGrayColor()
     }    
     
+    func refresh(){
+        friendsTableView.reloadData()
+    }
 }

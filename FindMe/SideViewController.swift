@@ -12,6 +12,7 @@ import Parse
 
 class SideViewController: UIViewController {
     
+    @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var trackingButton: UISwitch!
     var user = PFUser.currentUser()
     var track: Bool?
@@ -23,15 +24,21 @@ class SideViewController: UIViewController {
             trackingButton.on = false
             track = false
         }
+        usernameLabel.text = PFUser.currentUser()?.username
     }
     
     @IBAction func changeTracking(sender: AnyObject) {
         if(track!){
             track = false
             user!["tracking"] = false
+            user!["follow"] = ""
+            user!.saveInBackground()
+            print("false")
         }else{
             track = true
             user!["tracking"] = true
+            user!.saveInBackground()
+            print("true")
         }
     }
     

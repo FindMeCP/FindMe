@@ -441,7 +441,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="48" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="kNo-ou-rVG">
                                 <rect key="frame" x="0.0" y="104" width="320" height="464"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.79215686269999996" green="0.40784313729999999" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FriendsIdentifier" rowHeight="48" id="gd1-LN-ICY" customClass="FriendsCell" customModule="FindMe" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="48"/>
@@ -486,9 +486,9 @@
                             </tableView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="48" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="VHL-gj-dpE">
                                 <rect key="frame" x="0.0" y="104" width="320" height="464"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.79215686269999996" green="0.40784313729999999" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ContactsIdentifier" rowHeight="48" id="xuM-pW-vfI" customClass="ContactsCell" customModule="FindMe" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="ContactsIdentifier" rowHeight="48" id="xuM-pW-vfI" customClass="ContactsCell" customModule="FindMe" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xuM-pW-vfI" id="4bd-Fc-Nfh">
@@ -558,8 +558,10 @@
                                             <constraint firstAttribute="width" constant="120" id="Gh3-U4-of4"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <size key="titleShadowOffset" width="2.2250738585072014e-308" height="2.2250738585072014e-308"/>
                                         <state key="normal" title="Friends">
                                             <color key="titleColor" red="0.79215686269999996" green="0.40784313729999999" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </state>
                                         <variation key="default">
                                             <mask key="constraints">
@@ -988,6 +990,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="trackingButton" destination="TAN-Cr-kgK" id="FJz-QR-Ekh"/>
+                        <outlet property="usernameLabel" destination="yqS-EF-ocp" id="ONg-qA-bTO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7SK-qd-dPU" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -18,9 +18,9 @@ for all ages, but we are specifically targetting collegiates.
 - [X] Sign up, log in, and log out of the FindMe app. 
 - [X] Remained signed in across app restarts.
 - [X] See the user's location on a Google Maps SDK map.
-- [] Make or receive requests to share user locations with a friend.
+- [X] Share user locations with a friend.
 - [X] Reset the map to user/friend locations.
-- [] Turn off all location sharing.
+- [X] Turn off all location sharing.
 - [X] Select three map modes: split screen, shared screen, solo screen.
 - [X] Find friends with app installed.
 - [X] Friend's location pin updates every 5 seconds.

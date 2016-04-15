@@ -18,13 +18,9 @@
 		0021E5BF1C92480300B88D0B /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0021E5BE1C92480300B88D0B /* ContactsViewController.swift */; };
 		0021E5C31C924DFB00B88D0B /* ContactsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0021E5C21C924DFB00B88D0B /* ContactsCell.swift */; };
 		003C5C481CA8A5E40075105A /* FriendsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003C5C471CA8A5E40075105A /* FriendsCell.swift */; };
-		00EC22F01CB62AFE009B162B /* SideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00EC22EF1CB62AFE009B162B /* SideViewController.swift */; };
+		007C4D941CC0B296001DB085 /* LogoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007C4D931CC0B296001DB085 /* LogoutViewController.swift */; };
 		5C38DDF98CD2B282434DA202 /* Pods_FindMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B040466A5D1C7485E2B268 /* Pods_FindMe.framework */; };
-		9CD700EF1C90E483006389CC /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD700EE1C90E483006389CC /* SWRevealViewController.m */; };
 		EF4328CC1CA087F8006B9328 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF4328CB1CA087F8006B9328 /* MapKit.framework */; };
-		EF4328CE1CA08CD9006B9328 /* LogoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4328CD1CA08CD9006B9328 /* LogoutViewController.swift */; };
-		EF49C5A51CAEEEE000EC2FB3 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF49C5A41CAEEEE000EC2FB3 /* AccountViewController.swift */; };
-		EF49C5A71CAEEEEC00EC2FB3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF49C5A61CAEEEEC00EC2FB3 /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,17 +37,11 @@
 		0021E5BE1C92480300B88D0B /* ContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		0021E5C21C924DFB00B88D0B /* ContactsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsCell.swift; sourceTree = "<group>"; };
 		003C5C471CA8A5E40075105A /* FriendsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsCell.swift; sourceTree = "<group>"; };
-		00EC22EF1CB62AFE009B162B /* SideViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideViewController.swift; sourceTree = "<group>"; };
+		007C4D931CC0B296001DB085 /* LogoutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutViewController.swift; sourceTree = "<group>"; };
 		10B040466A5D1C7485E2B268 /* Pods_FindMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FindMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84545270CAA77090DD16047E /* Pods-FindMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindMe.release.xcconfig"; path = "Pods/Target Support Files/Pods-FindMe/Pods-FindMe.release.xcconfig"; sourceTree = "<group>"; };
-		9CD700EC1C90E43F006389CC /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
-		9CD700ED1C90E483006389CC /* FindMe-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FindMe-Bridging-Header.h"; sourceTree = "<group>"; };
-		9CD700EE1C90E483006389CC /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		DAD50516224F5EA7B48C8514 /* Pods-FindMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FindMe/Pods-FindMe.debug.xcconfig"; sourceTree = "<group>"; };
 		EF4328CB1CA087F8006B9328 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		EF4328CD1CA08CD9006B9328 /* LogoutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutViewController.swift; sourceTree = "<group>"; };
-		EF49C5A41CAEEEE000EC2FB3 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
-		EF49C5A61CAEEEEC00EC2FB3 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,20 +79,14 @@
 		0021E5A11C8FAFAC00B88D0B /* FindMe */ = {
 			isa = PBXGroup;
 			children = (
-				9CD700EB1C90E2CC006389CC /* SideBar */,
+				007C4D951CC0B2AD001DB085 /* User Setup */,
 				0021E5C41C924FAE00B88D0B /* Contacts */,
 				0021E5A21C8FAFAC00B88D0B /* AppDelegate.swift */,
 				0021E5A61C8FAFAC00B88D0B /* Main.storyboard */,
 				0021E5A91C8FAFAC00B88D0B /* Assets.xcassets */,
 				0021E5AB1C8FAFAC00B88D0B /* LaunchScreen.storyboard */,
 				0021E5AE1C8FAFAC00B88D0B /* Info.plist */,
-				0021E5B41C8FB25400B88D0B /* LoginViewController.swift */,
-				00071EA81CA205810063C9FD /* SignUpViewController.swift */,
 				0021E5B81C8FB4E600B88D0B /* MainViewController.swift */,
-				EF4328CD1CA08CD9006B9328 /* LogoutViewController.swift */,
-				EF49C5A41CAEEEE000EC2FB3 /* AccountViewController.swift */,
-				EF49C5A61CAEEEEC00EC2FB3 /* SettingsViewController.swift */,
-				00EC22EF1CB62AFE009B162B /* SideViewController.swift */,
 			);
 			path = FindMe;
 			sourceTree = "<group>";
@@ -115,6 +99,16 @@
 				003C5C471CA8A5E40075105A /* FriendsCell.swift */,
 			);
 			name = Contacts;
+			sourceTree = "<group>";
+		};
+		007C4D951CC0B2AD001DB085 /* User Setup */ = {
+			isa = PBXGroup;
+			children = (
+				00071EA81CA205810063C9FD /* SignUpViewController.swift */,
+				0021E5B41C8FB25400B88D0B /* LoginViewController.swift */,
+				007C4D931CC0B296001DB085 /* LogoutViewController.swift */,
+			);
+			name = "User Setup";
 			sourceTree = "<group>";
 		};
 		23CC7DEF12EDDC630375D103 /* Frameworks */ = {
@@ -134,16 +128,6 @@
 				84545270CAA77090DD16047E /* Pods-FindMe.release.xcconfig */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		9CD700EB1C90E2CC006389CC /* SideBar */ = {
-			isa = PBXGroup;
-			children = (
-				9CD700EC1C90E43F006389CC /* SWRevealViewController.h */,
-				9CD700EE1C90E483006389CC /* SWRevealViewController.m */,
-				9CD700ED1C90E483006389CC /* FindMe-Bridging-Header.h */,
-			);
-			name = SideBar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -269,18 +253,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF49C5A51CAEEEE000EC2FB3 /* AccountViewController.swift in Sources */,
 				0021E5B91C8FB4E600B88D0B /* MainViewController.swift in Sources */,
-				EF4328CE1CA08CD9006B9328 /* LogoutViewController.swift in Sources */,
-				9CD700EF1C90E483006389CC /* SWRevealViewController.m in Sources */,
 				0021E5BF1C92480300B88D0B /* ContactsViewController.swift in Sources */,
 				00071EA91CA205810063C9FD /* SignUpViewController.swift in Sources */,
-				EF49C5A71CAEEEEC00EC2FB3 /* SettingsViewController.swift in Sources */,
 				003C5C481CA8A5E40075105A /* FriendsCell.swift in Sources */,
 				0021E5B51C8FB25400B88D0B /* LoginViewController.swift in Sources */,
 				0021E5A31C8FAFAC00B88D0B /* AppDelegate.swift in Sources */,
+				007C4D941CC0B296001DB085 /* LogoutViewController.swift in Sources */,
 				0021E5C31C924DFB00B88D0B /* ContactsCell.swift in Sources */,
-				00EC22F01CB62AFE009B162B /* SideViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -2,7 +2,7 @@
 //  LogoutViewController.swift
 //  FindMe
 //
-//  Created by Jordi Turner on 3/21/16.
+//  Created by William Tong on 4/15/16.
 //  Copyright © 2016 William Tong. All rights reserved.
 //
 
@@ -11,14 +11,10 @@ import Parse
 
 class LogoutViewController: UIViewController {
 
-    @IBOutlet weak var settingsButton: UIBarButtonItem!
+    var user: PFUser = PFUser.currentUser()!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if self.revealViewController() != nil {
-            settingsButton.target = self.revealViewController()
-            settingsButton.action = #selector(SWRevealViewController.revealToggle(_:))
-        }
 
         // Do any additional setup after loading the view.
     }
@@ -28,14 +24,10 @@ class LogoutViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func onLogOut(sender: AnyObject) {
+    @IBAction func logout(sender: AnyObject) {
         PFUser.logOut()
-        
-        // Doesnt seem to work
-        
-        
-        
     }
+    
 
     /*
     // MARK: - Navigation

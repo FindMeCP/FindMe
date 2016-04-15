@@ -48,8 +48,6 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
         loadingView.hidden = false
             if user!["follow"] as! String != ""{
                 otherUserPhone = user!["follow"] as! String
-                print(user)
-                print("other user")
                 let query = PFUser.query()
                 query!.whereKey("phone", equalTo: otherUserPhone)
                 query!.findObjectsInBackgroundWithBlock {
@@ -119,8 +117,6 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
         loadingView.hidden = false
         if user!["follow"] as! String != ""{
             otherUserPhone = user!["follow"] as! String
-            print(user)
-            print("other user")
             let query = PFUser.query()
             query!.whereKey("phone", equalTo: otherUserPhone)
             query!.findObjectsInBackgroundWithBlock {
@@ -296,8 +292,8 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
     func loadOtherUserData() -> CLLocationCoordinate2D {
         var Lat = 0.0
         var Long = 0.1
-        if let userLat = otherUser["latitude"]{
-            Lat = userLat as! Double
+        if otherUser["latitude"] != nil{
+            Lat = otherUser["latitude"] as! Double
             Long = otherUser["longitude"] as! Double
             
         } else{

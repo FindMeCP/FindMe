@@ -799,7 +799,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PlA-1W-hvC">
+                                                <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PlA-1W-hvC">
                                                     <rect key="frame" x="282" y="8" width="30" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="30" id="62t-Cn-g2g"/>
@@ -929,7 +929,7 @@
         <!--SETTINGS-->
         <scene sceneID="8xB-1I-Vnc">
             <objects>
-                <viewController id="rWT-Y8-OfG" customClass="SettingsViewController" customModule="FindMe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="rWT-Y8-OfG" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="MaM-r6-1Zy"/>
                         <viewControllerLayoutGuide type="bottom" id="u0x-Hz-DBv"/>
@@ -963,7 +963,7 @@
         <!--ACCOUNT-->
         <scene sceneID="l6l-BV-Z8e">
             <objects>
-                <viewController id="1Hp-2G-WCt" customClass="AccountViewController" customModule="FindMe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="1Hp-2G-WCt" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="gzK-4Z-Xfu"/>
                         <viewControllerLayoutGuide type="bottom" id="S8p-8a-oaR"/>
@@ -1016,6 +1016,7 @@
                                 <rect key="frame" x="131" y="269" width="59" height="30"/>
                                 <state key="normal" title="Log Out!"/>
                                 <connections>
+                                    <action selector="logout:" destination="SvF-SQ-bkr" eventType="touchUpInside" id="yLH-b6-Fs4"/>
                                     <action selector="onLogOut:" destination="SvF-SQ-bkr" eventType="touchUpInside" id="dFa-VF-Edi"/>
                                 </connections>
                             </button>

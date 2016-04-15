@@ -46,6 +46,8 @@ class FriendsCell: UITableViewCell {
             friend=true
             addButton.setImage(UIImage(named: "Checked"), forState: .Normal)
         }
+        let table = superview?.superview as! UITableView
+        table.reloadData()
     }
     
     func add() {

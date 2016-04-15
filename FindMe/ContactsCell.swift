@@ -10,15 +10,15 @@ import UIKit
 import Parse
 import Contacts
 
+
 @available(iOS 9.0, *)
-class ContactsCell: UITableViewCell {
+class ContactsCell: UITableViewCell{
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var addButton: UIButton!
     
     var name: String?
     var contact:CNContact?
     var friend: Bool?
-    var user: User?
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -34,7 +34,6 @@ class ContactsCell: UITableViewCell {
     }
     
     @IBAction func addPerson(sender: AnyObject) {
-        add()
         if(friend==true){
             friend=false
             addButton.setImage(UIImage(named: "Unchecked"), forState: .Normal)
@@ -44,8 +43,4 @@ class ContactsCell: UITableViewCell {
         }
     }
     
-    func add() {
-        //user?.addContact(contact!)
-
-    }
 }

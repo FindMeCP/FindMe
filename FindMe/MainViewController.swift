@@ -14,6 +14,7 @@ import MapKit
 //contacts helps http://appcoda.com/ios-contacts-framework/
 
 
+@available(iOS 9.0, *)
 class MainViewController: UIViewController, CLLocationManagerDelegate{
     @IBOutlet weak var firstMapTitle: UILabel!
     @IBOutlet weak var loadingView: UIView!
@@ -24,7 +25,16 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
     @IBOutlet weak var mapViewArea: UIView!
     @IBOutlet weak var mapViewArea2: UIView!
     @IBOutlet weak var mapModeSlider: UISlider!
-    @IBOutlet weak var settingsButton: UIBarButtonItem!
+    
+    @IBOutlet weak var grayoutView: UIButton!
+    @IBOutlet weak var menuBarView: UIView!
+    @IBOutlet weak var menuConstraint: NSLayoutConstraint!
+    @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var trackingButton: UISwitch!
+    
+    
+    
+    var contactsViewController = ContactsViewController()
     let locationManager = CLLocationManager()
     let user = PFUser.currentUser()
     var locationMarker: GMSMarker!
@@ -34,11 +44,10 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         print("view did load")
+        
         loadingView.hidden = false
             if user!["follow"] as! String != ""{
                 otherUserPhone = user!["follow"] as! String
-                print(user)
-                print("other user")
                 let query = PFUser.query()
                 query!.whereKey("phone", equalTo: otherUserPhone)
                 query!.findObjectsInBackgroundWithBlock {
@@ -50,28 +59,35 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
                                 self.otherUser = object
                             }
                         }
+                        
+                    } else {
+                        print("Error: \(error!) \(error!.userInfo)")
+                    }
+                    if(self.otherUser["tracking"] as! Bool == true){
                         let otherUserCoordinates = self.loadOtherUserData() as CLLocationCoordinate2D!
                         self.setuplocationMarker(otherUserCoordinates)
                         self.mapMode()
                         self.loadingView.hidden = true
                         print("map fully loaded")
-                    } else {
-                        print("Error: \(error!) \(error!.userInfo)")
+                        let friendName = self.otherUser["username"]
+                        self.firstMapTitle.text = "\(friendName)"
+                    }else{
+                        self.firstMapTitle.text = "Friend name"
+                        self.mapMode()
+                        self.loadingView.hidden = true
                     }
-                    let friendName = self.otherUser["username"]
-                    self.firstMapTitle.text = "\(friendName)"
                 }
             }
             else {
+                
                 firstMapTitle.text = "Friend name"
                 mapMode()
                 loadingView.hidden = true
-                
+                if locationMarker != nil {
+                    locationMarker.map = nil
+                }
             }
-        let logo = UIImage(named: "FindMeLogoSmallPurple")
-        let imageView = UIImageView(image:logo)
-        imageView.contentMode = .ScaleAspectFit
-        self.navigationItem.titleView = imageView
+        
         locationManager.delegate = self
         secondMapTitle.text = "\((user!.username)!)"
         let status = CLLocationManager.authorizationStatus()
@@ -93,19 +109,14 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
             print("not authorized")
             // user denied your app access to Location Services, but can grant access from Settings.app
         }
-        
-        if self.revealViewController() != nil {
-            settingsButton.target = self.revealViewController()
-            settingsButton.action = #selector(SWRevealViewController.revealToggle(_:))
-        }
     }
     
     override func viewDidAppear(animated: Bool) {
+        print("View did appear")
+                
         loadingView.hidden = false
         if user!["follow"] as! String != ""{
             otherUserPhone = user!["follow"] as! String
-            print(user)
-            print("other user")
             let query = PFUser.query()
             query!.whereKey("phone", equalTo: otherUserPhone)
             query!.findObjectsInBackgroundWithBlock {
@@ -117,25 +128,41 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
                             self.otherUser = object
                         }
                     }
+                } else {
+                    print("Error: \(error!) \(error!.userInfo)")
+                }
+                if(self.otherUser["tracking"] as! Bool == true){
                     let otherUserCoordinates = self.loadOtherUserData() as CLLocationCoordinate2D!
                     self.setuplocationMarker(otherUserCoordinates)
                     self.mapMode()
                     self.loadingView.hidden = true
                     print("map fully loaded")
-                } else {
-                    print("Error: \(error!) \(error!.userInfo)")
+                    let friendName = self.otherUser["username"]
+                    self.firstMapTitle.text = "\(friendName)"
+                }else{
+                    self.firstMapTitle.text = "Friend name"
+                    self.mapMode()
+                    self.loadingView.hidden = true
                 }
-                let friendName = self.otherUser["username"]
-                self.firstMapTitle.text = "\(friendName)"
             }
         }
         else {
             firstMapTitle.text = "Friend name"
             mapMode()
             loadingView.hidden = true
-            
+            if locationMarker != nil {
+                locationMarker.map = nil
+            }
         }
-
+        if(user!["tracking"] as! Bool == true){
+            trackingButton.on = true
+            track = true
+        }else{
+            trackingButton.on = false
+            track = false
+        }
+        usernameLabel.text = PFUser.currentUser()?.username
+        
     }
     
     
@@ -175,7 +202,7 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
     func mapMode () {
         //let NYCoordinates = CLLocationCoordinate2DMake(40.72, -74)
         if (mapModeSlider.value == 0){
-            print("split mode")
+            //print("split mode")
             mapViewArea2.hidden = true;
             mapView1.myLocationEnabled = true
             mapView1.settings.myLocationButton = true
@@ -205,7 +232,7 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
             
         }
         else if (mapModeSlider.value == 1){
-            print("shared mode")
+            //print("shared mode")
             mapViewArea2.hidden = false;
             mapViewFull.myLocationEnabled = true
             mapViewFull.settings.myLocationButton = true
@@ -226,8 +253,7 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
             }
         }
         else if (mapModeSlider.value == 2){
-            print("solo mode")
-            
+            //print("solo mode")
             mapViewArea2.hidden = false;
             mapViewFull.myLocationEnabled = true
             mapViewFull.settings.myLocationButton = true
@@ -266,8 +292,8 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
     func loadOtherUserData() -> CLLocationCoordinate2D {
         var Lat = 0.0
         var Long = 0.1
-        if let userLat = otherUser["latitude"]{
-            Lat = userLat as! Double
+        if otherUser["latitude"] != nil{
+            Lat = otherUser["latitude"] as! Double
             Long = otherUser["longitude"] as! Double
             
         } else{
@@ -278,14 +304,22 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
     
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        user!["latitude"] = locationManager.location?.coordinate.latitude
-        user!["longitude"] = locationManager.location?.coordinate.longitude
-        ///ADD USER TIME
-        user!.saveInBackground()
+        if(user!["tracking"] as! Bool == true){
+            user!["latitude"] = locationManager.location?.coordinate.latitude
+            user!["longitude"] = locationManager.location?.coordinate.longitude
+            ///ADD USER TIME
+            user!.saveInBackground()
+        }
     }
 
     
+    @IBAction func onMenu(sender: AnyObject) {
+        showMenu()
+    }
     
+    @IBAction func onMenuFindMe(sender: AnyObject) {
+        hideMenu()
+    }
     
     func timedPinUpdate()
     {
@@ -311,5 +345,48 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
                 }
             }
     }
+    
+    @IBAction func touchToMenu(sender: AnyObject) {
+        //grayoutView.hidden = true
+        hideMenu()
+    }
+    
+    func showMenu(){
+        UIView.animateWithDuration(0.5, delay: 0, options: .CurveEaseIn, animations: {
+            self.menuBarView.center.x += self.menuBarView.frame.width
+            self.grayoutView.alpha = 0.5
+            
+            }, completion: { finished in
+                print("menu bar opened!")
+        })
+    }
+    
+    func hideMenu(){
+        UIView.animateWithDuration(0.5, delay: 0, options: .CurveEaseIn, animations: {
+            self.menuBarView.center.x -= self.menuBarView.frame.width
+            self.grayoutView.alpha = 0
+            }, completion: { finished in
+                print("menu bar closed!")
+        })
+    }
+    
+
+    var track: Bool?
+    
+    @IBAction func changeTracking(sender: AnyObject) {
+        if(track!){
+            track = false
+            user!["tracking"] = false
+            user!["follow"] = ""
+            user!.saveInBackground()
+            print("false")
+        }else{
+            track = true
+            user!["tracking"] = true
+            user!.saveInBackground()
+            print("true")
+        }
+    }
+
     
 }

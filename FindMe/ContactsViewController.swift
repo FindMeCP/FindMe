@@ -10,10 +10,10 @@ import UIKit
 import AddressBook
 import Parse
 import Contacts
-import ContactsUI
+import MessageUI
 
 @available(iOS 9.0, *)
-class ContactsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIPickerViewDelegate, CNContactPickerDelegate {
+class ContactsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIPickerViewDelegate, MFMessageComposeViewControllerDelegate {
     
     @IBOutlet weak var friendsTableView: UITableView!
     @IBOutlet weak var tableView: UITableView!
@@ -57,7 +57,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         } catch let e as NSError {
             print(e.localizedDescription)
         }
-        print(contacts)
+        //print(contacts)
         contactsBook = contacts
         return contacts
         
@@ -75,7 +75,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                 // Do something with the found objects
                 if let objects = objects {
                     for object in objects {
-                        print(object)
+                        //print(object)
                         self.queryBook.append(object)
                     }
                     completionHandler(success: true)
@@ -88,16 +88,16 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func createFriends(){
-        print("create friends")
+        //print("create friends")
         for x in 0...contactsBook.count-1 {
             for y in 0...contactsBook[x].phoneNumbers.count-1{
                 let number = contactsBook[x].phoneNumbers[y].value as! CNPhoneNumber
                 let phoneNumber = storeAsPhone(number.stringValue)
                 //print("\(phoneNumber)")
                 for object in queryBook{
-                    print(object["phone"] as! String)
+                    //print(object["phone"] as! String)
                     if(phoneNumber == (object["phone"] as! String)){
-                        print("appended")
+                        //print("appended")
                         friendBook.append(object)
                         self.friendsTableView.reloadData()
                         contactsDelete.append(x)
@@ -131,9 +131,9 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
             self.getQuery({ (success) -> Void in
                 if success {
                     self.createFriends()
-                    print("success")
+                    //print("success")
                     for object in self.friendBook{
-                        print(object["username"])
+                        //print(object["username"])
                         let dictionary = ["phone": object["phone"],"friend":false,"tracking":false]
                         self.contactDict.append(dictionary)
                         self.user!["contacts"]=self.contactDict
@@ -179,7 +179,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         if tableView == self.friendsTableView {
             if friendBook != nil {
                 //print("friends")
-                print(friendBook!.count)
+                //print(friendBook!.count)
                 return friendBook!.count
             } else {
                 return 0
@@ -193,6 +193,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         let blank = UITableViewCell()
         if tableView == self.tableView {
             let cell = tableView.dequeueReusableCellWithIdentifier("ContactsIdentifier", forIndexPath: indexPath) as! ContactsCell
+            
             let currentContact = contactsBook![indexPath.row]
             cell.contact = currentContact
             return cell
@@ -205,6 +206,40 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         }
         return blank
     }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        let contact = contactsBook![indexPath.row]
+        let phone = contact.phoneNumbers[0].value as! CNPhoneNumber
+        let number = storeAsPhone(phone.stringValue)
+        let messageVC = MFMessageComposeViewController()
+        
+        messageVC.body = "Join me on FindMe!";
+        messageVC.recipients = ["\(number)"]
+        messageVC.messageComposeDelegate = self
+        self.presentViewController(messageVC, animated: false, completion: nil)
+
+        
+    }
+    
+    
+    func messageComposeViewController(controller: MFMessageComposeViewController, didFinishWithResult result: MessageComposeResult) {
+        switch (result.rawValue) {
+        case MessageComposeResultCancelled.rawValue:
+            print("Message was cancelled")
+            self.dismissViewControllerAnimated(true, completion: nil)
+        case MessageComposeResultFailed.rawValue:
+            print("Message failed")
+            self.dismissViewControllerAnimated(true, completion: nil)
+        case MessageComposeResultSent.rawValue:
+            print("Message was sent")
+            self.dismissViewControllerAnimated(true, completion: nil)
+        default:
+            break;
+        }
+    }
+
     
     @IBAction func friendsTable(sender: AnyObject) {
         friendsTableView.hidden = false
@@ -220,4 +255,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         contactsButton.backgroundColor = UIColor.lightGrayColor()
     }    
     
+    func refresh(){
+        friendsTableView.reloadData()
+    }
 }

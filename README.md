@@ -27,26 +27,26 @@ for all ages, but we are specifically targetting collegiates.
 
 **Optional** features: User can
 
+- [X] Customize UI and logos
+- [X] Invite friends without the app.
+- [X] Enable maps to fix to users' locations. 
 - [] Track multiple friends at a time.
-- [] Enable maps to fix to users' locations. 
 - [] Leave geonotes.
 - [] Login with Facebook account.
 - [] Ping other users.
 - [] Set timer for user location sharing to end.
-- [] Invite friends without the app.
 
 **APIs**
 - Google Maps SDK API (link to endpoint)
 
 **Model Classes**
-- Users: username, password, phone number, latitute, longitude, email, locationSharingEnabled
-- Contacts: name, phone number, appUser, locationSharing
+- Users: username, password, phone number, latitute, longitude, friends, tracking
 
 ## Video Walkthrough 
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/8YaLGdE.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/2uEbYmn.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 

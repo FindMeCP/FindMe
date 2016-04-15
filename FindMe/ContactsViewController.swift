@@ -13,7 +13,7 @@ import Contacts
 import MessageUI
 
 @available(iOS 9.0, *)
-class ContactsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIPickerViewDelegate {
+class ContactsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIPickerViewDelegate, MFMessageComposeViewControllerDelegate {
     
     @IBOutlet weak var friendsTableView: UITableView!
     @IBOutlet weak var tableView: UITableView!
@@ -206,6 +206,40 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         }
         return blank
     }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        let contact = contactsBook![indexPath.row]
+        let phone = contact.phoneNumbers[0].value as! CNPhoneNumber
+        let number = storeAsPhone(phone.stringValue)
+        let messageVC = MFMessageComposeViewController()
+        
+        messageVC.body = "Join me on FindMe!";
+        messageVC.recipients = ["\(number)"]
+        messageVC.messageComposeDelegate = self
+        self.presentViewController(messageVC, animated: false, completion: nil)
+
+        
+    }
+    
+    
+    func messageComposeViewController(controller: MFMessageComposeViewController, didFinishWithResult result: MessageComposeResult) {
+        switch (result.rawValue) {
+        case MessageComposeResultCancelled.rawValue:
+            print("Message was cancelled")
+            self.dismissViewControllerAnimated(true, completion: nil)
+        case MessageComposeResultFailed.rawValue:
+            print("Message failed")
+            self.dismissViewControllerAnimated(true, completion: nil)
+        case MessageComposeResultSent.rawValue:
+            print("Message was sent")
+            self.dismissViewControllerAnimated(true, completion: nil)
+        default:
+            break;
+        }
+    }
+
     
     @IBAction func friendsTable(sender: AnyObject) {
         friendsTableView.hidden = false

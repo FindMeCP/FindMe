@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		00071EA91CA205810063C9FD /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00071EA81CA205810063C9FD /* SignUpViewController.swift */; };
+		000EA1781CC05A6200CDDE91 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 000EA1771CC05A6200CDDE91 /* MessageUI.framework */; };
 		0021E5A31C8FAFAC00B88D0B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0021E5A21C8FAFAC00B88D0B /* AppDelegate.swift */; };
 		0021E5A81C8FAFAC00B88D0B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0021E5A61C8FAFAC00B88D0B /* Main.storyboard */; };
 		0021E5AA1C8FAFAC00B88D0B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0021E5A91C8FAFAC00B88D0B /* Assets.xcassets */; };
@@ -28,6 +29,7 @@
 
 /* Begin PBXFileReference section */
 		00071EA81CA205810063C9FD /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignUpViewController.swift; path = ../SignUpViewController.swift; sourceTree = "<group>"; };
+		000EA1771CC05A6200CDDE91 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		0021E59F1C8FAFAC00B88D0B /* FindMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FindMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0021E5A21C8FAFAC00B88D0B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0021E5A71C8FAFAC00B88D0B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -57,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				000EA1781CC05A6200CDDE91 /* MessageUI.framework in Frameworks */,
 				EF4328CC1CA087F8006B9328 /* MapKit.framework in Frameworks */,
 				5C38DDF98CD2B282434DA202 /* Pods_FindMe.framework in Frameworks */,
 			);
@@ -117,6 +120,7 @@
 		23CC7DEF12EDDC630375D103 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				000EA1771CC05A6200CDDE91 /* MessageUI.framework */,
 				EF4328CB1CA087F8006B9328 /* MapKit.framework */,
 				10B040466A5D1C7485E2B268 /* Pods_FindMe.framework */,
 			);

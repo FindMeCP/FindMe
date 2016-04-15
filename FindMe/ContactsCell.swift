@@ -9,9 +9,15 @@
 import UIKit
 import Parse
 import Contacts
+import MessageUI
 
 @available(iOS 9.0, *)
-class ContactsCell: UITableViewCell {
+protocol CustomCellDeerCallsDelegate {
+    func showMessage(title:String, message:String)
+}
+
+@available(iOS 9.0, *)
+class ContactsCell: UITableViewCell, MFMessageComposeViewControllerDelegate {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var addButton: UIButton!
     
@@ -43,8 +49,29 @@ class ContactsCell: UITableViewCell {
         }
     }
     
-    func add() {
-        //user?.addContact(contact!)
-
+    func add(){
+        let viewController : UIViewController = ContactsViewController()
+        let messageVC = MFMessageComposeViewController()
+        
+        messageVC.body = "Enter a message";
+        messageVC.recipients = ["Enter tel-nr"]
+        messageVC.messageComposeDelegate = self;
+        viewController.presentViewController(messageVC, animated: false, completion: nil)
+    }
+    
+    func messageComposeViewController(controller: MFMessageComposeViewController, didFinishWithResult result: MessageComposeResult) {
+        switch (result.rawValue) {
+        case MessageComposeResultCancelled.rawValue:
+            print("Message was cancelled")
+            self.window?.rootViewController!.dismissViewControllerAnimated(true, completion: nil)
+        case MessageComposeResultFailed.rawValue:
+            print("Message failed")
+            self.window?.rootViewController!.dismissViewControllerAnimated(true, completion: nil)
+        case MessageComposeResultSent.rawValue:
+            print("Message was sent")
+            self.window?.rootViewController!.dismissViewControllerAnimated(true, completion: nil)
+        default:
+            break;
+        }
     }
 }

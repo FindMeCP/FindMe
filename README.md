@@ -1,3 +1,8 @@
+#TODO
+- Push notification request to add friend
+- Refine contacts page
+- Make other view controllers
+
 # FindMe
 Group Project for CodePath
 

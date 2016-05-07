@@ -1,5 +1,5 @@
 //
-//  FriendsCell.swift
+//  AppContactsCell.swift
 //  FindMe
 //
 //  Created by William Tong on 3/10/16.
@@ -10,7 +10,7 @@ import UIKit
 import Contacts
 import Parse
 
-class FriendsCell: UITableViewCell {
+class AppContactsCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var addButton: UIButton!
     
@@ -56,36 +56,34 @@ class FriendsCell: UITableViewCell {
     
     func add() {
         //user?.addContact(contact!)
-//        let query = PFUser.query()
-//        query!.whereKeyExists("phone")
-//        query!.orderByAscending("username")
-//        query!.findObjectsInBackgroundWithBlock {
-//            (objects: [PFObject]?, error: NSError?) -> Void in
-//            if error == nil {
-//                // The find succeeded.
-//                // Do something with the found objects
-//                if let objects = objects {
-//                    for object in objects {
-//                        //print(object)
-//                        self.queryBook.append(object)
-//                    }
-//                }
-//            } else {
-//                // Log details of the failure
-//                print("Error: \(error!) \(error!.userInfo)")
-//            }
-//        }
-        user!["follow"] = contact!["phone"]
-        user!.saveInBackground()
-//        let aContact = user!["contacts"] as! NSDictionary
-//        if let track = aContact["friend"] as? Bool {
-//            if(track==true){
-//                user!["follow"] = contact!["phone"]
-//                user!.saveInBackground()
-//            }else{
-//                requestFollow()
-//            }
-//        }
+        //        let query = PFUser.query()
+        //        query!.whereKeyExists("phone")
+        //        query!.orderByAscending("username")
+        //        query!.findObjectsInBackgroundWithBlock {
+        //            (objects: [PFObject]?, error: NSError?) -> Void in
+        //            if error == nil {
+        //                // The find succeeded.
+        //                // Do something with the found objects
+        //                if let objects = objects {
+        //                    for object in objects {
+        //                        //print(object)
+        //                        self.queryBook.append(object)
+        //                    }
+        //                }
+        //            } else {
+        //                // Log details of the failure
+        //                print("Error: \(error!) \(error!.userInfo)")
+        //            }
+        //        }
+        let aContact = user!["contacts"] as! NSDictionary
+        if let track = aContact["friend"] as? Bool {
+            if(track==true){
+                user!["follow"] = contact!["phone"]
+                user!.saveInBackground()
+            }else{
+                requestFriend()
+            }
+        }
     }
     
     func unadd() {
@@ -94,7 +92,7 @@ class FriendsCell: UITableViewCell {
         user!.saveInBackground()
     }
     
-    func requestFollow(){
+    func requestFriend(){
         
     }
 }

@@ -154,6 +154,7 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
                 locationMarker.map = nil
             }
         }
+        print(user!["username"])
         if(user!["tracking"] as! Bool == true){
             trackingButton.on = true
             track = true
@@ -352,7 +353,7 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
     }
     
     func showMenu(){
-        UIView.animateWithDuration(0.5, delay: 0, options: .CurveEaseIn, animations: {
+        UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseIn, animations: {
             self.menuBarView.center.x += self.menuBarView.frame.width
             self.grayoutView.alpha = 0.5
             
@@ -362,12 +363,13 @@ class MainViewController: UIViewController, CLLocationManagerDelegate{
     }
     
     func hideMenu(){
-        UIView.animateWithDuration(0.5, delay: 0, options: .CurveEaseIn, animations: {
+        UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseIn, animations: {
             self.menuBarView.center.x -= self.menuBarView.frame.width
             self.grayoutView.alpha = 0
             }, completion: { finished in
                 print("menu bar closed!")
         })
+        viewDidAppear(false)
     }
     
 

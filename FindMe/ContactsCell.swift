@@ -20,6 +20,10 @@ class ContactsCell: UITableViewCell{
     var contact:CNContact?
     var friend: Bool?
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         let contactPerson = contact!
@@ -42,5 +46,7 @@ class ContactsCell: UITableViewCell{
             addButton.setImage(UIImage(named: "Checked"), forState: .Normal)
         }
     }
+    
+
     
 }

@@ -1,26 +1,35 @@
 #TODO
-- Push notification request to add friend
-- Refine contacts page
-- Make other view controllers
+- MainViewControler
+  - [] Improve readability
+- Login/SignupViewController
+  - [] Improve UI
+  - [] Facebook Connectivity
+- ContactsViewController
+  - [] Optimize contact searching
+  - [] Create cached friendlist
+  - [] Reorganize code to make more readable
+
+- [] Push notification request to add friend
+- [] Refine contacts page
+- [] Make other view controllers
 
 # FindMe
 Group Project for CodePath
 
 ## Description
-Tired of trying to find your friends while they dont text you back? FindMe
+Tired of trying to find your friends while they don't text you back? FindMe
 helps you find your friends without any effort. The FindMe app is useful
-for all ages, but we are specifically targetting collegiates. 
+for all ages, but we are specifically targeting college students.
 
 #Project Distribution
 - Jordi: Google maps functionality, customize screens (split, shared, solo) for viewing maps, manage location services
 - William: Create users, access contacts, store and retrieve user data via Parse, allow tracking of other users, handle login and signup
-- Shirley: Settings side bar, view controllers that segue from side bar (settings, account logout)
 
 ## User Stories
 
 **Required** functionality: User can
 
-- [X] Sign up, log in, and log out of the FindMe app. 
+- [X] Sign up, log in, and log out of the FindMe app.
 - [X] Remained signed in across app restarts.
 - [X] See the user's location on a Google Maps SDK map.
 - [X] Share user locations with a friend.
@@ -34,7 +43,7 @@ for all ages, but we are specifically targetting collegiates.
 
 - [X] Customize UI and logos
 - [X] Invite friends without the app.
-- [X] Enable maps to fix to users' locations. 
+- [X] Enable maps to fix to users' locations.
 - [] Track multiple friends at a time.
 - [] Leave geonotes.
 - [] Login with Facebook account.
@@ -45,9 +54,9 @@ for all ages, but we are specifically targetting collegiates.
 - Google Maps SDK API (link to endpoint)
 
 **Model Classes**
-- Users: username, password, phone number, latitute, longitude, friends, tracking
+- Users: username, password, phone number, latitude, longitude, friends, tracking
 
-## Video Walkthrough 
+## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
@@ -57,7 +66,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## License
 
-    Copyright 2016 Jordi E. Turner, William Tong, Shirley Plotnik
+    Copyright 2016 Jordi E. Turner, William Tong
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

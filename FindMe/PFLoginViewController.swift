@@ -1,32 +1,30 @@
 //
-//  LogoutViewController.swift
+//  PFLoginViewController.swift
 //  FindMe
 //
-//  Created by William Tong on 4/15/16.
+//  Created by William Tong on 9/3/16.
 //  Copyright © 2016 William Tong. All rights reserved.
 //
 
 import UIKit
-import Parse
+import ParseUI
 
-class LogoutViewController: UIViewController {
-
-    var user: PFUser = PFUser.currentUser()!
+class PFLoginViewController: PFLogInViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        let label = UILabel()
+        label.textColor = UIColor.whiteColor()
+        label.text = "All Custom!"
+        label.sizeToFit()
+        logInView?.logo = label
         // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    @IBAction func logout(sender: AnyObject) {
-        PFUser.logOutInBackground()
-        performSegueWithIdentifier("logoutSegue", sender: nil)
     }
     
 

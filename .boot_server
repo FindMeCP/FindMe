@@ -1,0 +1,3 @@
+#!/bin/bash
+
+parse-server --appId findme2k16 --masterKey findme2k16_masterkey --databaseURI mongodb://heroku_tf2401dt:ctn7d5nmkf1iscgeakv80lrmc0@ds023398.mlab.com:23398/heroku_tf2401dt --serverURL https://findme2k16.herokuapp.com/

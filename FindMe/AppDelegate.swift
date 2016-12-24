@@ -15,7 +15,9 @@ import Contacts
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    let googleMapsApiKey = "AIzaSyAkOGIqKGRQhVDGWUisfmg3XvA2NmbI6Q4"
+    private let googleMapsApiKey = "AIzaSyAkOGIqKGRQhVDGWUisfmg3XvA2NmbI6Q4"
+    private let appID = "findme2k16"
+    private let clientkey = "findme2k16_masterkey"
     var storyboard = UIStoryboard(name: "Main", bundle: nil)
     var contactStore = CNContactStore()
 
@@ -26,17 +28,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         Parse.initializeWithConfiguration(
             ParseClientConfiguration(block: { (configuration:ParseMutableClientConfiguration) -> Void in
-                configuration.applicationId = "findMeID"
-                configuration.clientKey = "findMeMasterKey"
+                configuration.applicationId = self.appID
+                configuration.clientKey = self.clientkey
                 configuration.server = "https://findme2k16.herokuapp.com/parse"
                 
             })
         )
-        
+       
         if PFUser.currentUser() != nil {
             // if there is a logged in user then load the home view controller
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewControllerWithIdentifier("MainView") 
+            let vc = storyboard.instantiateViewControllerWithIdentifier("MainView")
             window?.rootViewController = vc
             print("current user logged in")
         }

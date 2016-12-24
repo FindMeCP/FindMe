@@ -36,6 +36,30 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate {
             }
         }
     }
+
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?){
+        view.endEditing(true)
+        super.touchesBegan(touches, withEvent: event)
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        textField.placeholder = nil
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField) {    //delegate method
+        if(textField==usernameText){
+            textField.placeholder = "Username"
+        }else{
+            textField.placeholder = "Password"
+        }
+    }
+
     
     
 

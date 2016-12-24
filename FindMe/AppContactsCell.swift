@@ -12,8 +12,10 @@ import Parse
 
 class AppContactsCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var contactNameLabel: UILabel!
     @IBOutlet weak var addButton: UIButton!
     
+    var contactName: String?
     var name: String?
     var user = PFUser.currentUser()
     var contact:PFObject?
@@ -38,6 +40,7 @@ class AppContactsCell: UITableViewCell {
         }
         name = contact!["username"] as? String
         nameLabel.text = name
+        contactNameLabel.text = contactName
     }
     
     @IBAction func addPerson(sender: AnyObject) {
@@ -46,6 +49,7 @@ class AppContactsCell: UITableViewCell {
             friend=false
             addButton.setImage(UIImage(named: "Unchecked"), forState: .Normal)
         }else{
+            print("added")
             add()
             friend=true
             addButton.setImage(UIImage(named: "Checked"), forState: .Normal)
@@ -55,41 +59,28 @@ class AppContactsCell: UITableViewCell {
     }
     
     func add() {
-        //user?.addContact(contact!)
-        //        let query = PFUser.query()
-        //        query!.whereKeyExists("phone")
-        //        query!.orderByAscending("username")
-        //        query!.findObjectsInBackgroundWithBlock {
-        //            (objects: [PFObject]?, error: NSError?) -> Void in
-        //            if error == nil {
-        //                // The find succeeded.
-        //                // Do something with the found objects
-        //                if let objects = objects {
-        //                    for object in objects {
-        //                        //print(object)
-        //                        self.queryBook.append(object)
-        //                    }
-        //                }
-        //            } else {
-        //                // Log details of the failure
-        //                print("Error: \(error!) \(error!.userInfo)")
-        //            }
-        //        }
-        let aContact = user!["contacts"] as! NSDictionary
-        if let track = aContact["friend"] as? Bool {
-            if(track==true){
-                user!["follow"] = contact!["phone"]
-                user!.saveInBackground()
-            }else{
-                requestFriend()
-            }
-        }
+        print("add to friends")
+        var friend = user!["friends"] as! [String]
+        friend.append(contact!.objectId!)
+        user!["friends"] = friend
+        user!.saveInBackground()
+        let table = superview?.superview as! UITableView
+        table.reloadData()
     }
     
     func unadd() {
         //user?.addContact(contact!)
-        user!["follow"] = ""
+        var friend = user!["friends"] as! [String]
+        if(friend.count>0){
+            for x in 0...friend.count{
+                if(friend[x] == contact!.objectId!){
+                    friend.removeAtIndex(x)
+                }
+            }
+        }
+        user!["friends"] = friend
         user!.saveInBackground()
+        
     }
     
     func requestFriend(){

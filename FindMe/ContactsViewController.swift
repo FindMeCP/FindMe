@@ -12,23 +12,28 @@ import Parse
 import Contacts
 import MessageUI
 
+
 @available(iOS 9.0, *)
-class ContactsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIPickerViewDelegate, MFMessageComposeViewControllerDelegate {
+class ContactsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIPickerViewDelegate, MFMessageComposeViewControllerDelegate, UISearchResultsUpdating {
     
     @IBOutlet weak var friendsTableView: UITableView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var friendsButton: UIButton!
     @IBOutlet weak var contactsButton: UIButton!
+    @IBOutlet weak var selectionView: UIView!
     var user = PFUser.currentUser()
-    var phonesArray: [String]!
+
     var queryBook: [PFObject]! = []
-    var friendBook: [PFObject]! = []    //Contacts with app
-    var friendList: [PFObject]! = []    //Friends
-    var friendsDelete: [Int]! = []
-    var contactsDelete: [Int]! = []
-    var contactsBook: [CNContact]!
-    var contactDict: [NSDictionary] = []
+    var friendQueryBook: [PFObject]! = []
     
+    var usersBook: [PFObject]! = []    //Contacts with app
+    var friendBook: [PFObject]! = []    //Friends
+    
+    var contactsBook: [CNContact]!
+    
+    var searchController: UISearchController!
+    
+    // retrieves contacts and loads them into contactsBook variable (used to load tableView)
     func getContacts(completionHandler: (success:Bool) -> Void) {
         AppDelegate.getAppDelegate().requestForAccess { (accessGranted) -> Void in
             if accessGranted {
@@ -59,71 +64,12 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         } catch let e as NSError {
             print(e.localizedDescription)
         }
-        //print(contacts)
         contactsBook = contacts
         return contacts
         
     }
     
-    func createAppContacts(){
-        print("create friends")
-        for x in 0...contactsBook.count-1 {
-            for y in 0...contactsBook[x].phoneNumbers.count-1{
-                let number = contactsBook[x].phoneNumbers[y].value as! CNPhoneNumber
-                let phoneNumber = storeAsPhone(number.stringValue)
-                //print("\(phoneNumber)")
-                for object in queryBook{
-                    print(phoneNumber)
-                    print(object["phone"] as! String)
-                    if(phoneNumber == (object["phone"] as! String)){
-                        print("appended")
-                        friendBook.append(object)
-                        self.tableView.reloadData()
-                        contactsDelete.append(x)
-                    }
-                }
-            }
-        }
-        if contactsDelete.count != 0 {
-            for x in 0...contactsDelete.count-1{
-                let i = contactsDelete.count-1-x
-                let z = contactsDelete[i]
-                contactsBook.removeAtIndex(z)
-            }
-        }
-        tableView.reloadData()
-    }
-    
-    func loadFriends(){
-        
-    }
-    
-    func addFriend(){
-        
-    }
-    
-    var person: PFObject?
-    
-    func searchByUsername(username:String, completionHandler: (success:Bool) -> Void){
-        let query = PFUser.query()
-        query!.whereKeyExists("username")
-        query!.findObjectsInBackgroundWithBlock {
-            (objects: [PFObject]?, error: NSError?) -> Void in
-            if error == nil {
-                if let objects = objects {
-                    for object in objects {
-                        if(object["username"] as! String == username){
-                            self.person = object
-                            completionHandler(success: true)
-                        }
-                    }
-                    
-                }
-            } else {
-                print("Error: \(error!) \(error!.userInfo)")
-            }
-        }
-    }
+
     
     func storeAsPhone(phone: String)->String{
         let stringArray = phone.componentsSeparatedByCharactersInSet(
@@ -131,6 +77,14 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         let newString = stringArray.joinWithSeparator("")
         return newString
     }
+    
+    /**
+     Lorem ipsum dolor sit amet.
+     
+     @param bar Consectetur adipisicing elit.
+     
+     @return Sed do eiusmod tempor.
+     */
     
     func getQuery(completionHandler: (success:Bool) -> Void){
         //var flag = false
@@ -145,6 +99,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                 if let objects = objects {
                     for object in objects {
                         //print(object)
+                        self.friendQueryBook.append(object)
                         self.queryBook.append(object)
                     }
                     completionHandler(success: true)
@@ -156,97 +111,113 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
-    func getFriendQuery(completionHandler: (success:Bool) -> Void){
-        //var flag = false
-        print("friendquery")
-        print(user!["username"])
-        print(user!["friends"])
-        if let friendsArray = user!["friends"] as? [String]{
-            print(friendsArray)
-            let query = PFUser.query()
-            query!.orderByDescending("username")
-                print("friend occuring")
-            for x in 0...friendsArray
-                .count-1{
-                query!.getObjectInBackgroundWithId(friendsArray[x]) {
-                    (object: PFObject?, error: NSError?) -> Void in
-                    if error == nil && object != nil {
-                        self.friendList.append(object!)
-                        //print(object)
-                        completionHandler(success: true)
-                    } else {
-                        print(error)
+    var appContactNames: [String]! = []
+    
+    func createAppContacts(){
+        print("create friends")
+        var contactsDelete:[Int] = []
+        for x in 0...contactsBook.count-1 {
+            for y in 0...contactsBook[x].phoneNumbers.count-1{
+                let number = contactsBook[x].phoneNumbers[y].value as! CNPhoneNumber
+                let phoneNumber = storeAsPhone(number.stringValue)
+                print("\(phoneNumber)")
+                for object in queryBook{
+                    if(phoneNumber == (object["phone"] as! String)){
+                        print("appended")
+                        usersBook.append(object)
+                        let name = "\(contactsBook[x].givenName) \(contactsBook[x].familyName)"
+                        appContactNames.append(name)
+                        self.tableView.reloadData()
+                        contactsDelete.append(x)
                     }
                 }
-                if(x==friendsArray.count-1){
-                    print("friends completed")
-                }
-            
             }
         }
         
+        if contactsDelete.count != 0 {
+            for x in 0...contactsDelete.count-1{
+                let i = contactsDelete.count-1-x
+                let z = contactsDelete[i]
+                contactsBook.removeAtIndex(z)
+            }
+        }
+        tableView.reloadData()
+    }
+
+    var friendList: [String]?
+    
+    func getFriendQuery(completionHandler: (success:Bool) -> Void){
+            print("hello")
+            let query = PFUser.query()
+            query!.whereKeyExists("_id")
+            query!.orderByDescending("username")
+            query!.findObjectsInBackgroundWithBlock {
+                (objects: [PFObject]?, error: NSError?) -> Void in
+                if error == nil {
+                    // The find succeeded.
+                    // Do something with the found objects
+                    print("friends query")
+                    if let objects = objects {
+                        for object in objects {
+                            print(object)
+                            self.friendQueryBook.append(object)
+                        }
+                        completionHandler(success: true)
+                    }
+                } else {
+                    // Log details of the failure
+                    print("Error: \(error!) \(error!.userInfo)")
+                }
+            }
     }
     
-    func filterFriendBook(){
-        if(friendList.count>0){
+    func createFriends(){
+        print(friendQueryBook)
+        if let friendsArray = user!["friends"] as? [String]{
+            for x in 0...friendsArray.count-1{
+                print(friendsArray[x])
+                    for y in 0...friendQueryBook.count-1{
+                        if(friendQueryBook[y].objectId == (friendsArray[x])){
+                            print("appended")
+                            friendBook.append(friendQueryBook[y] )
+                            self.friendsTableView.reloadData()
+
+                        }
+                    }
+            }
+        }
+        filteredFriendBook = friendBook
+    }
+    
+    func filterUsersBook(){
+        var friendsDelete: [Int] = []
+        if(friendBook.count>0){
             print("comparing")
-            for y in 0...friendList.count-1{
-                for z in 0...friendBook.count-1{
-                    print(friendList[y])
-                    print(friendBook[z])
-                    if(friendList[y]["username"] as! String == friendBook[z]["username"] as! String){
-                        print("same!")
+            for z in 0...usersBook.count-1 {
+                for y in 0...friendBook.count-1 {
+                    if(friendBook[y]["username"] as! String == usersBook[z]["username"] as! String){
                         friendsDelete.append(z)
                     }
                 }
             }
         }
-        
-        if friendsDelete.count != 0 {
+
+        if friendsDelete.count != 0 && usersBook.count != 0{
             for w in 0...friendsDelete.count-1{
                 let i = friendsDelete.count-1-w
                 let j = friendsDelete[i]
-                friendBook.removeAtIndex(j)
+                usersBook.removeAtIndex(j)
+                appContactNames.removeAtIndex(j)
             }
         }
+        print("filtered")
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        user!.saveInBackground()
-        getContacts({(success) -> Void in
-            print("getContacts")
-//            self.getFriendQuery({ (success) -> Void in
-//                print("getFriends")
-//                if success{
-                    self.getQuery({ (success) -> Void in
-                        print("getQuery")
-                        if success {
-                            self.createAppContacts()
-                            print("success")
-                            self.getFriendQuery({ (success) in
-                                if(success){
-                                    print("getFriends")
-                                    self.filterFriendBook()
-                                    self.tableView.reloadData()
-                                    self.friendsTableView.reloadData()
-                                }else{
-                                    print("failed")
-                                }
-                                //print("success")
-                            })
-                        } else {
-                            print("no contacts")
-                        }
-                    })
-//                }else{
-//                    print("no friends")
-//                }
-//                
-//            })
+        loadContacts()
         
-        })
     
         tableView.dataSource = self
         tableView.delegate = self
@@ -258,17 +229,54 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         friendsTableView.rowHeight = UITableViewAutomaticDimension
         friendsTableView.estimatedRowHeight = 150
         
+        searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = true
+        searchController.searchBar.sizeToFit()
+        friendsTableView.tableHeaderView = searchController.searchBar
+        
         friendsTableView.hidden = false
         tableView.hidden = true
         
-        friendsButton.backgroundColor = UIColor.lightGrayColor()
-        contactsButton.backgroundColor = UIColor.whiteColor()
-        friendsButton.layer.cornerRadius = 10.0
-        friendsButton.clipsToBounds = true
-        contactsButton.layer.cornerRadius = 10.0
-        contactsButton.clipsToBounds = true
+        selectionView.layer.cornerRadius = 10.0
+        selectionView.clipsToBounds = true
+        selectionView.layer.borderColor = UIColor.lightGrayColor().CGColor
+        selectionView.layer.borderWidth = 1.0
 
     }
+    
+    func loadContacts(){
+        getContacts({(success) -> Void in
+            print("getContacts")
+            self.getQuery({ (success) -> Void in
+                print("getQuery")
+                if success {
+                    self.createAppContacts()
+                    print("success")
+//                    self.getFriendQuery({ (success) in
+                        if(success){
+                            print("getFriends")
+                            self.createFriends()
+                            self.filterUsersBook()
+                            self.tableView.reloadData()
+                            self.friendsTableView.reloadData()
+                        }else{
+                            print("failed")
+                        }
+                        //print("success")
+//                    })
+                } else {
+                    print("no contacts")
+                }
+            })
+            
+        })
+    }
+    
+    
+    /*
+    *   tableView methods to control for both tableViews
+    */
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         if tableView == self.tableView {
@@ -280,7 +288,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if tableView == self.tableView {
-            return 50
+            return 30
         }else{
             return 0
         }
@@ -289,10 +297,12 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         var headerView = UIView()
         if tableView == self.tableView {
-            headerView = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
-            headerView.backgroundColor = UIColor(white: 1, alpha: 0.9)
+            headerView = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 5))
+            headerView.backgroundColor = UIColor.lightGrayColor()
 
-            let labelView = UILabel(frame: CGRect(x: 10, y: 10, width: 200, height: 30))
+            let labelView = UILabel(frame: CGRect(x: 10, y: 10, width: 200, height: 20))
+            labelView.font = UIFont.systemFontOfSize(12)
+            
             var userPath = ""
             
             if(section==0){
@@ -313,16 +323,16 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
             if section == 1 {
                 return (contactsBook!.count)
             } else if(section == 0){
-                return friendBook.count
+                return usersBook.count
             }else {
                 return 0
             }
         }
         if tableView == self.friendsTableView {
-            if friendList != nil {
+            if filteredFriendBook != nil {
                 //print("friends")
-                //print(friendBook!.count)
-                return friendList!.count
+                //print(usersBook!.count)
+                return filteredFriendBook!.count
             } else {
                 return 0
             }
@@ -345,9 +355,9 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
             }
             if indexPath.section==0{
                 let cell = tableView.dequeueReusableCellWithIdentifier("AppContactsIdentifier", forIndexPath: indexPath) as! AppContactsCell
-                print(indexPath.row)
                 if(indexPath.row < contactsBook!.count){
-                    let record: PFObject = friendBook![indexPath.row]
+                    let record: PFObject = usersBook![indexPath.row]
+                    cell.contactName = appContactNames[indexPath.row]
                     cell.contact = record
                 }
                 return cell
@@ -355,7 +365,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         }
         if tableView == self.friendsTableView{
             let cell = tableView.dequeueReusableCellWithIdentifier("FriendsIdentifier", forIndexPath: indexPath) as! FriendsCell
-            let record:PFObject = friendList![indexPath.row]
+            let record:PFObject = filteredFriendBook![indexPath.row]
             cell.contact = record
             return cell
         }
@@ -382,6 +392,8 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     
+    
+    
     func messageComposeViewController(controller: MFMessageComposeViewController, didFinishWithResult result: MessageComposeResult) {
         switch (result.rawValue) {
         case MessageComposeResultCancelled.rawValue:
@@ -398,20 +410,122 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
 
+    // functions for when friend or contact tab is pressed
     
     @IBAction func friendsTable(sender: AnyObject) {
         friendsTableView.hidden = false
         tableView.hidden = true
-        friendsButton.backgroundColor = UIColor.lightGrayColor()
+        friendsButton.backgroundColor = UIColor(red: 202/256, green: 104/256, blue: 156/256, alpha: 1)
+        friendsButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         contactsButton.backgroundColor = UIColor.whiteColor()
+        contactsButton.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
     }
     
     @IBAction func contactsTable(sender: AnyObject) {
         friendsTableView.hidden = true
         tableView.hidden = false
+        friendsButton.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
         friendsButton.backgroundColor = UIColor.whiteColor()
-        contactsButton.backgroundColor = UIColor.lightGrayColor()
-    }    
+        contactsButton.backgroundColor = UIColor(red: 202/256, green: 104/256, blue: 156/256, alpha: 1)
+        contactsButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+    }
+    
+    
+    @IBAction func addFriends(sender: AnyObject) {
+        addByUsername("Random") { (success) in
+            print("requesting friend")
+        }
+    }
+    
+    var person: PFObject?
+    
+    func addByUsername(username:String, completionHandler: (success:Bool) -> Void){
+        let query = PFUser.query()
+        query!.whereKeyExists("username")
+        query!.findObjectsInBackgroundWithBlock {
+            (objects: [PFObject]?, error: NSError?) -> Void in
+            if error == nil {
+                if let objects = objects {
+                    for object in objects {
+                        if(object["username"] as? String == username){
+                            if var friendsRequested = self.user?["friends_requested"] as? [String]{
+                                var alreadyRequested = false
+                                for person in friendsRequested{
+                                    if object.objectId == person{
+                                        alreadyRequested = true
+                                    }
+                                }
+                                if !alreadyRequested {
+                                    friendsRequested.append(object.objectId!)
+                                    self.user?["friends_requested"] = friendsRequested
+                                    self.user?.saveInBackground()
+                                }
+                            }
+                            if var friendRequests = object["friend_requests"] as? [String] {
+                                var alreadyRequested = false
+                                for person in friendRequests{
+                                    if object.objectId == person{
+                                        alreadyRequested = true
+                                    }
+                                }
+                                if !alreadyRequested {
+                                    friendRequests.append(self.user!.objectId!)
+                                    object["friend_requests"] = friendRequests
+                                    object.saveInBackground()
+                                }
+                            }
+                            
+                            completionHandler(success: true)
+                        }
+                    }
+                }
+            } else {
+                print("Error: \(error!) \(error!.userInfo)")
+            }
+        }
+    }
+    
+    func acceptRequest(username:String, completionHandler: (success:Bool) -> Void){
+        let query = PFUser.query()
+        query!.whereKeyExists("username")
+        query!.findObjectsInBackgroundWithBlock {
+            (objects: [PFObject]?, error: NSError?) -> Void in
+            if error == nil {
+                if let objects = objects {
+                    for object in objects {
+                        if(object["username"] as? String == username){
+                            if var friendsRequested = self.user?["friends_requested"] as? [String]{
+                                friendsRequested.append(object.objectId!)
+                                self.user?["friends_requested"] = friendsRequested
+                                self.user?.saveInBackground()
+                            }
+                            if var friendRequests = object["friend_requests"] as? [String] {
+                                friendRequests.append(self.user!.objectId!)
+                                object["friend_requests"] = friendRequests
+                                object.saveInBackground()
+                            }
+                            
+                            completionHandler(success: true)
+                        }
+                    }
+                }
+            } else {
+                print("Error: \(error!) \(error!.userInfo)")
+            }
+        }
+    }
+    
+    var filteredFriendBook: [PFObject]!
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        if let searchText = searchController.searchBar.text {
+            filteredFriendBook = searchText.isEmpty ? friendBook : friendBook.filter({(dataString: PFObject) -> Bool in
+                return (dataString["username"] as! String).rangeOfString(searchText, options: .CaseInsensitiveSearch) != nil
+            })
+            
+            friendsTableView.reloadData()
+        }
+    }
     
     func refresh(){
         friendsTableView.reloadData()

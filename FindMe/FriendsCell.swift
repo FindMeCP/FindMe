@@ -48,44 +48,15 @@ class FriendsCell: UITableViewCell {
         }else{
             add()
             friend=true
-            addButton.setImage(UIImage(named: "Checked"), forState: .Normal)
+            self.addButton.setImage(UIImage(named: "Checked"), forState: .Normal)
         }
         let table = superview?.superview as! UITableView
         table.reloadData()
     }
     
     func add() {
-        //user?.addContact(contact!)
-//        let query = PFUser.query()
-//        query!.whereKeyExists("phone")
-//        query!.orderByAscending("username")
-//        query!.findObjectsInBackgroundWithBlock {
-//            (objects: [PFObject]?, error: NSError?) -> Void in
-//            if error == nil {
-//                // The find succeeded.
-//                // Do something with the found objects
-//                if let objects = objects {
-//                    for object in objects {
-//                        //print(object)
-//                        self.queryBook.append(object)
-//                    }
-//                }
-//            } else {
-//                // Log details of the failure
-//                print("Error: \(error!) \(error!.userInfo)")
-//            }
-//        }
         user!["follow"] = contact!["phone"]
         user!.saveInBackground()
-//        let aContact = user!["contacts"] as! NSDictionary
-//        if let track = aContact["friend"] as? Bool {
-//            if(track==true){
-//                user!["follow"] = contact!["phone"]
-//                user!.saveInBackground()
-//            }else{
-//                requestFollow()
-//            }
-//        }
     }
     
     func unadd() {

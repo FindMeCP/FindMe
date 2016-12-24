@@ -57,6 +57,12 @@ class SignUpViewController: UIViewController {
         let newString = stringArray.joinWithSeparator("")
         return newString
     }
+
+    @IBAction func backButton(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true) {
+            
+        }
+    }
     
 }
 

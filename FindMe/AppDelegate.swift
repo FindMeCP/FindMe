@@ -7,16 +7,91 @@
 //
 
 import UIKit
+import Parse
+import Contacts
+import FBSDKCoreKit
+import GoogleMaps
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    private let googleMapsApiKey = "AIzaSyCYnhijS1HY1VfVmgx_Zky0Kf3lFeL2JCg"
+    private let appID = "findme2k16"
+    private let clientkey = "findme2k16_masterkey"
+    var storyboard = UIStoryboard(name: "Main", bundle: nil)
+    var contactStore = CNContactStore()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        
+        GMSServices.provideAPIKey(googleMapsApiKey)
+        
+        // Override point for customization after application launch.
+        Parse.initialize(
+            with: ParseClientConfiguration(block: { (configuration:ParseMutableClientConfiguration) -> Void in
+                configuration.applicationId = self.appID
+                configuration.clientKey = self.clientkey
+                configuration.server = "https://findme2k16.herokuapp.com/parse"
+            })
+        )
+        
+        if PFUser.current() != nil {
+            // if there is a logged in user then load the home view controller
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "MainView")
+            window?.rootViewController = vc
+            print("current user logged in")
+        }
+        
         return true
+
+    }
+    
+    class func getAppDelegate() -> AppDelegate {
+        return UIApplication.shared.delegate as! AppDelegate
+    }
+    
+    func showMessage(message: String) {
+        let alertController = UIAlertController(title: "FindMe", message: message, preferredStyle: UIAlertControllerStyle.alert)
+        
+        let dismissAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) { (action) -> Void in
+        }
+        
+        alertController.addAction(dismissAction)
+        
+        let pushedViewControllers = (self.window?.rootViewController as! UINavigationController).viewControllers
+        let presentedViewController = pushedViewControllers[pushedViewControllers.count - 1]
+        
+        presentedViewController.present(alertController, animated: true, completion: nil)
+    }
+    
+    func requestForAccess(completionHandler: @escaping (_ accessGranted: Bool) -> Void) {
+        let authorizationStatus = CNContactStore.authorizationStatus(for: CNEntityType.contacts)
+        
+        switch authorizationStatus {
+        case .authorized:
+            completionHandler(true)
+            
+        case .denied, .notDetermined:
+            self.contactStore.requestAccess(for: CNEntityType.contacts, completionHandler: { (access, accessError) -> Void in
+                if access {
+                    completionHandler(access)
+                }
+                else {
+                    if authorizationStatus == CNAuthorizationStatus.denied {
+                        DispatchQueue.main.async(execute: { () -> Void in
+                            let message = "\(accessError!.localizedDescription)\n\nPlease allow the app to access your contacts through the Settings."
+                            self.showMessage(message: message)
+                        })
+                    }
+                }
+            })
+            
+        default:
+            completionHandler(false)
+        }
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

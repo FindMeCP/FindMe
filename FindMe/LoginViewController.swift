@@ -26,9 +26,9 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
         
-        let loginButton = FBSDKLoginButton()
-        loginButton.center = view.center
-        view.addSubview(loginButton)
+//        let loginButton = FBSDKLoginButton()
+//        loginButton.center = view.center
+//        view.addSubview(loginButton)
     }
 
     override func didReceiveMemoryWarning() {

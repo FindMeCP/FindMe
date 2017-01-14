@@ -16,9 +16,10 @@ import GoogleMaps
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    private let googleMapsApiKey = "AIzaSyCYnhijS1HY1VfVmgx_Zky0Kf3lFeL2JCg"
-    private let appID = "findme2k16"
-    private let clientkey = "findme2k16_masterkey"
+    final private let googleMapsApiKey = "AIzaSyCYnhijS1HY1VfVmgx_Zky0Kf3lFeL2JCg"
+    final private let appID = "findme2k16"
+    final private let clientkey = "findme2k16_masterkey"
+    final private let serverURL = "https://findme2k16.herokuapp.com/parse"
     var storyboard = UIStoryboard(name: "Main", bundle: nil)
     var contactStore = CNContactStore()
 
@@ -33,11 +34,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             with: ParseClientConfiguration(block: { (configuration:ParseMutableClientConfiguration) -> Void in
                 configuration.applicationId = self.appID
                 configuration.clientKey = self.clientkey
-                configuration.server = "https://findme2k16.herokuapp.com/parse"
+                configuration.server = self.serverURL
             })
         )
-        
         if PFUser.current() != nil {
+            PFUser.enableRevocableSessionInBackground()
             // if there is a logged in user then load the home view controller
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "MainView")
@@ -61,10 +62,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         alertController.addAction(dismissAction)
         
-        let pushedViewControllers = (self.window?.rootViewController as! UINavigationController).viewControllers
-        let presentedViewController = pushedViewControllers[pushedViewControllers.count - 1]
+        inputViewController?.present(alertController, animated: true, completion: nil)
         
-        presentedViewController.present(alertController, animated: true, completion: nil)
+//      let pushedViewControllers = (self.window?.rootViewController as! UINavigationController).viewControllers
+//      let presentedViewController = pushedViewControllers[pushedViewControllers.count - 1]
+        
+        //presentedViewController.present(alertController, animated: true, completion: nil)
     }
     
     func requestForAccess(completionHandler: @escaping (_ accessGranted: Bool) -> Void) {

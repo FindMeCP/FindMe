@@ -1,10 +1,10 @@
 #TODO
 - MainViewControler
-  - [] Improve readability
 - Login/SignupViewController
   - [] Improve UI
   - [] Facebook Connectivity
 - ContactsViewController
+  - [] Add contact via username
   - [] Optimize contact searching
   - [] Create cached friendlist
   - [] Reorganize code to make more readable
@@ -22,8 +22,8 @@ helps you find your friends without any effort. The FindMe app is useful
 for all ages, but we are specifically targeting college students.
 
 #Project Distribution
-- Jordi: Google maps functionality, customize screens (split, shared, solo) for viewing maps, manage location services
 - William: Create users, access contacts, store and retrieve user data via Parse, allow tracking of other users, handle login and signup
+- Jordi: Google maps functionality, customize screens (split, shared, solo) for viewing maps, manage location services
 
 ## User Stories
 
@@ -66,7 +66,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## License
 
-    Copyright 2016 Jordi E. Turner, William Tong
+    Copyright 2016 William Tong, Jordi E. Turner
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

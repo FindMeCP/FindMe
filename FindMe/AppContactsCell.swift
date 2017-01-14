@@ -36,9 +36,9 @@ class AppContactsCell: UITableViewCell {
         }
         //let contactPerson: PFObject = contact!
         if(friend==true){
-            addButton.setImage(UIImage(named: "Checked"), for: .normal)
+            addButton.setImage(UIImage(named: "PinkCheck"), for: .normal)
         }else{
-            addButton.setImage(UIImage(named: "Unchecked"), for: .normal)
+            addButton.setImage(UIImage(named: "PinkAdd"), for: .normal)
         }
         name = contact!["username"] as? String
         nameLabel.text = name
@@ -49,17 +49,19 @@ class AppContactsCell: UITableViewCell {
         if(friend==true){
             unadd()
             friend=false
-            addButton.setImage(UIImage(named: "Unchecked"), for: .normal)
+            addButton.setImage(UIImage(named: "PinkAdd"), for: .normal)
         }else{
             print("added")
             add()
             friend=true
-            addButton.setImage(UIImage(named: "Checked"), for: .normal)
+            addButton.setImage(UIImage(named: "PinkCheck"), for: .normal)
         }
         let table = superview?.superview as! UITableView
         table.reloadData()
     }
     
+    
+    // FIXME!!!
     func add() {
         print("add to friends")
         var friend = user!["friends"] as! [String]
@@ -70,6 +72,7 @@ class AppContactsCell: UITableViewCell {
         table.reloadData()
     }
     
+    // FIXME!!
     func unadd() {
         //user?.addContact(contact!)
         var friend = user!["friends"] as! [String]
@@ -85,7 +88,4 @@ class AppContactsCell: UITableViewCell {
         
     }
     
-    func requestFriend(){
-        
-    }
 }

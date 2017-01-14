@@ -60,6 +60,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
             loadFollowedUser()
         }
         
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        
         locationManager.delegate = self
         secondMapTitle.text = "\((user!.username)!)"
         
@@ -87,6 +89,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         loadingView.isHidden = false
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
         loadFollowedUser()
         if let userTracking = user!["tracking"] as? Bool {
             if (userTracking) {
@@ -127,7 +130,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
                         if(trackOtherUser){
                             let otherUserCoordinates = self.loadOtherUserData() as CLLocationCoordinate2D!
                             self.setuplocationMarker(coordinate: otherUserCoordinates!)
-                            let friendName = self.otherUser["username"]
+                            let friendName = self.otherUser["username"] as! String
                             self.firstMapTitle.text = "\(friendName)"
                         }else{
                             self.firstMapTitle.text = "Friend name"
@@ -388,6 +391,24 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
             user!.saveInBackground()
             print("true")
         }
+    }
+    
+    @IBAction func logoutPressed(_ sender: Any) {
+        let logoutAlert = UIAlertController(title: "Log Out", message: "Are you sure you want to log out ? ", preferredStyle: UIAlertControllerStyle.alert)
+        
+        logoutAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
+            PFUser.logOutInBackground()
+            self.performSegue(withIdentifier: "logoutSegue", sender: self)
+        }))
+        
+        logoutAlert.addAction(UIAlertAction(title: "No", style: .default, handler: { (action: UIAlertAction!) in
+            
+            logoutAlert .dismiss(animated: true, completion: nil)
+            
+            
+        }))
+        
+        present(logoutAlert, animated: true, completion: nil)
     }
 
 }

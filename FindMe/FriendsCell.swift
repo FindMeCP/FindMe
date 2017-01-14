@@ -34,23 +34,24 @@ class FriendsCell: UITableViewCell {
         }
         //let contactPerson: PFObject = contact!
         if(friend==true){
-            addButton.setImage(UIImage(named: "Checked"), for: .normal)
+            addButton.setImage(UIImage(named: "PinkCheck"), for: .normal)
         }else{
-            addButton.setImage(UIImage(named: "Unchecked"), for: .normal)
+            addButton.setImage(UIImage(named: "PinkAdd"), for: .normal)
         }
         name = contact!["username"] as? String
         nameLabel.text = name
     }
     
     @IBAction func addPerson(_ sender: Any) {
+        print("CHECK")
         if(friend==true){
             unadd()
             friend=false
-            addButton.setImage(UIImage(named: "Unchecked"), for: .normal)
+            addButton.setImage(UIImage(named: "PinkAdd"), for: .normal)
         }else{
             add()
             friend=true
-            self.addButton.setImage(UIImage(named: "Checked"), for: .normal)
+            self.addButton.setImage(UIImage(named: "PinkCheck"), for: .normal)
         }
         let table = superview?.superview as! UITableView
         table.reloadData()
@@ -66,10 +67,7 @@ class FriendsCell: UITableViewCell {
         user!["follow"] = ""
         user!.saveInBackground()
     }
-    
-    func requestFollow(){
-        
-    }
+
 }
 
 

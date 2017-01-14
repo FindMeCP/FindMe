@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		002197851E2606AC0056F007 /* AddUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002197841E2606AC0056F007 /* AddUserCell.swift */; };
+		003F29AE1E1C370200BD7FBF /* AddUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003F29AD1E1C370200BD7FBF /* AddUserViewController.swift */; };
+		00A29D6C1E29632200B6C2D5 /* RequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A29D6B1E29632200B6C2D5 /* RequestsViewController.swift */; };
+		00A29D6E1E29633C00B6C2D5 /* RequestsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A29D6D1E29633C00B6C2D5 /* RequestsCell.swift */; };
+		00A29D701E2963A400B6C2D5 /* ContactsMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A29D6F1E2963A400B6C2D5 /* ContactsMenuViewController.swift */; };
 		00B16F761E18B15000C1F3D0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B16F751E18B15000C1F3D0 /* AppDelegate.swift */; };
 		00B16F7B1E18B15000C1F3D0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00B16F791E18B15000C1F3D0 /* Main.storyboard */; };
 		00B16F7D1E18B15000C1F3D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00B16F7C1E18B15000C1F3D0 /* Assets.xcassets */; };
@@ -24,6 +29,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		002197841E2606AC0056F007 /* AddUserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddUserCell.swift; sourceTree = "<group>"; };
+		003F29AD1E1C370200BD7FBF /* AddUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddUserViewController.swift; sourceTree = "<group>"; };
+		00A29D6B1E29632200B6C2D5 /* RequestsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestsViewController.swift; sourceTree = "<group>"; };
+		00A29D6D1E29633C00B6C2D5 /* RequestsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestsCell.swift; sourceTree = "<group>"; };
+		00A29D6F1E2963A400B6C2D5 /* ContactsMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsMenuViewController.swift; sourceTree = "<group>"; };
 		00B16F721E18B15000C1F3D0 /* FindMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FindMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00B16F751E18B15000C1F3D0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		00B16F7A1E18B15000C1F3D0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -57,6 +67,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		00A29D681E295DD800B6C2D5 /* Friend Requests */ = {
+			isa = PBXGroup;
+			children = (
+				00A29D6B1E29632200B6C2D5 /* RequestsViewController.swift */,
+				00A29D6D1E29633C00B6C2D5 /* RequestsCell.swift */,
+			);
+			name = "Friend Requests";
+			sourceTree = "<group>";
+		};
+		00A29D691E295DE300B6C2D5 /* ContactsView */ = {
+			isa = PBXGroup;
+			children = (
+				00B16F901E18BA7900C1F3D0 /* ContactsViewController.swift */,
+				00B16F921E18BAD900C1F3D0 /* ContactsCell.swift */,
+				00B16F9D1E1B881A00C1F3D0 /* AppContactsCell.swift */,
+				00B16F941E18BAF400C1F3D0 /* FriendsCell.swift */,
+			);
+			name = ContactsView;
+			sourceTree = "<group>";
+		};
+		00A29D6A1E295DFF00B6C2D5 /* AddFriends */ = {
+			isa = PBXGroup;
+			children = (
+				003F29AD1E1C370200BD7FBF /* AddUserViewController.swift */,
+				002197841E2606AC0056F007 /* AddUserCell.swift */,
+			);
+			name = AddFriends;
+			sourceTree = "<group>";
+		};
+		00A29D711E29822400B6C2D5 /* SettingsView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = SettingsView;
+			sourceTree = "<group>";
+		};
 		00B16F691E18B15000C1F3D0 = {
 			isa = PBXGroup;
 			children = (
@@ -80,7 +126,8 @@
 			children = (
 				00B16F8F1E18BA1600C1F3D0 /* Contacts */,
 				00B16F871E18B99600C1F3D0 /* UserSetup */,
-				00B16F8E1E18BA0C00C1F3D0 /* New Group */,
+				00B16F8E1E18BA0C00C1F3D0 /* MapView */,
+				00A29D711E29822400B6C2D5 /* SettingsView */,
 				00B16F751E18B15000C1F3D0 /* AppDelegate.swift */,
 				00B16F791E18B15000C1F3D0 /* Main.storyboard */,
 				00B16F7C1E18B15000C1F3D0 /* Assets.xcassets */,
@@ -100,21 +147,21 @@
 			name = UserSetup;
 			sourceTree = "<group>";
 		};
-		00B16F8E1E18BA0C00C1F3D0 /* New Group */ = {
+		00B16F8E1E18BA0C00C1F3D0 /* MapView */ = {
 			isa = PBXGroup;
 			children = (
 				00B16F9B1E1B059E00C1F3D0 /* MapViewController.swift */,
 			);
-			name = "New Group";
+			name = MapView;
 			sourceTree = "<group>";
 		};
 		00B16F8F1E18BA1600C1F3D0 /* Contacts */ = {
 			isa = PBXGroup;
 			children = (
-				00B16F901E18BA7900C1F3D0 /* ContactsViewController.swift */,
-				00B16F921E18BAD900C1F3D0 /* ContactsCell.swift */,
-				00B16F9D1E1B881A00C1F3D0 /* AppContactsCell.swift */,
-				00B16F941E18BAF400C1F3D0 /* FriendsCell.swift */,
+				00A29D6F1E2963A400B6C2D5 /* ContactsMenuViewController.swift */,
+				00A29D681E295DD800B6C2D5 /* Friend Requests */,
+				00A29D6A1E295DFF00B6C2D5 /* AddFriends */,
+				00A29D691E295DE300B6C2D5 /* ContactsView */,
 			);
 			name = Contacts;
 			sourceTree = "<group>";
@@ -172,6 +219,7 @@
 				TargetAttributes = {
 					00B16F711E18B15000C1F3D0 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = YW8U3XET7P;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -260,14 +308,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				002197851E2606AC0056F007 /* AddUserCell.swift in Sources */,
 				00B16F8B1E18B9F100C1F3D0 /* LoginViewController.swift in Sources */,
+				00A29D6E1E29633C00B6C2D5 /* RequestsCell.swift in Sources */,
 				00B16F891E18B9DE00C1F3D0 /* SignUpViewController.swift in Sources */,
 				00B16F8D1E18BA0500C1F3D0 /* LogoutViewController.swift in Sources */,
 				00B16F9C1E1B059E00C1F3D0 /* MapViewController.swift in Sources */,
+				00A29D6C1E29632200B6C2D5 /* RequestsViewController.swift in Sources */,
 				00B16F761E18B15000C1F3D0 /* AppDelegate.swift in Sources */,
+				003F29AE1E1C370200BD7FBF /* AddUserViewController.swift in Sources */,
 				00B16F9E1E1B881A00C1F3D0 /* AppContactsCell.swift in Sources */,
 				00B16F911E18BA7900C1F3D0 /* ContactsViewController.swift in Sources */,
 				00B16F931E18BAD900C1F3D0 /* ContactsCell.swift in Sources */,
+				00A29D701E2963A400B6C2D5 /* ContactsMenuViewController.swift in Sources */,
 				00B16F951E18BAF400C1F3D0 /* FriendsCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -334,7 +387,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -377,7 +430,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -390,6 +443,7 @@
 			baseConfigurationReference = 867CF1E6C75551FB256B37BC /* Pods-FindMe.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = YW8U3XET7P;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos/Parse",
@@ -407,6 +461,7 @@
 			baseConfigurationReference = D0524FFC8C9777DE16EBF089 /* Pods-FindMe.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = YW8U3XET7P;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos/Parse",

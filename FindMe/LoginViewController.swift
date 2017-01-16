@@ -45,6 +45,10 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
+    @IBAction func signup(_ sender: Any) {
+        performSegue(withIdentifier: "signUpSegue", sender: self)
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
         super.touchesBegan(touches, with: event)

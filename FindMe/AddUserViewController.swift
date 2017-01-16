@@ -17,6 +17,7 @@ class AddUserViewController: UIViewController, UISearchResultsUpdating, UITableV
     
     @IBOutlet weak var tableView: UITableView!
     
+    var friendBook: [PFObject]?
     var userDatabase: [PFObject]?
     
     override func viewDidLoad() {
@@ -35,6 +36,36 @@ class AddUserViewController: UIViewController, UISearchResultsUpdating, UITableV
         searchController.dimsBackgroundDuringPresentation = true
         searchController.searchBar.sizeToFit()
         tableView.tableHeaderView = searchController.searchBar
+        
+        if let friendsData = user?["friends"] as? [NSDictionary] {
+            for friend in friendsData {
+                if let friendID = friend["id"] as? String {
+                    print("friend")
+                    print(friendID)
+                    
+                }
+            }
+        }
+        
+//        let query = PFUser.query()
+//        query!.whereKeyExists("phone")
+//        query!.order(byAscending: "username")
+//        query!.findObjectsInBackground(block: { (objects, error) in
+//            if error == nil {
+//                // The find succeeded.
+//                // Do something with the found objects
+//                if let objects = objects {
+//                    for object in objects {
+//                        //print(object)
+//                        self.friendQueryBook.append(object)
+//                        self.queryBook.append(object)
+//                    }
+//                }
+//            } else {
+//                // Log details of the failure
+//                print("Error: \(error!) \(error!.localizedDescription)")
+//            }
+//        })
     }
 
     override func didReceiveMemoryWarning() {
@@ -88,7 +119,7 @@ class AddUserViewController: UIViewController, UISearchResultsUpdating, UITableV
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "AddFriendsIdentifier", for: indexPath as IndexPath) as! ContactsCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "AddFriendsIdentifier", for: indexPath as IndexPath) as! AddUserCell
         let currentContact = userDatabase?[indexPath.row]
         //cell.usernameLabel.text = currentContact
         return cell

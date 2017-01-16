@@ -43,6 +43,7 @@ class FriendsCell: UITableViewCell {
     }
     
     @IBAction func addPerson(_ sender: Any) {
+        
         print("CHECK")
         if(friend==true){
             unadd()

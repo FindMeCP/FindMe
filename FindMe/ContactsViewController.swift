@@ -144,24 +144,24 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         print("create friends")
         var contactsDelete:[Int] = []
         for x in 0...contactsBook.count-1 {
-            for y in 0...contactsBook[x].phoneNumbers.count-1{
-                let number = contactsBook[x].phoneNumbers[y].value
-                
-                let phoneNumber = storeAsPhone(phone: number.stringValue)
-                print("\(phoneNumber)")
-                for object in queryBook{
-                    if(phoneNumber == (object["phone"] as! String)){
-                        print("appended")
-                        usersBook.append(object)
-                        let name = "\(contactsBook[x].givenName) \(contactsBook[x].familyName)"
-                        appContactNames.append(name)
-                        self.tableView.reloadData()
-                        contactsDelete.append(x)
-                    }
+            let number = contactsBook[x].phoneNumbers[0].value
+            
+            let phoneNumber = storeAsPhone(phone: number.stringValue)
+            print("\(phoneNumber)")
+            for object in queryBook{
+                if(phoneNumber == (object["phone"] as! String)){
+                    print("appended")
+                    print(phoneNumber)
+                    usersBook.append(object)
+                    let name = "\(contactsBook[x].givenName) \(contactsBook[x].familyName)"
+                    appContactNames.append(name)
+                    self.tableView.reloadData()
+                    contactsDelete.append(x)
                 }
             }
         }
-        
+        print(contactsBook)
+        print(contactsDelete)
         if contactsDelete.count != 0 {
             for x in 0...contactsDelete.count-1{
                 let i = contactsDelete.count-1-x

@@ -2,16 +2,12 @@
 - MainViewControler
 - Login/SignupViewController
   - [] Improve UI
-  - [] Facebook Connectivity
 - ContactsViewController
-  - [] Add contact via username
   - [] Optimize contact searching
-  - [] Create cached friendlist
-  - [] Reorganize code to make more readable
-
-- [] Push notification request to add friend
-- [] Refine contacts page
-- [] Make other view controllers
+- RequestsViewController
+  - [] Request to add friend
+- AddUserViewController
+  - [] Add contact via username
 
 # FindMe
 Group Project for CodePath
@@ -30,7 +26,7 @@ for all ages, but we are specifically targeting college students.
 **Required** functionality: User can
 
 - [X] Sign up, log in, and log out of the FindMe app.
-- [X] Remained signed in across app restarts.
+- [X] Persisted across app restarts.
 - [X] See the user's location on a Google Maps SDK map.
 - [X] Share user locations with a friend.
 - [X] Reset the map to user/friend locations.
@@ -39,8 +35,9 @@ for all ages, but we are specifically targeting college students.
 - [X] Find friends with app installed.
 - [X] Friend's location pin updates every 5 seconds.
 
-**Optional** features: User can
+**Optional** features:
 
+- [X] SMS Verification in Sign Up
 - [X] Customize UI and logos
 - [X] Invite friends without the app.
 - [X] Enable maps to fix to users' locations.

@@ -64,10 +64,20 @@ class AppContactsCell: UITableViewCell {
     // FIXME!!!
     func add() {
         print("add to friends")
-        var friend = user!["friends"] as! [String]
-        friend.append(contact!.objectId!)
-        user!["friends"] = friend
-        user!.saveInBackground()
+        makeFriends(user1: user!, user2: contact! as! PFUser)
+//        if var friend = user!["friends"] as? [NSDictionary] {
+//            let friendData: NSDictionary = ["id" : "\(contact!.objectId!)", "type" : 0 ]
+//            friend.append(friendData)
+//            user!["friends"] = friend
+//            user!.saveInBackground()
+//        } else {
+//            var friend: [NSDictionary] = []
+//            let friendData: NSDictionary = ["id" : "\(contact!.objectId!)", "type" : 0 ]
+//            friend.append(friendData)
+//            user!["friends"] = friend
+//            user!.saveInBackground()
+//        }
+        
         let table = superview?.superview as! UITableView
         table.reloadData()
     }
@@ -86,6 +96,29 @@ class AppContactsCell: UITableViewCell {
         user!["friends"] = friend
         user!.saveInBackground()
         
+    }
+    
+    func makeFriends(user1: PFUser, user2: PFUser) {
+        var user1Data: [NSDictionary] = []
+        var user2Data: [NSDictionary] = []
+        let user1AsFriend: NSDictionary = ["id" : "\(user1.objectId!)", "type" : 2]
+        let user2AsFriend: NSDictionary = ["id" : "\(user2.objectId!)", "type" : 2]
+        if let user1Friends = user1["friends"] as? [NSDictionary] {
+            user1Data = user1Friends
+            user1Data.append(user2AsFriend)
+        } else {
+            user1Data.append(user2AsFriend)
+        }
+        if let user2Friends = user2["friends"] as? [NSDictionary] {
+            user2Data = user2Friends
+            user2Data.append(user1AsFriend)
+        } else {
+            user2Data.append(user1AsFriend)
+        }
+        user1["friends"] = user1Data
+        user2["friends"] = user2Data
+        user1.saveInBackground()
+        user2.saveInBackground()
     }
     
 }

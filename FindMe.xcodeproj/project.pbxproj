@@ -12,6 +12,7 @@
 		00A29D6C1E29632200B6C2D5 /* RequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A29D6B1E29632200B6C2D5 /* RequestsViewController.swift */; };
 		00A29D6E1E29633C00B6C2D5 /* RequestsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A29D6D1E29633C00B6C2D5 /* RequestsCell.swift */; };
 		00A29D701E2963A400B6C2D5 /* ContactsMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A29D6F1E2963A400B6C2D5 /* ContactsMenuViewController.swift */; };
+		00A344751E2AAC4D00312026 /* EnterCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A344741E2AAC4D00312026 /* EnterCodeViewController.swift */; };
 		00B16F761E18B15000C1F3D0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B16F751E18B15000C1F3D0 /* AppDelegate.swift */; };
 		00B16F7B1E18B15000C1F3D0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00B16F791E18B15000C1F3D0 /* Main.storyboard */; };
 		00B16F7D1E18B15000C1F3D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00B16F7C1E18B15000C1F3D0 /* Assets.xcassets */; };
@@ -34,6 +35,7 @@
 		00A29D6B1E29632200B6C2D5 /* RequestsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestsViewController.swift; sourceTree = "<group>"; };
 		00A29D6D1E29633C00B6C2D5 /* RequestsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestsCell.swift; sourceTree = "<group>"; };
 		00A29D6F1E2963A400B6C2D5 /* ContactsMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsMenuViewController.swift; sourceTree = "<group>"; };
+		00A344741E2AAC4D00312026 /* EnterCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterCodeViewController.swift; sourceTree = "<group>"; };
 		00B16F721E18B15000C1F3D0 /* FindMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FindMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00B16F751E18B15000C1F3D0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		00B16F7A1E18B15000C1F3D0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -140,9 +142,10 @@
 		00B16F871E18B99600C1F3D0 /* UserSetup */ = {
 			isa = PBXGroup;
 			children = (
-				00B16F881E18B9DE00C1F3D0 /* SignUpViewController.swift */,
 				00B16F8A1E18B9F100C1F3D0 /* LoginViewController.swift */,
 				00B16F8C1E18BA0500C1F3D0 /* LogoutViewController.swift */,
+				00B16F881E18B9DE00C1F3D0 /* SignUpViewController.swift */,
+				00A344741E2AAC4D00312026 /* EnterCodeViewController.swift */,
 			);
 			name = UserSetup;
 			sourceTree = "<group>";
@@ -308,6 +311,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00A344751E2AAC4D00312026 /* EnterCodeViewController.swift in Sources */,
 				002197851E2606AC0056F007 /* AddUserCell.swift in Sources */,
 				00B16F8B1E18B9F100C1F3D0 /* LoginViewController.swift in Sources */,
 				00A29D6E1E29633C00B6C2D5 /* RequestsCell.swift in Sources */,

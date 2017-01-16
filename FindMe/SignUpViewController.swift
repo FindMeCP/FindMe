@@ -42,9 +42,9 @@ class SignUpViewController: UIViewController, UIPopoverControllerDelegate {
         newUser["follow"] = ""
         newUser["tracking"] = true
         newUser["friends"] = []
-        let query = PFUser.query()
-        query?.whereKey("username", equalTo: newUser.username!)
-        query?.findObjectsInBackground(block: { (objects, error) in
+        let usernameQuery = PFUser.query()
+        usernameQuery?.whereKey("username", equalTo: newUser.username!)
+        usernameQuery?.findObjectsInBackground(block: { (objects, error) in
             if error == nil {
                 if (objects!.count > 0){
                     self.usernameTaken = true
@@ -52,26 +52,27 @@ class SignUpViewController: UIViewController, UIPopoverControllerDelegate {
                     
                 } else {
                     print("Username is available. ")
-                    completionHandler(true)
+                    let phoneQuery = PFUser.query()
+                    phoneQuery?.whereKey("phone", equalTo: storedNumber)
+                    phoneQuery?.findObjectsInBackground(block: { (objects, error) in
+                        if error == nil {
+                            if (objects!.count > 0){
+                                self.phoneTaken = true
+                                print("Phone Number is taken")
+                            } else {
+                                print("Phone Number is available. ")
+                                completionHandler(true)
+                            }
+                        } else {
+                            print("error")
+                        }
+                    })
                 }
             } else {
                 print("error")
             }
         })
-        query?.whereKey("phone", equalTo: storedNumber)
-        query?.findObjectsInBackground(block: { (objects, error) in
-            if error == nil {
-                if (objects!.count > 0){
-                    self.phoneTaken = true
-                    print("Phone Number is taken")
-                } else {
-                    print("Phone Number is available. ")
-                    completionHandler(true)
-                }
-            } else {
-                print("error")
-            }
-        })
+
     }
     
     func storeAsPhone(phone: String)->String{

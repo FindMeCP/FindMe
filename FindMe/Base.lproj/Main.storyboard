@@ -805,7 +805,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UWa-ZU-saa">
-                                <rect key="frame" x="107" y="407" width="163" height="48"/>
+                                <rect key="frame" x="106" y="407" width="163" height="48"/>
                                 <color key="backgroundColor" red="0.79215686269999996" green="0.40784313729999999" blue="0.61568627450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <inset key="contentEdgeInsets" minX="12" minY="12" maxX="12" maxY="12"/>
@@ -1477,7 +1477,7 @@
             <objects>
                 <navigationController storyboardIdentifier="MainView" automaticallyAdjustsScrollViewInsets="NO" id="YDo-AF-a6D" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="WtC-YE-2SA">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="WtC-YE-2SA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1495,7 +1495,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0ds-Ct-ypi" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="rpc-pK-T42">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="rpc-pK-T42">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1521,7 +1521,7 @@
         <image name="purplecircle35" width="35" height="35"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Cwk-bv-IXr"/>
+        <segue reference="Jhu-VD-6oU"/>
         <segue reference="lUo-SA-cOe"/>
     </inferredMetricsTieBreakers>
 </document>

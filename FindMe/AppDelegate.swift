@@ -17,9 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     final private let googleMapsApiKey = "AIzaSyCYnhijS1HY1VfVmgx_Zky0Kf3lFeL2JCg"
-    final private let appID = "findme2k16"
-    final private let clientkey = "findme2k16_masterkey"
-    final private let serverURL = "https://findme2k16.herokuapp.com/parse"
+    final private let appID = "findme2k17"
+    final private let clientkey = "findme2k17_masterkey"
+    final private let serverURL = "https://findme2k17.herokuapp.com//parse"
     var storyboard = UIStoryboard(name: "Main", bundle: nil)
     var contactStore = CNContactStore()
 

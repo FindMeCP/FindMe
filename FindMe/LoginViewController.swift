@@ -20,7 +20,16 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        PFCloud.callFunction(inBackground: "hello", withParameters: [:]) { (success, error) in
+            if ( error == nil) {
+                print("success")
+                print(success.debugDescription)
+            }
+            else if (error != nil) {
+                NSLog("error")
+            }
+        }
+            
         // Do any additional setup after loading the view.
         
         locationManager.delegate = self

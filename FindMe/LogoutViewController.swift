@@ -11,6 +11,8 @@ import Parse
 
 class LogoutViewController: UIViewController {
     
+    var window: UIWindow?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -24,7 +26,11 @@ class LogoutViewController: UIViewController {
     
     @IBAction func logout(_ sender: Any) {
         PFUser.logOut()
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "Main")
+        window?.rootViewController = vc
     }
+    
 
     /*
     // MARK: - Navigation

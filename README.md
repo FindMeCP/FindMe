@@ -1,5 +1,4 @@
 #TODO
-- MainViewControler
 - Login/SignupViewController
   - [] Improve UI
 - ContactsViewController
@@ -10,12 +9,14 @@
   - [] Add contact via username
 
 # FindMe
-Group Project for CodePath
 
 ## Description
 Tired of trying to find your friends while they don't text you back? FindMe
 helps you find your friends without any effort. The FindMe app is useful
 for all ages, but we are specifically targeting college students.
+
+## Info
+FindMe is a geolocation app built on Google Maps API. Backend uses Parse Server with mongoDB, hosted on Heroku platform.
 
 #Project Distribution
 - William: Create users, access contacts, store and retrieve user data via Parse, allow tracking of other users, handle login and signup

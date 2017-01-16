@@ -1,12 +1,18 @@
 #TODO
-- Login/SignupViewController
-  - [] Improve UI
-- ContactsViewController
-  - [] Optimize contact searching
-- RequestsViewController
-  - [] Request to add friend
-- AddUserViewController
-  - [] Add contact via username
+- Parse Server
+  - Cloud functions
+    - [] Friend Requests
+    - [] Accepted Friend Requests
+
+- FindMe Client App    
+  - Login/SignupViewController
+    - [] Improve UI
+  - ContactsViewController
+    - [] Optimize contact searching
+  - RequestsViewController
+    - [] Request to add friend
+  - AddUserViewController
+    - [] Add contact via username
 
 # FindMe
 

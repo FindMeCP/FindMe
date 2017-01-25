@@ -56,7 +56,19 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadingView.isHidden = false
-        if user != nil{
+        if otherUser != nil{
+            PFCloud.callFunction(inBackground: "friendRequest", withParameters: ["user" : otherUser.objectId]) { (success, error) in
+                print("requesting friend")
+                if ( error == nil) {
+                    print("success")
+                    print(success.debugDescription)
+                }
+                else if (error != nil) {
+                    NSLog("error")
+                }
+            }
+            
+            
             loadFollowedUser()
         }
         

@@ -21,6 +21,7 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         PFCloud.callFunction(inBackground: "hello", withParameters: [:]) { (success, error) in
+            print("dummy")
             if ( error == nil) {
                 print("success")
                 print(success.debugDescription)
@@ -29,6 +30,7 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate {
                 NSLog("error")
             }
         }
+        
             
         // Do any additional setup after loading the view.
         

@@ -9,16 +9,17 @@
 import UIKit
 import Parse
 
-class AddUserViewController: UIViewController, UISearchResultsUpdating, UITableViewDelegate, UITableViewDataSource {
+class AddUserViewController: UIViewController, UISearchControllerDelegate, UISearchResultsUpdating, UITableViewDelegate, UITableViewDataSource {
     
     var user = PFUser.current()
 
-    var searchController: UISearchController!
+    let searchController = UISearchController(searchResultsController: nil)
     
     @IBOutlet weak var tableView: UITableView!
     
     var friendBook: [PFObject]?
-    var userDatabase: [PFObject]?
+    var userDatabase: [PFObject] = []
+    var filteredUserDatabase: [PFObject] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,11 +32,12 @@ class AddUserViewController: UIViewController, UISearchResultsUpdating, UITableV
         tableView.estimatedRowHeight = 150
 
         // Do any additional setup after loading the view.
-        searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
-        searchController.dimsBackgroundDuringPresentation = true
-        searchController.searchBar.sizeToFit()
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = false
+        definesPresentationContext = true
         tableView.tableHeaderView = searchController.searchBar
+        
         
         if let friendsData = user?["friends"] as? [NSDictionary] {
             for friend in friendsData {
@@ -47,25 +49,25 @@ class AddUserViewController: UIViewController, UISearchResultsUpdating, UITableV
             }
         }
         
-//        let query = PFUser.query()
-//        query!.whereKeyExists("phone")
-//        query!.order(byAscending: "username")
-//        query!.findObjectsInBackground(block: { (objects, error) in
-//            if error == nil {
-//                // The find succeeded.
-//                // Do something with the found objects
-//                if let objects = objects {
-//                    for object in objects {
-//                        //print(object)
-//                        self.friendQueryBook.append(object)
-//                        self.queryBook.append(object)
-//                    }
-//                }
-//            } else {
-//                // Log details of the failure
-//                print("Error: \(error!) \(error!.localizedDescription)")
-//            }
-//        })
+        let query = PFUser.query()
+        query!.whereKeyExists("phone")
+        query!.order(byAscending: "username")
+        query!.findObjectsInBackground(block: { (objects, error) in
+            if error == nil {
+                // The find succeeded.
+                // Do something with the found objects
+                if let objects = objects {
+                    for object in objects {
+                        //print(object)
+                        self.userDatabase.append(object)
+                        self.filteredUserDatabase.append(object)
+                    }
+                }
+            } else {
+                // Log details of the failure
+                print("Error: \(error!) \(error!.localizedDescription)")
+            }
+        })
     }
 
     override func didReceiveMemoryWarning() {
@@ -74,13 +76,32 @@ class AddUserViewController: UIViewController, UISearchResultsUpdating, UITableV
     }
     
     @IBAction func addUser(_ sender: Any) {
+        
     }
     
+    
     func updateSearchResults(for searchController: UISearchController) {
-        if let searchText = searchController.searchBar.text {
-            
+        if let searchedText = searchController.searchBar.text {
+            filterContentForSearchText(searchText: searchedText)
         }
     }
+    
+    func filterContentForSearchText(searchText: String, scope: String = "All") {
+        if searchText != "" {
+            filteredUserDatabase = userDatabase.filter { object in
+                if let objectName = object["username"] as? String {
+                    return objectName.lowercased().contains(searchText.lowercased())
+                }else{
+                    return false
+                }
+            }
+        }else{
+            filteredUserDatabase = userDatabase
+        }
+        
+        tableView.reloadData()
+    }
+
     
     var person: PFObject?
     
@@ -103,25 +124,18 @@ class AddUserViewController: UIViewController, UISearchResultsUpdating, UITableV
         })
     }
     
-    func addToFriends(){
-        
-        
-    }
+    
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if userDatabase != nil {
-            return userDatabase!.count
-        }
-        else{
-            return 0
-        }
+        return filteredUserDatabase.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AddFriendsIdentifier", for: indexPath as IndexPath) as! AddUserCell
-        let currentContact = userDatabase?[indexPath.row]
-        //cell.usernameLabel.text = currentContact
+        let currentContact = filteredUserDatabase[indexPath.row] as? PFUser
+        cell.usernameLabel.text = currentContact?.username
+        cell.otherUser = currentContact
         return cell
         
     }

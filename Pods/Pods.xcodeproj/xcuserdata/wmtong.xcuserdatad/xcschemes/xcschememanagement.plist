@@ -54,15 +54,15 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>SinchVerification-Swift.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>332F91393FB1DE033D370B4CEDDD5FCF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>433617779AE16D2B00C38C93D95DD46B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -93,16 +93,6 @@
 			<true/>
 		</dict>
 		<key>A7FEAA14E89971698ACA148F7F7202F2</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>B835ADE10BAFDBD019E0D00470C28FDB</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C35197B06BB67A28D7A774F8705AF8D1</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -12,7 +12,5 @@ target 'FindMe' do
   pod 'FacebookLogin'
   pod 'FacebookCore'
   pod 'FacebookShare'
-  pod 'SinchVerification-Swift'
-
 
 end

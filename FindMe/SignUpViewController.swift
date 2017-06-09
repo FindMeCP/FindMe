@@ -8,7 +8,6 @@
 
 import UIKit
 import Parse
-import SinchVerification
 
 class SignUpViewController: UIViewController, UIPopoverControllerDelegate {
     
@@ -16,8 +15,6 @@ class SignUpViewController: UIViewController, UIPopoverControllerDelegate {
     @IBOutlet weak var passwordText: UITextField!
     @IBOutlet weak var phoneText: UITextField!
     
-    var verification: Verification!
-    var applicationKey = "d40f30f0-af13-4896-8671-95943af5c1e1"
     var newUser = PFUser()
     var usernameTaken = false
     var phoneTaken = false
@@ -64,12 +61,12 @@ class SignUpViewController: UIViewController, UIPopoverControllerDelegate {
                                 completionHandler(true)
                             }
                         } else {
-                            print("error")
+                            print("error" + error.debugDescription)
                         }
                     })
                 }
             } else {
-                print("error")
+                print("error" + error.debugDescription)
             }
         })
 
@@ -89,26 +86,23 @@ class SignUpViewController: UIViewController, UIPopoverControllerDelegate {
         }else {
             createNewUser { (success) in
                 
-                 self.verification =
-                SMSVerification(self.applicationKey,
-                                phoneNumber: verificationPhone)
-                self.verification.initiate({ (success, error) in
-                    //self.disableUI(false);
-                    if (success.success){
-                        self.performSegue(withIdentifier: "enterPinSegue", sender: sender);
-                    } else {
-                        print("unable to send verification")
-                        print(error!.localizedDescription)
+                self.newUser.signUpInBackground { (success, error) in
+                    PFUser.logInWithUsername(inBackground: self.newUser.username!, password: self.newUser.password!) { (user, error) in
+                        if user != nil {
+                            print("you're logged in!")
+                            self.performSegue(withIdentifier: "newUserSegue", sender: nil)
+                        }
                     }
-                })
+                }
+                
+
             }
         }
+        
+        
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == "enterPinSegue") {
-            let enterCodeVC = segue.destination as! EnterCodeViewController;
-            enterCodeVC.verification = self.verification;
-            enterCodeVC.newUser = newUser
+        if (segue.identifier == "newUserSegue") {
         }
     }
     

@@ -56,22 +56,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadingView.isHidden = false
-        if otherUser != nil{
-            PFCloud.callFunction(inBackground: "friendRequest", withParameters: ["user" : otherUser.objectId]) { (success, error) in
-                print("requesting friend")
-                if ( error == nil) {
-                    print("success")
-                    print(success.debugDescription)
-                }
-                else if (error != nil) {
-                    NSLog("error")
-                }
-            }
-            
-            
-            loadFollowedUser()
-        }
-        
+
+        loadFollowedUser()
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         
         locationManager.delegate = self
@@ -86,8 +72,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         case .authorizedAlways:
             print("authorized always")
             locationManager.startUpdatingLocation()
-            if user!["follow"] as! String != ""{
-                Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(MapViewController.timedPinUpdate), userInfo: nil, repeats: true)
+            if user!["follow"] as? String != ""{
+                Timer.scheduledTimer(timeInterval: 50.0, target: self, selector: #selector(MapViewController.timedPinUpdate), userInfo: nil, repeats: true)
             }
         case .restricted:
             print("restricted")
@@ -101,6 +87,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         loadingView.isHidden = false
+
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         loadFollowedUser()
         if let userTracking = user!["tracking"] as? Bool {
@@ -137,15 +124,16 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
                     } else {
                         print("Error: \(error!) \(error!.localizedDescription)")
                     }
-                    
-                    if let trackOtherUser = self.otherUser["tracking"] as? Bool {
-                        if(trackOtherUser){
-                            let otherUserCoordinates = self.loadOtherUserData() as CLLocationCoordinate2D!
-                            self.setuplocationMarker(coordinate: otherUserCoordinates!)
-                            let friendName = self.otherUser["username"] as! String
-                            self.firstMapTitle.text = "\(friendName)"
-                        }else{
-                            self.firstMapTitle.text = "Friend name"
+                    if self.otherUser != nil {
+                        if let trackOtherUser = self.otherUser["tracking"] as? Bool {
+                            if(trackOtherUser){
+                                let otherUserCoordinates = self.loadOtherUserData() as CLLocationCoordinate2D!
+                                self.setuplocationMarker(coordinate: otherUserCoordinates!)
+                                let friendName = self.otherUser["username"] as! String
+                                self.firstMapTitle.text = "\(friendName)"
+                            }else{
+                                self.firstMapTitle.text = "Friend name"
+                            }
                         }
                     }
                     self.mapMode()

@@ -46,7 +46,6 @@ PODS:
     - GoogleMaps/Base
   - Parse (1.14.2):
     - Bolts/Tasks (~> 1.8)
-  - SinchVerification-Swift (2.0.3)
 
 DEPENDENCIES:
   - AFNetworking
@@ -55,7 +54,6 @@ DEPENDENCIES:
   - FacebookShare
   - GoogleMaps
   - Parse
-  - SinchVerification-Swift
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
@@ -68,8 +66,7 @@ SPEC CHECKSUMS:
   FBSDKShareKit: 0b8d6cc3f103c75297eb3c62caec284a2ccf1b9e
   GoogleMaps: a5b5bbe47734e2443bde781a6aa64e69fdb6d785
   Parse: 4335d65f40cb3d43190d723144bbe1afb9c38230
-  SinchVerification-Swift: 567aaf9cb29c55a115faecb6016fea25a7f37688
 
-PODFILE CHECKSUM: 48d05773d974bd626f59935340f7563d1a0720ef
+PODFILE CHECKSUM: 3afe1425dd77677c9e056f060b9f54c14c53e487
 
 COCOAPODS: 1.2.0.beta.3

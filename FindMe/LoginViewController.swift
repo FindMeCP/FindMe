@@ -27,7 +27,7 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate {
                 print(success.debugDescription)
             }
             else if (error != nil) {
-                NSLog("error")
+                NSLog(error.debugDescription)
             }
         }
         
@@ -52,6 +52,12 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate {
                 if user != nil {
                     print("you're logged in!")
                     self.performSegue(withIdentifier: "loginSegue", sender: nil)
+                }
+                if ( error == nil) {
+                    print("success")
+                }
+                else if (error != nil) {
+                    NSLog(error.debugDescription)
                 }
         }
     }

@@ -7,19 +7,18 @@
 //
 
 import UIKit
-import Parse
 
 class ContactsMenuViewController: UIViewController {
     
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var proPic: UIImageView!
     
-    var currentUser = PFUser.current()
+//    var currentUser = PFUser.current()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.setNavigationBarHidden(false, animated: false)
-        usernameLabel.text = currentUser?.username
+//        usernameLabel.text = currentUser?.username
         // Do any additional setup after loading the view.
         proPic.layer.cornerRadius = 8
         proPic.clipsToBounds = true

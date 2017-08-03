@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Parse
 import Contacts
 
 
@@ -31,11 +30,11 @@ class ContactsCell: UITableViewCell{
     }
     
     @IBAction func addPerson(_ sender: Any) {
-        if contact != nil {
-            if let contactsVC = self.viewController as? ContactsViewController {
-                contactsVC.presentMessage(contact: contact!)
-            }
-        }
+//        if contact != nil {
+//            if let contactsVC = self.viewController as? ContactsViewController {
+//                contactsVC.presentMessage(contact: contact!)
+//            }
+//        }
     }
     
     

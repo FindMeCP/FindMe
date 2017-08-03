@@ -6,11 +6,17 @@ target 'FindMe' do
   use_frameworks!
 
   # Pods for FindMe
-  pod 'Parse'
   pod 'GoogleMaps'
   pod 'AFNetworking'
-  pod 'FacebookLogin'
-  pod 'FacebookCore'
-  pod 'FacebookShare'
+
+  # Pods for FirebaseDemo
+  pod 'Firebase/Core'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Database'
+
+  # Pods for Facebook
+  pod 'Bolts'
+  pod 'FBSDKCoreKit'
+  pod 'FBSDKLoginKit'
 
 end

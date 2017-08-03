@@ -10,64 +10,63 @@ import UIKit
 
 import UIKit
 import Contacts
-import Parse
 
 class FriendsCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var addButton: UIButton!
     
     var name: String?
-    var user = PFUser.current()
-    var contact:PFObject?
+//    var user = PFUser.current()
+//    var contact:PFObject?
     var friend: Bool?
     
     override func awakeFromNib() {
         super.awakeFromNib()
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        if(contact!["phone"] as? String == user!["follow"] as? String){
-            friend = true
-        }else{
-            friend = false
-        }
-        //let contactPerson: PFObject = contact!
-        if(friend==true){
-            addButton.setImage(UIImage(named: "PinkCheck"), for: .normal)
-        }else{
-            addButton.setImage(UIImage(named: "PinkAdd"), for: .normal)
-        }
-        name = contact!["username"] as? String
-        nameLabel.text = name
-    }
-    
-    @IBAction func addPerson(_ sender: Any) {
-        
-        print("CHECK")
-        if(friend==true){
-            unadd()
-            friend=false
-            addButton.setImage(UIImage(named: "PinkAdd"), for: .normal)
-        }else{
-            add()
-            friend=true
-            self.addButton.setImage(UIImage(named: "PinkCheck"), for: .normal)
-        }
-        let table = superview?.superview as! UITableView
-        table.reloadData()
-    }
-    
-    func add() {
-        user!["follow"] = contact!["phone"]
-        user!.saveInBackground()
-    }
-    
-    func unadd() {
-        //user?.addContact(contact!)
-        user!["follow"] = ""
-        user!.saveInBackground()
-    }
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        if(contact!["phone"] as? String == user!["follow"] as? String){
+//            friend = true
+//        }else{
+//            friend = false
+//        }
+//        //let contactPerson: PFObject = contact!
+//        if(friend==true){
+//            addButton.setImage(UIImage(named: "PinkCheck"), for: .normal)
+//        }else{
+//            addButton.setImage(UIImage(named: "PinkAdd"), for: .normal)
+//        }
+//        name = contact!["username"] as? String
+//        nameLabel.text = name
+//    }
+//    
+//    @IBAction func addPerson(_ sender: Any) {
+//        
+//        print("CHECK")
+//        if(friend==true){
+//            unadd()
+//            friend=false
+//            addButton.setImage(UIImage(named: "PinkAdd"), for: .normal)
+//        }else{
+//            add()
+//            friend=true
+//            self.addButton.setImage(UIImage(named: "PinkCheck"), for: .normal)
+//        }
+//        let table = superview?.superview as! UITableView
+//        table.reloadData()
+//    }
+//    
+//    func add() {
+//        user!["follow"] = contact!["phone"]
+//        user!.saveInBackground()
+//    }
+//    
+//    func unadd() {
+//        //user?.addContact(contact!)
+//        user!["follow"] = ""
+//        user!.saveInBackground()
+//    }
 
 }
 

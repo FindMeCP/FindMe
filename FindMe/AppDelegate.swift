@@ -7,9 +7,10 @@
 //
 
 import UIKit
-import Parse
-import Contacts
+//import Parse
+import Firebase
 import FBSDKCoreKit
+import Contacts
 import GoogleMaps
 
 @UIApplicationMain
@@ -25,29 +26,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        FIRApp.configure()
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
         GMSServices.provideAPIKey(googleMapsApiKey)
         
+//        window = UIWindow(frame: UIScreen.main.bounds)
+//        window?.makeKeyAndVisible()
+//        
+//        window?.rootViewController = UINavigationController(rootViewController: LoginViewController)
+        
         // Override point for customization after application launch.
-        Parse.initialize(
-            with: ParseClientConfiguration(block: { (configuration:ParseMutableClientConfiguration) -> Void in
-                configuration.applicationId = self.appID
-                configuration.clientKey = self.clientkey
-                configuration.server = self.serverURL
-            })
-        )
-        if PFUser.current() != nil {
-            PFUser.enableRevocableSessionInBackground()
-            // if there is a logged in user then load the home view controller
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "MainView")
-            window?.rootViewController = vc
-            print("current user logged in")
-        }
+//        Parse.initialize(
+//            with: ParseClientConfiguration(block: { (configuration:ParseMutableClientConfiguration) -> Void in
+//                configuration.applicationId = self.appID
+//                configuration.clientKey = self.clientkey
+//                configuration.server = self.serverURL
+//            })
+//        )
+//        if PFUser.current() != nil {
+//            PFUser.enableRevocableSessionInBackground()
+//            // if there is a logged in user then load the home view controller
+//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//            let vc = storyboard.instantiateViewController(withIdentifier: "MainView")
+//            window?.rootViewController = vc
+//            print("current user logged in")
+//        }
         
         return true
 
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        let handled = FBSDKApplicationDelegate.sharedInstance().application(app, open: url, options: options)
+        
+        return handled
     }
     
     class func getAppDelegate() -> AppDelegate {

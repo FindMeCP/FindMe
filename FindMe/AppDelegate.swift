@@ -32,27 +32,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         GMSServices.provideAPIKey(googleMapsApiKey)
         
-//        window = UIWindow(frame: UIScreen.main.bounds)
-//        window?.makeKeyAndVisible()
-//        
-//        window?.rootViewController = UINavigationController(rootViewController: LoginViewController)
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        var vc: UIViewController!
+        if (FIRAuth.auth()?.currentUser != nil) {
+            vc = mainStoryboard.instantiateViewController(withIdentifier: "navigationController")
+        } else {
+            vc = mainStoryboard.instantiateViewController(withIdentifier: "loginViewController")
+        }
         
-        // Override point for customization after application launch.
-//        Parse.initialize(
-//            with: ParseClientConfiguration(block: { (configuration:ParseMutableClientConfiguration) -> Void in
-//                configuration.applicationId = self.appID
-//                configuration.clientKey = self.clientkey
-//                configuration.server = self.serverURL
-//            })
-//        )
-//        if PFUser.current() != nil {
-//            PFUser.enableRevocableSessionInBackground()
-//            // if there is a logged in user then load the home view controller
-//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//            let vc = storyboard.instantiateViewController(withIdentifier: "MainView")
-//            window?.rootViewController = vc
-//            print("current user logged in")
-//        }
+        self.window?.rootViewController = vc
+        self.window?.makeKeyAndVisible()
         
         return true
 
@@ -109,6 +99,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         default:
             completionHandler(false)
         }
+    }
+    
+    func userDidLogout(){
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = mainStoryboard.instantiateViewController(withIdentifier: "loginViewController")
+        self.window?.rootViewController = vc
+        self.window?.makeKeyAndVisible()
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

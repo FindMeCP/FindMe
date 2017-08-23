@@ -15,7 +15,7 @@ import FBSDKLoginKit
 
 class FriendsAPI {
     
-    static let system = FriendsAPI()
+    static let instance = FriendsAPI()
     
     // MARK: - Firebase references
     let BASE_REF = FIRDatabase.database().reference()
@@ -49,6 +49,11 @@ class FriendsAPI {
         let id = snapshot.key
         let name = snapshot.childSnapshot(forPath: "name").value as! String
         let email = snapshot.childSnapshot(forPath: "email").value as! String
+
+        var date = NSDate().timeIntervalSince1970
+        if let dateValue = snapshot.childSnapshot(forPath: "timestamp").value as? TimeInterval {
+            date = dateValue
+        }
         
         var coordinates: (Double, Double) = (0,0)
         if let latitude = snapshot.childSnapshot(forPath: "coordinates").childSnapshot(forPath: "latitude").value as? Double {
@@ -73,7 +78,7 @@ class FriendsAPI {
             tracking = trackingValue
         }
         
-        return User(userID: id, userName: name, userEmail: email,  userCoordinates: coordinates, userRequests: requests,userFriends: friends, userFollow: follow, userTracking: tracking)
+        return User(userID: id, userName: name, userEmail: email, userTimestamp: date,  userCoordinates: coordinates, userRequests: requests,userFriends: friends, userFollow: follow, userTracking: tracking)
     }
     
     /** Gets the current User object for the specified user id */
@@ -83,6 +88,7 @@ class FriendsAPI {
             completion(user)
         })
     }
+    
     /** Gets the User object for the specified user id */
     func getUser(_ userID: String, completion: @escaping (User) -> Void) {
         USER_REF.child(userID).observeSingleEvent(of: FIRDataEventType.value, with: { (snapshot) in
@@ -99,24 +105,30 @@ class FriendsAPI {
      - parameter completion: What to do when the block has finished running. The success variable
      indicates whether or not the signup was a success
      */
-    func createEmailAccount(_ email: String, password: String, name: String, completion: @escaping (_ success: Bool) -> Void) {
+    func createEmailAccount(_ email: String, password: String, name: String, completion: @escaping (_ success: Bool, _ error: Error?) -> Void) {
         FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user, error) in
             
+            guard let userID = user?.uid else {
+                return
+            }
+            let ref = FIRDatabase.database().reference(fromURL: "https://findme-e7ff6.firebaseio.com/")
             if (error == nil) {
                 // Success
-                var userInfo = [String: AnyObject]()
-                userInfo = ["email": email as AnyObject, "name": name as AnyObject]
-                self.CURRENT_USER_REF.setValue(userInfo)
-                completion(true)
+                ref.child("users").child(userID).child("name").setValue(name)
+                ref.child("users").child(userID).child("email").setValue(email)
+                ref.child("users").child(userID).child("timestamp").setValue(NSDate().timeIntervalSince1970)
+                ref.child("users").child(userID).child("follow").setValue("")
+                ref.child("users").child(userID).child("tracking").setValue(true)
+                completion(true, nil)
             } else {
                 // Failure
-                completion(false)
+                completion(false, error)
             }
             
         })
     }
     
-    func loginFBAccount(_ credentials: FIRAuthCredential, completion: @escaping (_ success: Bool) -> Void) {
+    func loginFBAccount(_ credentials: FIRAuthCredential, completion: @escaping (_ success: Bool, _ error: Error?) -> Void) {
         FIRAuth.auth()?.signIn(with: credentials, completion: { (user, error) in
             if error != nil {
                 print("Error with FB user: ", error ?? " ")
@@ -130,14 +142,15 @@ class FriendsAPI {
             ref.child("users").child(userID).observeSingleEvent (of: FIRDataEventType.value, with: { (snapshot) in
                 if snapshot.exists() {
                     // if user exists just log in
-                    completion(true)
+                    completion(true, nil)
                 } else {
                     // otherwise, create user
                     ref.child("users").child(userID).child("name").setValue(name)
                     ref.child("users").child(userID).child("email").setValue(email)
+                    ref.child("users").child(userID).child("timestamp").setValue(NSDate().timeIntervalSince1970)
                     ref.child("users").child(userID).child("follow").setValue("")
                     ref.child("users").child(userID).child("tracking").setValue(true)
-                    completion(true)
+                    completion(true, nil)
                 }
             })
         })
@@ -150,15 +163,15 @@ class FriendsAPI {
      - parameter completion: What to do when the block has finished running. The success variable
      indicates whether or not the login was a success
      */
-    func loginEmailAccount(_ email: String, password: String, completion: @escaping (_ success: Bool) -> Void) {
+    func loginEmailAccount(_ email: String, password: String, completion: @escaping (_ success: Bool, _ error: Error?) -> Void) {
         FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in
             
             if (error == nil) {
                 // Success
-                completion(true)
+                completion(true, nil)
             } else {
                 // Failure
-                completion(false)
+                completion(false, error)
                 print(error!)
             }
             
@@ -171,37 +184,11 @@ class FriendsAPI {
         try! FIRAuth.auth()?.signOut()
     }
     
-    
-    
-    // MARK: - Request System Functions
-    
-    /** Sends a friend request to the user with the specified id */
-    func sendRequestToUser(_ userID: String) {
-        USER_REF.child(userID).child("requests").child(CURRENT_USER_ID).setValue(true)
-    }
-    
-    /** Unfriends the user with the specified id */
-    func removeFriend(_ userID: String) {
-        CURRENT_USER_REF.child("friends").child(userID).removeValue()
-        USER_REF.child(userID).child("friends").child(CURRENT_USER_ID).removeValue()
-    }
-    
-    /** Accepts a friend request from the user with the specified id */
-    func acceptFriendRequest(_ userID: String) {
-        CURRENT_USER_REF.child("requests").child(userID).removeValue()
-        CURRENT_USER_REF.child("friends").child(userID).setValue(true)
-        USER_REF.child(userID).child("friends").child(CURRENT_USER_ID).setValue(true)
-        USER_REF.child(userID).child("requests").child(CURRENT_USER_ID).removeValue()
-    }
-    
     // MARK: - Location System Functions
     /** Follows a friend **/
-    func followUser(_ userID: String, _ completion: @escaping (String) -> Void) {
-        CURRENT_USER_FRIENDS_REF.observeSingleEvent(of: .value, with: { (snapshot) in
-            if snapshot.value(forKey: userID) != nil {
-                self.CURRENT_USER_REF.child("follow").setValue(userID)
-            }
-        })
+    func followUser(_ userID: String, _ completion: @escaping (Bool) -> Void) {
+        CURRENT_USER_REF.child("follow").setValue(userID)
+        completion(true)
     }
     
     /** Gets coordinates that current user is following */
@@ -218,10 +205,9 @@ class FriendsAPI {
     
     /** Gets coordinates that current user is following */
     func updateUserLocation(_ userID: String, coordinates: (Double, Double)) {
-        print("updating UserLocation")
-        print(userID)
         USER_REF.child(userID).child("coordinates").child("latitude").setValue(coordinates.0)
         USER_REF.child(userID).child("coordinates").child("longitude").setValue(coordinates.1)
+        USER_REF.child(userID).child("timestamp").setValue(NSDate().timeIntervalSince1970)
     }
     
     /** Change Tracking */
@@ -229,9 +215,72 @@ class FriendsAPI {
         if(track) {
             CURRENT_USER_REF.child("tracking").setValue(true)
         } else {
-//            CURRENT_USER_REF.child("follow").setValue("")
             CURRENT_USER_REF.child("tracking").setValue(false)
         }
+    }
+    
+    
+    // MARK: - Request System Functions
+    
+    /** Sends a friend request to the user with the specified id */
+    func sendRequestToUser(_ userID: String, _ completion: @escaping (Bool) -> Void) {
+        // if user is already a friend, don't send request
+        var flag = true
+        USER_REF.child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
+            if let value = snapshot.value as? NSDictionary {
+                if let requests = value["requests"] as? NSDictionary {
+                    if requests[self.CURRENT_USER_ID] != nil {
+                        print("flag is false")
+                        flag = false
+                    }
+                }
+            }
+            print("test")
+            self.USER_REF.child(userID).child("requests").child(self.CURRENT_USER_ID).setValue(true)
+            if(flag) {
+                print("true")
+                completion(true)
+            } else {
+                print("false")
+                completion(false)
+            }
+            
+        })
+    }
+    
+    /** Unfriends the user with the specified id */
+    func removeFriend(_ userID: String) {
+        CURRENT_USER_REF.child("friends").child(userID).removeValue()
+        USER_REF.child(userID).child("friends").child(CURRENT_USER_ID).removeValue()
+        CURRENT_USER_REF.observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            if value?["follow"] as? String == userID {
+                self.CURRENT_USER_REF.child("follow").setValue("")
+            }
+        })
+        USER_REF.child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            if value?["follow"] as? String == self.CURRENT_USER_ID {
+                self.USER_REF.child(userID).child("follow").setValue("")
+            }
+        })
+    }
+    
+    /** Accepts a friend request from the user with the specified id */
+    func acceptFriendRequest(_ userID: String, _ completion: @escaping (Bool) -> Void) {
+        CURRENT_USER_REF.child("requests").child(userID).removeValue()
+        CURRENT_USER_REF.child("friends").child(userID).setValue(true)
+        USER_REF.child(userID).child("friends").child(CURRENT_USER_ID).setValue(true)
+        USER_REF.child(userID).child("requests").child(CURRENT_USER_ID).removeValue()
+        completion(true)
+    }
+    
+    func rejectFriendRequest(_ userID: String, _ completion: @escaping (Bool) -> Void) {
+        print("REJECTING")
+        CURRENT_USER_REF.child("requests").child(userID).removeValue()
+        USER_REF.child(userID).child("requests").child(CURRENT_USER_ID).removeValue()
+        print(requestList)
+        completion(true)
     }
     
     
@@ -241,7 +290,7 @@ class FriendsAPI {
     /** Adds a user observer. The completion function will run every time this list changes, allowing you
      to update your UI. */
     func addUserObserver(_ update: @escaping () -> Void) {
-        FriendsAPI.system.USER_REF.observe(FIRDataEventType.value, with: { (snapshot) in
+        USER_REF.observe(FIRDataEventType.value, with: { (snapshot) in
             self.userList.removeAll()
             for child in snapshot.children.allObjects as! [FIRDataSnapshot] {
                 let email = child.childSnapshot(forPath: "email").value as! String
@@ -259,6 +308,33 @@ class FriendsAPI {
     }
     
     
+    // MARK: - Addable users
+    /** The list of addable users */
+    var otherUserList = [User]()
+    /** Adds a user observer. The completion function will run every time this list changes, allowing you
+     to update your UI. */
+    func addOtherUserObserver(_ update: @escaping () -> Void) {
+        print("add another user observer")
+        USER_REF.observe(FIRDataEventType.value, with: { (snapshot) in
+            self.otherUserList.removeAll()
+            for child in snapshot.children.allObjects as! [FIRDataSnapshot] {
+                let email = child.childSnapshot(forPath: "email").value as! String
+                if email != FIRAuth.auth()?.currentUser?.email! {
+                    let user = self.getUserObject(snapshot: child)
+                    self.otherUserList.append(user)
+                }
+            }
+            for u in self.otherUserList {
+                print(u.id)
+            }
+            self.otherUserList = Array(Set<User>(self.otherUserList).subtracting(self.friendList).subtracting(self.requestList))
+            update()
+        })
+    }
+    /** Removes the user observer. This should be done when leaving the view that uses the observer. */
+    func removeOtherUserObserver() {
+        USER_REF.removeAllObservers()
+    }
     
     // MARK: - All friends
     /** The list of all friends of the current user. */
@@ -281,12 +357,11 @@ class FriendsAPI {
             }
         })
     }
+    
     /** Removes the friend observer. This should be done when leaving the view that uses the observer. */
     func removeFriendObserver() {
         CURRENT_USER_FRIENDS_REF.removeAllObservers()
     }
-    
-    
     
     // MARK: - All requests
     /** The list of all friend requests the current user has. */
@@ -295,6 +370,7 @@ class FriendsAPI {
      to update your UI. */
     func addRequestObserver(_ update: @escaping () -> Void) {
         CURRENT_USER_REQUESTS_REF.observe(FIRDataEventType.value, with: { (snapshot) in
+            print("OBSERVING")
             self.requestList.removeAll()
             for child in snapshot.children.allObjects as! [FIRDataSnapshot] {
                 let id = child.key
@@ -311,6 +387,7 @@ class FriendsAPI {
     }
     /** Removes the friend request observer. This should be done when leaving the view that uses the observer. */
     func removeRequestObserver() {
+        print("removing requests observer")
         CURRENT_USER_REQUESTS_REF.removeAllObservers()
     }
     

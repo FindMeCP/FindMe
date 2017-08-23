@@ -50,29 +50,27 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     let locationManager = CLLocationManager()
     var locationMarker: GMSMarker!
     
+    var timerTest : Timer?
+    
     // Parse User objects for current user and user being followed
-//    let user = PFUser.current()
     var currentUser: User?
     var otherUser: User?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.locationManager.delegate = self
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        
         let userID = FIRAuth.auth()?.currentUser?.uid
         
-        FriendsAPI.system.getUser(userID!) { (user) in
-            print("GOT USER")
-            print(user.id,user.email,user.coordinates,user.friends,user.follow)
+        FriendsAPI.instance.getUser(userID!) { (user) in
             self.currentUser = user
             self.usernameLabel.text = self.currentUser?.name
             self.secondMapTitle.text = self.currentUser?.name
-            
             self.loadingView.isHidden = false
-            
             self.loadFollowedUser()
-            self.navigationController?.setNavigationBarHidden(true, animated: false)
-            
-            self.locationManager.delegate = self
             
             let status = CLLocationManager.authorizationStatus()
             switch status {
@@ -83,8 +81,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
             case .authorizedAlways:
                 print("authorized always")
                 self.locationManager.startUpdatingLocation()
-                if self.currentUser?.follow != ""{
-                    Timer.scheduledTimer(timeInterval: 50.0, target: self, selector: #selector(MapViewController.timedPinUpdate), userInfo: nil, repeats: true)
+                if self.currentUser!.tracking! {
+                    self.startTimer()
                 }
             case .restricted:
                 print("restricted")
@@ -100,19 +98,17 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        
         let userID = FIRAuth.auth()?.currentUser?.uid
 
-        FriendsAPI.system.getUser(userID!) { (user) in
-            print("GOT USER")
-            print(user.id,user.email,user.coordinates,user.friends,user.follow)
+        FriendsAPI.instance.getUser(userID!) { (user) in
             self.currentUser = user
             self.usernameLabel.text = self.currentUser?.name
             self.secondMapTitle.text = self.currentUser?.name
-            
             self.loadingView.isHidden = false
             
             self.loadFollowedUser()
-            self.navigationController?.setNavigationBarHidden(true, animated: false)
             
             if let userTracking = self.currentUser?.tracking {
                 self.trackingButton.isOn = userTracking
@@ -121,8 +117,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
                 self.trackingButton.isOn = false
                 self.track = false
             }
-            
-            self.usernameLabel.text = self.currentUser?.name
         }
     }
     
@@ -131,7 +125,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         if let otherUserID = currentUser?.follow {
             if currentUser!.tracking! && otherUserID != "" {
                 // get other user from id
-                FriendsAPI.system.getUser(otherUserID, completion: { (user) in
+                FriendsAPI.instance.getUser(otherUserID, completion: { (user) in
                     self.otherUser = user
                     if let trackOtherUser = self.otherUser?.tracking {
                         if(trackOtherUser){
@@ -189,7 +183,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         mapView1.settings.myLocationButton = true
         mapView2.isMyLocationEnabled = true
         mapView2.settings.myLocationButton = true
-        if currentUser!.tracking && currentUser?.follow != ""{
+        if currentUser!.tracking && currentUser?.follow != "" && otherUser != nil && otherUser!.tracking{
             print("reached this point - following")
             let otherUserCoordinates = loadOtherUserData()
             mapView1.animate(toZoom: zoomSetting)
@@ -216,7 +210,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         mapViewFull.isMyLocationEnabled = true
         mapViewFull.settings.myLocationButton = true
         if let userCoordinates = locationManager.location?.coordinate {
-            if currentUser!.tracking && currentUser?.follow != ""{
+            if currentUser!.tracking && currentUser?.follow != "" && otherUser != nil && otherUser!.tracking{
                 let otherUserCoordinates = loadOtherUserData()
                 let path = GMSMutablePath()
                 path.add(userCoordinates)
@@ -236,7 +230,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         mapViewArea2.isHidden = false;
         mapViewFull.isMyLocationEnabled = true
         mapViewFull.settings.myLocationButton = true
-        if currentUser!.tracking && currentUser?.follow != ""{
+        if currentUser!.tracking && currentUser?.follow != "" && otherUser != nil && otherUser!.tracking{
             let otherUserCoordinates = loadOtherUserData()
             mapViewFull.animate(toZoom: zoomSetting)
             mapViewFull.animate(toLocation: otherUserCoordinates)
@@ -257,10 +251,17 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
             locationMarker.map = nil
         }
         locationMarker = GMSMarker(position: coordinate)
-        locationMarker.title = "Username"
+        locationMarker.title = otherUser?.name
         locationMarker.appearAnimation = kGMSMarkerAnimationPop
         locationMarker.isFlat = false
-        locationMarker.snippet = "Time posted"
+        locationMarker.snippet = "Time Stamp"
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let date = NSDate(timeIntervalSince1970: otherUser!.timestamp)
+        print(date)
+        let myString = formatter.string(from: date as Date)
+        print(myString)
+        locationMarker.snippet =  myString
         if (mapModeSlider.value == splitMode){
             locationMarker.map = mapView1
         }
@@ -280,6 +281,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
                     Lat = coordinates.0
                     Long = coordinates.1
                     
+                    
                 } else{
                     print("If let not working")
                 }
@@ -292,22 +294,27 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     // checks to see if current user's tracking is turned on.
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         print("location manager")
-        if let tracking = currentUser?.tracking {
-            if(tracking){
-                print("Tracking is on!")
-                let latitude = locationManager.location?.coordinate.latitude
-                let longitude = locationManager.location?.coordinate.longitude
-                //updates user coordinates
-                FriendsAPI.system.updateUserLocation(currentUser!.id, coordinates: (latitude!,longitude!))
+        print(currentUser ?? "user not logged in")
+        if currentUser != nil {
+            if let tracking = currentUser?.tracking {
+                if(tracking){
+                    print("Tracking is on!")
+                    let latitude = locationManager.location?.coordinate.latitude
+                    let longitude = locationManager.location?.coordinate.longitude
+                    //updates user coordinates
+                    FriendsAPI.instance.updateUserLocation(currentUser!.id, coordinates: (latitude!,longitude!))
+                }
             }
+
         }
     }
     
     func timedPinUpdate()
     {
+        print("updating")
         if currentUser?.follow != "" {
             if let otherUserID = currentUser?.follow {
-                FriendsAPI.system.getUser(otherUserID, completion: { (user) in
+                FriendsAPI.instance.getUser(otherUserID, completion: { (user) in
                     self.otherUser = user
                     let otherUserCoordinates = self.loadOtherUserData() as CLLocationCoordinate2D!
                     self.setuplocationMarker(coordinate: otherUserCoordinates!)
@@ -383,18 +390,38 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         viewDidAppear(false)
     }
     
+    
+    func startTimer() {
+        if timerTest == nil {
+            print("Starting timer")
+            timerTest = Timer.scheduledTimer(timeInterval: 1500.0, target: self, selector: #selector(MapViewController.timedPinUpdate), userInfo: nil, repeats: true)
+        }
+    }
+    
+    func stopTimer() {
+        print("trying to stop timer")
+        if timerTest == nil {
+            print("timer is nil")
+        }
+        if timerTest != nil {
+            print("TIMER STOPPING")
+            timerTest!.invalidate()
+            timerTest = nil
+        }
+    }
+    
     var track: Bool?
     
     @IBAction func changeTracking(_ sender: Any) {
         if(track!){
             print("turn off")
             track = false
-            FriendsAPI.system.changeTracking(track!)
+            FriendsAPI.instance.changeTracking(track!)
             currentUser?.tracking = track
         }else{
             print("turn on")
             track = true
-            FriendsAPI.system.changeTracking(track!)
+            FriendsAPI.instance.changeTracking(track!)
             currentUser?.tracking = track
         }
     }
@@ -403,8 +430,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         let logoutAlert = UIAlertController(title: "Log Out", message: "Are you sure you want to log out ? ", preferredStyle: UIAlertControllerStyle.alert)
         
         logoutAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
-            FriendsAPI.system.logoutAccount()
-            self.performSegue(withIdentifier: "logoutSegue", sender: self)
+            FriendsAPI.instance.logoutAccount()
+            self.locationManager.stopUpdatingLocation()
+            self.currentUser = nil
+            self.stopTimer()
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.userDidLogout()
         }))
         
         logoutAlert.addAction(UIAlertAction(title: "No", style: .default, handler: { (action: UIAlertAction!) in
@@ -414,4 +445,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         present(logoutAlert, animated: true, completion: nil)
     }
 
+    
+    deinit {
+        print("MapViewController was deallocated")
+    }
 }

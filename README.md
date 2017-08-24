@@ -1,5 +1,7 @@
 # FindMe
 
+[Check the app out on the iOS App Store!](https://itunes.apple.com/us/app/findme-geolocation-app/id1274629614?ls=1&mt=8)
+
 ## Description
 Tired of trying to find your friends while they don't text you back? FindMe
 helps you find your friends without any effort. The FindMe app is a useful tracking app

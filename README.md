@@ -1,6 +1,6 @@
 # FindMe
 
-[Check the app out on the iOS App Store!](https://itunes.apple.com/us/app/findme-geolocation-app/id1274629614?ls=1&mt=8)
+[Check out FindMe on the iOS App Store!](https://itunes.apple.com/us/app/findme-geolocation-app/id1274629614?ls=1&mt=8)
 
 ## Description
 Tired of trying to find your friends while they don't text you back? FindMe
@@ -10,13 +10,17 @@ designed for users of all ages.
 ## Info
 FindMe is a geolocation app built on Google Maps API, with a Firebase backend.
 
-#Project Distribution
-- William Tong: Firebase database, Facebook + email login, friend/request logic, Google Maps logic
-- Jordi Turner: Google Maps API, Map UI
+## Demo
 
-## User Stories
+![Findme gif](findme.gif)
 
-**Required** functionality: User can
+## Project Distribution
+- William Tong: Firebase database, Facebook + email login, friend/request logic, Google Maps API, UI
+- Jordi Turner: Google Maps API, Map View UI
+
+## App Details
+
+**Functionality:**
 
 - [X] Sign up, log in, and log out of the FindMe app.
 - [X] Login with Facebook account.
@@ -37,9 +41,6 @@ FindMe is a geolocation app built on Google Maps API, with a Firebase backend.
 **Model Classes**
 - Users: name, email, coordinates, friends, requests, tracking, follow
 
-## Video Walkthrough
-
-Video walkthrough coming soon.
 
 ## Links
 

@@ -9,8 +9,8 @@ designed for users of all ages.
 FindMe is a geolocation app built on Google Maps API, with a Firebase backend.
 
 #Project Distribution
-- William: Firebase database, Facebook + email login, friend/request logic, Google Maps logic
-- Jordi: Google Maps API, Map UI
+- William Tong: Firebase database, Facebook + email login, friend/request logic, Google Maps logic
+- Jordi Turner: Google Maps API, Map UI
 
 ## User Stories
 
@@ -38,6 +38,10 @@ FindMe is a geolocation app built on Google Maps API, with a Firebase backend.
 ## Video Walkthrough
 
 Video walkthrough coming soon.
+
+## Links
+
+Tab bar icons from https://icons8.com
 
 ## License
 
